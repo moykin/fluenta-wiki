@@ -58,7 +58,9 @@ Web — внешний провайдер; iOS/Android — IAP (см. «Откр
 
 ## Э11 — Маркетинг и SEO ⟵ запускать параллельно, начиная с Э3
 
-Индексация занимает месяцы, поэтому SEO-куст нельзя оставлять на конец. Лендинг, тарифы, «О проекте», `SEO Pillar / Texts / Texts B1 / Grammar / Video / Career`. Стек — см. «Открытый вопрос 1» в [ARCHITECTURE.md](ARCHITECTURE.md).
+Индексация занимает месяцы, поэтому SEO-куст нельзя оставлять на конец. Лендинг, тарифы, «О проекте», `SEO Pillar / Texts / Texts B1 / Grammar / Video / Career`.
+
+Стек — **Jaspr** (Dart): статическая генерация, настоящий HTML, partial hydration. Живое демо читалки на лендинге — через `jaspr_flutter_embed`, тем же кодом, что в приложении. Обоснование — [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Э12 — Сторы
 

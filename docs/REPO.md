@@ -12,7 +12,7 @@
 fluenta.wiki/
 ├── app/          # Flutter — web, iOS, iPadOS, Android, macOS
 ├── backend/      # FastAPI — API, голосовой релей, разбор текста
-├── marketing/    # лендинг, тарифы, SEO-куст (стек на подтверждении)
+├── marketing/    # лендинг, тарифы, SEO-куст — Jaspr (Dart)
 ├── design/       # дизайн-хэндофф
 │   ├── README.md         # ГЛАВНОЕ: токены, экраны, состояния, правила
 │   ├── *.dc.html         # 34 макета — держать ПЛОСКО, они ссылаются друг на друга

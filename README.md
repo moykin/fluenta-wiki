@@ -11,6 +11,7 @@
 | Слой | Технология |
 |---|---|
 | Приложение | Flutter — web, iOS, iPadOS, Android, macOS |
+| Лендинг и SEO | Jaspr (Dart) — статическая генерация + partial hydration |
 | Backend | Python + FastAPI |
 | База данных | PostgreSQL 16 + pgvector |
 | Голос | Gemini Flash Live через серверный релей |
@@ -22,7 +23,7 @@
 ```
 app/        — Flutter-приложение (все платформы)
 backend/    — FastAPI: API, голосовой релей, разбор текста
-marketing/  — лендинг и SEO-страницы
+marketing/  — лендинг и SEO-страницы (Jaspr)
 design/     — дизайн-хэндофф: макеты, токены, ассеты
 infra/      — docker-compose, Caddy, провижн сервера
 docs/       — документация проекта
