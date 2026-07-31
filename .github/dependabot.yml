@@ -1,5 +1,10 @@
 version: 2
 
+# ВАЖНО: экосистему подключаем ТОЛЬКО когда в её директории реально есть
+# файл манифеста. Dependabot не умеет «подождать» — он сразу пытается
+# разобрать зависимости, не находит их и падает с ошибкой, засыпая почту
+# уведомлениями. Блоки ниже раскомментировать по мере появления кода.
+
 updates:
   # Сами GitHub Actions — самая частая точка компрометации CI.
   - package-ecosystem: github-actions
@@ -12,40 +17,43 @@ updates:
       actions:
         patterns: ["*"]
 
-  - package-ecosystem: pip
-    directory: /backend
-    schedule:
-      interval: weekly
-      day: monday
-    labels: [dependencies, backend]
-    groups:
-      # Патчи и минорные — одним PR, чтобы не тонуть в шуме.
-      minor-and-patch:
-        update-types: [minor, patch]
+  # ─── Раскомментировать вместе с backend/pyproject.toml (этап Э1) ───
+  # - package-ecosystem: pip
+  #   directory: /backend
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #   labels: [dependencies, backend]
+  #   groups:
+  #     minor-and-patch:
+  #       update-types: [minor, patch]
 
-  - package-ecosystem: pub
-    directory: /app
-    schedule:
-      interval: weekly
-      day: monday
-    labels: [dependencies, app]
-    groups:
-      minor-and-patch:
-        update-types: [minor, patch]
+  # ─── Раскомментировать вместе с backend/Dockerfile (этап Э1) ───
+  # - package-ecosystem: docker
+  #   directory: /backend
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #   labels: [dependencies, docker]
 
-  - package-ecosystem: pub
-    directory: /marketing
-    schedule:
-      interval: weekly
-      day: monday
-    labels: [dependencies, marketing]
-    groups:
-      minor-and-patch:
-        update-types: [minor, patch]
+  # ─── Раскомментировать вместе с app/pubspec.yaml (этап Э1) ───
+  # - package-ecosystem: pub
+  #   directory: /app
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #   labels: [dependencies, app]
+  #   groups:
+  #     minor-and-patch:
+  #       update-types: [minor, patch]
 
-  - package-ecosystem: docker
-    directory: /backend
-    schedule:
-      interval: weekly
-      day: monday
-    labels: [dependencies, docker]
+  # ─── Раскомментировать вместе с marketing/pubspec.yaml (этап Э11) ───
+  # - package-ecosystem: pub
+  #   directory: /marketing
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #   labels: [dependencies, marketing]
+  #   groups:
+  #     minor-and-patch:
+  #       update-types: [minor, patch]

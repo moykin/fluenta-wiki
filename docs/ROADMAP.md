@@ -25,6 +25,7 @@ git init, монорепо, дизайн-хэндофф в репо, докум�
 - `backend/` — FastAPI-скелет, `/healthz`, Postgres + pgvector, Alembic.
 - `infra/` — docker-compose (Caddy + api + postgres), провижн сервера (non-root sudo, SSH по ключу, UFW, fail2ban), DNS `fluenta.wiki` → сервер, TLS.
 - CI: линт + тесты, генерация Dart-клиента из OpenAPI.
+- ⚠️ Вместе с созданием каждой части **раскомментировать соответствующий блок в `.github/dependabot.yml`** — они выключены, пока манифестов нет, иначе Dependabot падает и шлёт уведомления.
 
 ## Э2 — Спайки двух главных рисков
 
