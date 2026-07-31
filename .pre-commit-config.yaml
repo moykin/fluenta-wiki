@@ -21,13 +21,15 @@ repos:
         exclude: ^infra/docker-compose\.yml$
       - id: check-json
       - id: check-toml
+      # Тексты лицензий не трогаем: это чужие документы, их содержимое
+      # должно оставаться ровно таким, как его опубликовал автор шрифта.
       - id: end-of-file-fixer
-        exclude: ^design/
+        exclude: ^(design/|app/assets/fonts/OFL-)
       - id: trailing-whitespace
-        exclude: ^design/
+        exclude: ^(design/|app/assets/fonts/OFL-)
       - id: mixed-line-ending
         args: ["--fix=lf"]
-        exclude: ^design/
+        exclude: ^(design/|app/assets/fonts/OFL-)
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.1
