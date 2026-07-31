@@ -10,7 +10,7 @@
 | iOS + iPadOS | Flutter | решено |
 | Android | Flutter | решено |
 | macOS | Flutter (нативный desktop-таргет) | решено |
-| Лендинг, тарифы, SEO-куст, «О проекте» | статика (Astro) — **см. «Открытый вопрос 1»** | требует подтверждения |
+| Лендинг, тарифы, SEO-куст, «О проекте» | Jaspr (Dart, SSG + partial hydration) — **см. «Открытый вопрос 1»** | требует подтверждения |
 | Backend / API / голосовой релей | Python + FastAPI | решено |
 | БД | PostgreSQL 16 + pgvector | решено |
 
@@ -93,8 +93,21 @@ Docker Compose на одном сервере (см. `INFRA.local.md` — он g
 
 ## Открытые вопросы
 
-**1. Чем делать маркетинг и SEO-куст.**
-У проекта серьёзный SEO-куст (`SEO Pillar`, `Texts`, `Texts B1`, `Grammar`, `Video`, `Career`) плюс лендинг, тарифы и «О проекте» — это основной канал привлечения. Flutter Web рисует контент в canvas: поисковый робот видит пустую страницу, вес рантайма ~2 МБ, LCP страдает. **Рекомендация: маркетинг и SEO — отдельная статика (Astro), приложение — Flutter.** Макеты этих страниц уже написаны как HTML/CSS, поэтому перенос в Astro дешевле, чем переписывание их же на Flutter. Обе поверхности живут на одном домене: `fluenta.wiki/*` — статика, `fluenta.wiki/app/*` — Flutter.
+**1. Чем делать маркетинг и SEO-куст. → Рекомендация: Jaspr (Dart)**
+
+У проекта серьёзный SEO-куст (`SEO Pillar`, `Texts`, `Texts B1`, `Grammar`, `Video`, `Career`) плюс лендинг, тарифы и «О проекте» — это основной канал привлечения.
+
+*Почему не Flutter Web.* С версии 3.29 HTML-рендерер удалён, остались только `canvaskit` и `skwasm` — весь текст рисуется в `<canvas>`, в DOM нет ни заголовков, ни абзацев. Документация Flutter формулирует это прямо: «Flutter web prioritizes performance, fidelity, and consistency. This means application output doesn't align with what search engines need to properly index» и «At this time, Flutter is not suitable for static websites with text-rich flow-based content». Официальная рекомендация той же страницы — либо Jaspr, либо отделить маркетинг в SEO-оптимизированный HTML.
+
+*Почему Jaspr, а не Astro.* Jaspr — веб-фреймворк **на Dart**: рендерит настоящий HTML/CSS, умеет SSG, SSR и partial hydration (страница статична, JS подключается только к интерактивным островкам). Язык остаётся один на весь проект — общие модели, токены и валидация с приложением, второй экосистемы не появляется. Команда Flutter перевела на Jaspr `flutter.dev`, `dart.dev` и `docs.flutter.dev`; Google инвестирует в проект напрямую.
+
+*Бонус для лендинга.* Пакет `jaspr_flutter_embed` позволяет встроить настоящий Flutter-виджет в статическую страницу. Живое демо читалки на лендинге можно собрать из того же кода, что и в приложении, не жертвуя индексируемостью самой страницы.
+
+*Риск.* Jaspr пока pre-1.0 (`jaspr ^0.23.x`) — API может меняться. Смягчается тем, что на нём работают продовые сайты Flutter и Google в него вкладывается.
+
+Раскладка на домене: `fluenta.wiki/*` — Jaspr (маркетинг и SEO), `fluenta.wiki/app/*` — Flutter (приложение).
+
+Источники: [docs.flutter.dev — Web FAQ](https://docs.flutter.dev/platform-integration/web/faq) · [Flutter Blog — We rebuilt Flutter's websites with Dart and Jaspr](https://flutter.dev/blog/we-rebuilt-flutters-websites-with-dart-and-jaspr) · [docs.jaspr.site](https://docs.jaspr.site/)
 
 **2. Платежи в мобильных сторах.**
 Apple и Google требуют использовать их встроенные покупки для цифрового контента — комиссия 15–30%. Тарифы (Pro 150 мин/мес, пакеты +60 / +180 мин) на iOS/Android должны быть оформлены как IAP, а в вебе — через внешнего провайдера (Stripe/Paddle). Учёт минут при этом остаётся единым на сервере. Решить до реализации paywall.
