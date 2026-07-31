@@ -1,0 +1,84 @@
+[project]
+name = "fluenta-api"
+version = "0.1.0"
+description = "Fluenta API: чтение с разбором, голосовой тьютор, повторения"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "pydantic>=2.10",
+    "pydantic-settings>=2.7",
+    "sqlalchemy[asyncio]>=2.0",
+    "asyncpg>=0.30",
+    "alembic>=1.14",
+    "pgvector>=0.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9",
+    "mypy>=1.14",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.25",
+    "pytest-cov>=6.0",
+    "httpx>=0.28",
+    "pip-audit>=2.7",
+]
+
+# ─────────────────────────── Формат и линт ───────────────────────────
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # сортировка импортов
+    "N",        # именование
+    "UP",       # современный синтаксис
+    "B",        # частые баги
+    "S",        # безопасность (bandit)
+    "ASYNC",    # ошибки в async-коде
+    "RUF",
+]
+ignore = [
+    "S101",     # assert — нормален в тестах
+    # Комментарии и докстринги в проекте на русском, поэтому проверки на
+    # «подозрительные» юникод-символы срабатывают на каждой второй строке.
+    # На строковых литералах (RUF001) проверка остаётся: там подмена
+    # кириллической буквы латинской действительно может быть ошибкой.
+    "RUF002",   # кириллица в докстрингах
+    "RUF003",   # кириллица в комментариях
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]  # тестовые пароли-заглушки
+
+# ───────────────────────────── Типы ─────────────────────────────
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+plugins = ["pydantic.mypy"]
+exclude = ["migrations/"]
+
+[[tool.mypy.overrides]]
+module = ["pgvector.*"]
+ignore_missing_imports = true
+
+# ───────────────────────────── Тесты ─────────────────────────────
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Корень проекта в путях импорта: тесты обращаются к пакету `app`
+# напрямую, без установки его в окружение.
+pythonpath = ["."]
+asyncio_mode = "auto"
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/__main__.py"]

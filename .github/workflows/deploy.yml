@@ -29,6 +29,7 @@ jobs:
     outputs:
       tag: ${{ steps.meta.outputs.tag }}
       skipped: ${{ steps.check.outputs.exists == 'false' }}
+      can_deploy: ${{ steps.access.outputs.ready }}
     steps:
       - uses: actions/checkout@v7
 
@@ -37,6 +38,20 @@ jobs:
         run: |
           if [ -f backend/Dockerfile ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
           else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Backend ещё не создан — деплой пропускается."; fi
+
+      - name: Настроен ли доступ к серверу
+        id: access
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          # Пока секреты деплоя не заведены, образ собирается и проверяется,
+          # но выкатка пропускается — иначе каждый push давал бы красный прогон.
+          if [ -n "$SSH_HOST" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Секреты деплоя не заданы — выкатка пропускается, собран только образ."
+          fi
 
       - uses: docker/setup-buildx-action@v4
         if: steps.check.outputs.exists == 'true'
@@ -80,7 +95,7 @@ jobs:
   deploy:
     name: Выкатить на ${{ github.event_name == 'workflow_dispatch' && inputs.environment || 'dev' }}
     needs: build
-    if: needs.build.outputs.skipped != 'true'
+    if: needs.build.outputs.skipped != 'true' && needs.build.outputs.can_deploy == 'true'
     runs-on: ubuntu-latest
     # Прод-окружение защищено правилом ручного подтверждения в настройках
     # репозитория: выкатка в прод не происходит без явного нажатия.

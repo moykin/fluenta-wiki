@@ -17,35 +17,32 @@ updates:
       actions:
         patterns: ["*"]
 
-  # ─── Раскомментировать вместе с backend/pyproject.toml (этап Э1) ───
-  # - package-ecosystem: pip
-  #   directory: /backend
-  #   schedule:
-  #     interval: weekly
-  #     day: monday
-  #   labels: [dependencies, backend]
-  #   groups:
-  #     minor-and-patch:
-  #       update-types: [minor, patch]
+  - package-ecosystem: pip
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies, backend]
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
 
-  # ─── Раскомментировать вместе с backend/Dockerfile (этап Э1) ───
-  # - package-ecosystem: docker
-  #   directory: /backend
-  #   schedule:
-  #     interval: weekly
-  #     day: monday
-  #   labels: [dependencies, docker]
+  - package-ecosystem: docker
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies, docker]
 
-  # ─── Раскомментировать вместе с app/pubspec.yaml (этап Э1) ───
-  # - package-ecosystem: pub
-  #   directory: /app
-  #   schedule:
-  #     interval: weekly
-  #     day: monday
-  #   labels: [dependencies, app]
-  #   groups:
-  #     minor-and-patch:
-  #       update-types: [minor, patch]
+  - package-ecosystem: pub
+    directory: /app
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies, app]
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
 
   # ─── Раскомментировать вместе с marketing/pubspec.yaml (этап Э11) ───
   # - package-ecosystem: pub

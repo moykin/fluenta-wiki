@@ -47,8 +47,22 @@ jobs:
           dart pub get
           dart run jaspr_cli:jaspr build
 
+      - name: Настроен ли Cloudflare
+        id: cf
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          # Пока токен не заведён, сборка проверяется, а публикация
+          # пропускается — иначе каждый PR давал бы красный прогон.
+          if [ -n "$TOKEN" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::CLOUDFLARE_API_TOKEN не задан — публикация пропускается, сборка проверена."
+          fi
+
       - name: Публикация
-        if: steps.check.outputs.exists == 'true'
+        if: steps.check.outputs.exists == 'true' && steps.cf.outputs.ready == 'true'
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -84,8 +98,22 @@ jobs:
           flutter pub get
           flutter build web --release
 
+      - name: Настроен ли Cloudflare
+        id: cf
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          # Пока токен не заведён, сборка проверяется, а публикация
+          # пропускается — иначе каждый PR давал бы красный прогон.
+          if [ -n "$TOKEN" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::CLOUDFLARE_API_TOKEN не задан — публикация пропускается, сборка проверена."
+          fi
+
       - name: Публикация
-        if: steps.check.outputs.exists == 'true'
+        if: steps.check.outputs.exists == 'true' && steps.cf.outputs.ready == 'true'
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
