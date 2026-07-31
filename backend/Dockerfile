@@ -1,7 +1,7 @@
 # Многоступенчатая сборка: в финальном образе нет ни компилятора,
 # ни менеджера пакетов — меньше поверхность атаки и меньше вес.
 
-FROM python:3.13-slim AS builder
+FROM python:3.14-slim AS builder
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
@@ -17,7 +17,7 @@ COPY app ./app
 RUN uv sync --frozen --no-dev 2>/dev/null || uv sync --no-dev
 
 
-FROM python:3.13-slim
+FROM python:3.14-slim
 
 # Приложение работает не от root: если контейнер скомпрометируют,
 # у процесса не должно быть прав что-то менять в системе.
