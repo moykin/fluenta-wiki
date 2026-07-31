@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+input::placeholder{color:#9CA3AF}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes growbar{from{transform:scaleY(.05)}to{transform:scaleY(1)}}
+.v2card{transition:box-shadow .16s,transform .16s,border-color .16s}
+.v2card:hover{box-shadow:0 12px 30px rgba(26,26,26,.10);transform:translateY(-3px);border-color:#C7D2FE}
+.v2card:hover .v2title{color:#4F46E5}
+.v2card:hover .v2cover-in{transform:scale(1.05)}
+.v2rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:thin}
+.v2rail>*{scroll-snap-align:start;flex:0 0 clamp(250px,26vw,308px)}
+.v2step{transition:background .15s,border-color .15s}
+.v2step:hover{border-color:#C7D2FE;background:#fff}
+@media (max-width:520px){.v2hero{grid-template-columns:1fr !important}.v2herocover{height:150px !important}}
+</style>
+</helmet>
+<div data-screen-label="Library v2" style="min-height:100vh">
+<dc-import name="FluentaLumen" pose="idle" message="Начните с текста, где знакомо 94% и больше — читается легко, но всё же учит." action-label="Показать такие →" action-href="Fluenta Library v2.dc.html" size="92" hint-size="0px,0px" style="position:fixed;left:0;top:0;width:0;height:0"></dc-import>
+<dc-import name="FluentaShell2" active="library" title="Библиотека" due="14" hint-size="100%,0px"></dc-import>
+
+<div class="fl-page" style="max-width:1240px;margin:0 auto;padding:92px clamp(16px,4vw,40px) 64px;animation:fadein .25s ease-out">
+
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(27px,3.6vw,35px);font-weight:700;letter-spacing:-.015em;margin:0">Добрый день, Анна</h1>
+      <div style="font-size:13.5px;color:#6B7280;margin-top:6px">Суббота, 18 июля · уровень B2 · английский → русский</div>
+      <div style="font-size:12.5px;color:#9CA3AF;margin-top:4px">Цель — превратить то, что вы читаете, в то, что вы можете сказать</div>
+    </div>
+    <a href="Fluenta Profile.dc.html" style="margin-left:auto;display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid #E5E7EB;border-radius:999px;padding:7px 8px 7px 14px;font-size:13px;font-weight:500;color:#374151" style-hover="border-color:#C7D2FE;color:#4338CA">
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:#10B981"></span>7 дней подряд</span>
+      <span style="width:28px;height:28px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600">А</span>
+    </a>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(144px,1fr));gap:8px;align-items:stretch;margin-bottom:30px">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+      <a href="{{ s.href }}" class="v2step" style="display:flex;align-items:center;gap:10px;background:{{ s.bg }};border:1px solid {{ s.bd }};border-radius:12px;padding:11px 13px;text-decoration:none;min-width:0">
+        <span style="width:26px;height:26px;border-radius:8px;background:{{ s.dotBg }};color:{{ s.dotCl }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">{{ s.n }}</span>
+        <span style="min-width:0">
+          <span style="display:block;font-size:13px;font-weight:600;color:{{ s.cl }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.label }}</span>
+          <span style="display:block;font-size:11px;color:#9CA3AF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.hint }}</span>
+        </span>
+      </a>
+    </sc-for>
+  </div>
+
+  <div class="v2hero" style="display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:18px;margin-bottom:40px">
+    <div class="v2card" style="background:#fff;border:1px solid #E5E7EB;border-radius:18px;overflow:hidden;display:flex;flex-direction:column">
+      <div class="v2herocover" style="position:relative;height:190px;background:#EEF2FF;overflow:hidden">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="lib2-hero-cover" placeholder="Обложка текста · 3:1" shape="rect" hint-size="100%,190px"></x-import>
+        <div style="position:absolute;left:0;right:0;bottom:0;top:40%;background:linear-gradient(to top,rgba(20,18,40,.78),rgba(20,18,40,0));pointer-events:none"></div>
+        <div style="position:absolute;left:18px;bottom:14px;right:18px;pointer-events:none">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:2px 8px;border-radius:6px;backdrop-filter:blur(4px)">Продолжаем</span>
+            <span style="font-size:11.5px;color:rgba(255,255,255,.85)">MacBook · вчера, 21:40</span>
+          </div>
+          <div style="font-family:'Source Serif 4',serif;font-size:clamp(22px,2.6vw,27px);font-weight:700;color:#fff;line-height:1.2;letter-spacing:-.01em;text-shadow:0 1px 12px rgba(0,0,0,.35)">The Quiet Power of Habits</div>
+        </div>
+      </div>
+      <div style="padding:16px 20px 18px;display:flex;flex-direction:column;gap:12px;flex:1">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12.5px;color:#6B7280">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.04em;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;padding:2px 7px;border-radius:6px">B1</span>
+          <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:#14B8A6"></span>Психология · 4 мин</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;border:1px solid #D1FAE5;color:#047857;font-weight:600;padding:2px 9px;border-radius:999px"><span style="width:6px;height:6px;border-radius:50%;background:#10B981"></span>Знакомо 96%</span>
+        </div>
+        <div style="font-family:'Source Serif 4',serif;font-style:italic;font-size:14.5px;line-height:1.6;color:#4B5563;border-left:2px solid #E0E7FF;padding-left:12px">“…the brain builds a shortcut. Researchers call this loop a cue, a routine, and a reward.”</div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:auto">
+          <span style="display:inline-flex;align-items:center;gap:10px;flex:1 1 180px;min-width:150px">
+            <span style="flex:1;height:6px;border-radius:3px;background:#ECECE8;overflow:hidden"><span style="display:block;width:68%;height:100%;background:linear-gradient(90deg,#6366F1,#4F46E5);border-radius:3px"></span></span>
+            <span style="font-size:12.5px;color:#374151;font-weight:500;white-space:nowrap">68% · ~2 мин</span>
+          </span>
+          <a href="Fluenta Reader.dc.html" class="fl-tap" style="display:inline-flex;align-items:center;gap:8px;background:#4F46E5;color:#fff;border-radius:11px;padding:11px 18px;font-size:14px;font-weight:600" style-hover="background:#4338CA;color:#fff" style-active="background:#3730A3">Продолжить
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #E5E7EB;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:8px">
+        <div style="font-size:15px;font-weight:600">Ваша неделя</div>
+        <a href="Fluenta Progress.dc.html" style="margin-left:auto;font-size:12px;font-weight:500">Прогресс →</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <div style="position:relative;width:84px;height:84px;flex:none">
+          <svg width="84" height="84" viewBox="0 0 42 42" style="transform:rotate(-90deg)">
+            <circle cx="21" cy="21" r="17" fill="none" stroke="#F0F0EE" stroke-width="5"></circle>
+            <circle cx="21" cy="21" r="17" fill="none" stroke="#4F46E5" stroke-width="5" stroke-linecap="round" stroke-dasharray="{{ ringDash }}"></circle>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:700;line-height:1">{{ weekPct }}</span>
+            <span style="font-size:9.5px;color:#9CA3AF;letter-spacing:.04em">от цели</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;min-width:0">
+          <div style="font-size:12.5px;color:#374151"><b style="font-weight:600">4 из 5</b> текстов на неделе</div>
+          <div style="font-size:12.5px;color:#374151"><b style="font-weight:600">31 мин</b> разговора с тьютором</div>
+          <div style="font-size:12.5px;color:#374151"><b style="font-weight:600">+38</b> новых слов</div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:flex-end;gap:6px;height:52px">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="7">
+            <span title="{{ b.title }}" style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:5px">
+              <span style="display:block;height:{{ b.h }};background:{{ b.color }};border-radius:4px 4px 2px 2px;transform-origin:bottom;animation:growbar .5s ease-out {{ b.delay }} both"></span>
+            </span>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:6px">
+          <sc-for list="{{ bars }}" as="b" hint-placeholder-count="7">
+            <span style="flex:1;text-align:center;font-size:10px;color:#9CA3AF">{{ b.day }}</span>
+          </sc-for>
+        </div>
+      </div>
+      <a href="Fluenta Review.dc.html" style="display:flex;align-items:center;gap:9px;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:11px;padding:10px 12px;text-decoration:none;margin-top:auto" style-hover="background:#E0E7FF">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        <span style="font-size:13px;font-weight:600;color:#4338CA">14 карточек ждут повторения</span>
+        <span style="margin-left:auto;color:#4F46E5;font-size:15px">→</span>
+      </a>
+    </div>
+  </div>
+
+  <sc-if value="{{ digestOn }}" hint-placeholder-val="{{ true }}">
+  <div style="margin-bottom:44px">
+    <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:6px">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:700;letter-spacing:-.01em;margin:0">Дайджест недели</h2>
+      <span style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#B45309;background:#FFFBEB;border:1px solid #FDE68A;padding:3px 8px;border-radius:6px">Новое · 18 июля</span>
+      <a href="#" onClick="{{ noop }}" style="margin-left:auto;font-size:12.5px;font-weight:500">Все выпуски →</a>
+    </div>
+    <div style="font-size:13px;color:#6B7280;margin-bottom:16px">Пять новостей недели, пересобранных под ваш уровень B2 — каждая на 3–4 минуты чтения</div>
+    <div class="v2rail">
+      <sc-for list="{{ digest }}" as="d" hint-placeholder-count="4">
+        <div onClick="{{ d.open }}" class="v2card" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column">
+          <div style="position:relative;height:118px;overflow:hidden;background:{{ d.coverBg }}">
+            <div class="v2cover-in" style="position:absolute;inset:0;background:{{ d.pattern }};transition:transform .3s ease-out"></div>
+            <div style="position:absolute;left:14px;top:12px;font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.28);padding:2px 8px;border-radius:5px">{{ d.tag }}</div>
+            <div style="position:absolute;right:12px;bottom:10px;font-family:'Source Serif 4',serif;font-size:44px;font-weight:700;color:rgba(255,255,255,.34);line-height:.8;user-select:none">{{ d.glyph }}</div>
+          </div>
+          <div style="padding:13px 15px 15px;display:flex;flex-direction:column;gap:8px;flex:1">
+            <div class="v2title" style="font-family:'Source Serif 4',serif;font-size:16.5px;font-weight:600;line-height:1.28;text-wrap:pretty;transition:color .15s">{{ d.title }}</div>
+            <div style="font-size:12.5px;line-height:1.5;color:#6B7280;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ d.teaser }}</div>
+            <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#6B7280;margin-top:auto;padding-top:4px">
+              <span style="font-size:10.5px;font-weight:600;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;padding:1.5px 6px;border-radius:5px">{{ d.lvl }}</span>
+              <span>{{ d.min }} мин</span>
+              <span style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;color:#047857;font-weight:600"><span style="width:5px;height:5px;border-radius:50%;background:#10B981"></span>{{ d.known }}%</span>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;background:#fff;border:1px solid #E0E7FF;border-radius:18px;padding:18px 22px;margin-bottom:34px">
+    <div style="flex:1 1 320px;min-width:0">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#4338CA">Свои тексты</span>
+        <span style="font-size:10.5px;font-weight:600;letter-spacing:.05em;color:#fff;background:#4F46E5;border-radius:5px;padding:2px 7px">{{ ownBadge }}</span>
+      </div>
+      <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.25">Хотите проработать свой материал — принесите его сюда</div>
+      <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:7px;max-width:560px">Ссылка на статью, PDF с курса или глава книги. Посчитаем уровень и знакомые слова, объясним трудные места, обсудим голосом. {{ ownLimit }}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:13px">
+        <sc-for list="{{ ownWays }}" as="w" hint-placeholder-count="3">
+          <span style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#374151;background:#FAFAF8;border:1px solid #EFEFEB;border-radius:999px;padding:5px 12px">{{ w.label }}</span>
+        </sc-for>
+      </div>
+    </div>
+    <div style="flex:0 1 260px;display:flex;flex-direction:column;gap:9px">
+      <button onClick="{{ addOwn }}" class="fl-tap" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;background:#4F46E5;color:#fff;border-radius:11px;padding:12px 18px;font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer" style-hover="background:#4338CA" style-active="background:#3730A3">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Добавить свой текст
+      </button>
+      <div style="display:flex;align-items:center;gap:9px;background:#FAFAF8;border:1px solid #F0F0EE;border-radius:10px;padding:9px 12px">
+        <span style="min-width:0;flex:1">
+          <span style="display:block;font-size:12px;font-weight:600;color:#374151">{{ ownCount }}</span>
+          <span style="display:block;font-size:11px;color:#9CA3AF;margin-top:1px">видны только вам</span>
+        </span>
+        <a href="Fluenta Profile.dc.html" style="font-size:11.5px;font-weight:600;flex:none">все →</a>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+    <h2 style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:700;letter-spacing:-.01em;margin:0">Каталог текстов</h2>
+    <span style="font-size:13px;color:#9CA3AF">{{ countLabel }}</span>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:22px">
+    <div style="position:relative;flex:1 1 240px;max-width:400px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);pointer-events:none"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input value="{{ q }}" onChange="{{ qChange }}" placeholder="Поиск по каталогу…" aria-label="Поиск" style="width:100%;box-sizing:border-box;border:1px solid #E5E7EB;border-radius:11px;padding:10px 14px 10px 34px;font-family:Inter,sans-serif;font-size:13px;background:#fff;color:#1A1A1A">
+    </div>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:7px">
+      <sc-for list="{{ chips }}" as="ch" hint-placeholder-count="6">
+        <button onClick="{{ ch.on }}" class="fl-tap" style="display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;border:1px solid {{ ch.bd }};background:{{ ch.bg }};color:{{ ch.cl }};font-weight:{{ ch.fw }};font-family:Inter,sans-serif;font-size:13px;cursor:pointer" style-hover="border-color:#C7D2FE">
+          <sc-if value="{{ ch.hasDot }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ ch.dot }}"></span></sc-if>{{ ch.label }}
+        </button>
+      </sc-for>
+    </div>
+  </div>
+
+  <sc-if value="{{ allReadOn }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:stretch;background:#fff;border:1px solid #D1FAE5;border-radius:18px;padding:20px 22px;margin-bottom:22px">
+      <div style="flex:1 1 300px;min-width:0">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:9px">
+          <span style="width:26px;height:26px;border-radius:50%;background:#ECFDF5;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </span>
+          <span style="font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#047857">Каталог пройден</span>
+        </div>
+        <div style="font-family:'Source Serif 4',serif;font-size:clamp(21px,2.4vw,26px);font-weight:700;letter-spacing:-.01em;line-height:1.2">Вы прочитали всё, что мы подобрали на этой неделе</div>
+        <div style="font-size:13.5px;line-height:1.6;color:#6B7280;margin-top:8px;max-width:520px">10 текстов, 3 разговора, 38 новых слов. Новые материалы приходят каждый день в 07:00, дайджест недели — в субботу.</div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:15px">
+          <a href="Fluenta Review.dc.html" style="display:inline-flex;align-items:center;gap:7px;background:#4F46E5;color:#fff;border-radius:10px;padding:10px 16px;font-size:13.5px;font-weight:600" style-hover="background:#4338CA;color:#fff">Повторить 14 карточек</a>
+          <button onClick="{{ noop }}" style="border:1px solid #E5E7EB;background:#fff;border-radius:10px;padding:10px 15px;font-family:Inter,sans-serif;font-size:13.5px;font-weight:600;color:#374151;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4338CA">Добавить свой текст</button>
+        </div>
+      </div>
+      <div style="flex:1 1 250px;max-width:330px;display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ nextUp }}" as="n" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:11px;background:#FAFAF8;border:1px solid #F0F0EE;border-radius:11px;padding:11px 13px">
+            <span style="width:8px;height:8px;border-radius:50%;background:{{ n.dot }};flex:none"></span>
+            <span style="min-width:0;flex:1">
+              <span style="display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ n.label }}</span>
+              <span style="display:block;font-size:11px;color:#9CA3AF;margin-top:1px">{{ n.hint }}</span>
+            </span>
+            <span style="font-size:11.5px;font-weight:600;color:#4F46E5;flex:none">{{ n.when }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(266px,1fr));gap:18px">
+    <sc-for list="{{ cards }}" as="c" hint-placeholder-count="8">
+      <div onClick="{{ c.open }}" class="v2card" style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column">
+        <div style="position:relative;height:132px;overflow:hidden;background:{{ c.coverBg }}">
+          <div class="v2cover-in" style="position:absolute;inset:0;background:{{ c.pattern }};transition:transform .3s ease-out"></div>
+          <div style="position:absolute;right:10px;bottom:-6px;font-family:'Source Serif 4',serif;font-size:64px;font-weight:700;color:rgba(255,255,255,.3);line-height:.8;user-select:none">{{ c.glyph }}</div>
+          <div style="position:absolute;left:12px;top:11px;display:flex;gap:6px">
+            <span style="font-size:10.5px;font-weight:600;letter-spacing:.06em;color:#fff;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.3);padding:2px 7px;border-radius:5px">{{ c.lvl }}</span>
+            <sc-if value="{{ c.imported }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:10.5px;font-weight:600;color:#fff;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.3);padding:2px 7px;border-radius:5px">импорт</span>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:500;color:rgba(255,255,255,.9);letter-spacing:.04em">{{ c.meta }}</div>
+          <sc-if value="{{ c.hasProg }}" hint-placeholder-val="{{ false }}">
+            <span style="position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.28)"><span style="display:block;height:100%;width:{{ c.progPct }};background:#fff"></span></span>
+          </sc-if>
+        </div>
+        <div style="padding:14px 16px 15px;display:flex;flex-direction:column;gap:9px;flex:1">
+          <div class="v2title" style="font-family:'Source Serif 4',serif;font-size:17.5px;font-weight:600;line-height:1.27;text-wrap:pretty;transition:color .15s">{{ c.title }}</div>
+          <div style="font-size:12.5px;line-height:1.5;color:#6B7280;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ c.teaser }}</div>
+          <div style="flex:1"></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span title="{{ c.knownTitle }}" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;background:{{ c.cBg }};border:1px solid {{ c.cBd }};color:{{ c.cCl }};padding:3px 9px;border-radius:999px;white-space:nowrap"><span style="width:6px;height:6px;border-radius:50%;background:{{ c.cDot }}"></span>{{ c.cTxt }}</span>
+            <span style="margin-left:auto;display:flex;align-items:center;gap:4px" title="{{ c.cycleTitle }}">
+              <sc-for list="{{ c.dots }}" as="d" hint-placeholder-count="3">
+                <span style="width:16px;height:4px;border-radius:2px;background:{{ d.color }}"></span>
+              </sc-for>
+            </span>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="text-align:center;font-size:12.5px;color:#9CA3AF;margin-top:56px">fluenta.wiki · каталог → текст → разговор → трекинг → профиль</div>
+</div>
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:80;background:#1A1A1A;color:#fff;font-size:13px;font-weight:500;padding:9px 15px;border-radius:10px;box-shadow:0 8px 20px rgba(26,26,26,.2)">{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showDigest&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Разделы&quot;},&quot;catalogState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;обычный&quot;,&quot;всё прочитано&quot;],&quot;default&quot;:&quot;обычный&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Состояние&quot;},&quot;plan&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Free&quot;,&quot;Pro&quot;],&quot;default&quot;:&quot;Pro&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Состояние&quot;}}">
+class Component extends DCLogic {
+  state = { q: '', topic: 'all', toast: null };
+  componentWillUnmount() { clearTimeout(this._tt); }
+  toastMsg(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: null }), 1700); }
+  palette(t) {
+    const P = {
+      'Рассказы': ['#4F46E5', '#818CF8'], 'Наука': ['#0D9488', '#5EEAD4'], 'Бизнес': ['#B45309', '#FCD34D'],
+      'Классика': ['#BE185D', '#FDA4AF'], 'Новости': ['#475569', '#94A3B8'], 'Психология': ['#0F766E', '#7DD3FC']
+    };
+    return P[t] || P['Новости'];
+  }
+  cover(topic, i) {
+    const p = this.palette(topic);
+    const pats = [
+      'repeating-linear-gradient(135deg,rgba(255,255,255,.12) 0 2px,transparent 2px 11px)',
+      'radial-gradient(circle at 78% 24%,rgba(255,255,255,.26),transparent 58%)',
+      'repeating-linear-gradient(0deg,rgba(255,255,255,.1) 0 1px,transparent 1px 9px)',
+      'radial-gradient(circle at 18% 82%,rgba(255,255,255,.22),transparent 55%),repeating-linear-gradient(45deg,rgba(0,0,0,.06) 0 3px,transparent 3px 12px)'
+    ];
+    return { coverBg: 'linear-gradient(135deg,' + p[0] + ' 0%,' + p[1] + ' 100%)', pattern: pats[i % pats.length] };
+  }
+  comfort(k) {
+    const t = k >= 94 ? ['Комфортно', '#ECFDF5', '#D1FAE5', '#047857', '#10B981']
+      : k >= 86 ? ['В самый раз', '#EEF2FF', '#E0E7FF', '#4338CA', '#6366F1']
+      : ['С вызовом', '#FFFBEB', '#FDE68A', '#92400E', '#F59E0B'];
+    return { label: t[0], bg: t[1], bd: t[2], cl: t[3], dot: t[4] };
+  }
+  texts() { return [
+    { id: 1, title: 'The Open Window', topic: 'Рассказы', lvl: 'B1', min: 7, known: 95, teaser: 'Гостя в загородном доме встречает племянница хозяйки — и открытое окно, у которого своя история.', read: 1, retold: 1, cards: 1 },
+    { id: 2, title: 'A Telephone Call', topic: 'Рассказы', lvl: 'B2', min: 8, known: 94, teaser: '«Он обещал позвонить в пять». Дороти Паркер — монолог ожидания у молчащего телефона.', prog: 52, read: 0.5 },
+    { id: 3, title: 'Why We Sleep in Two Halves', topic: 'Наука', lvl: 'B2', min: 9, known: 91, teaser: 'До электричества люди спали дважды за ночь. Историки нашли следы «первого» и «второго» сна.' },
+    { id: 4, title: 'The Last Blockbuster on Earth', topic: 'Новости', lvl: 'B1', min: 6, known: 96, teaser: 'Репортаж из Орегона, где всё ещё работает последний видеопрокат планеты.' },
+    { id: 5, title: 'How IKEA Names Its Furniture', topic: 'Бизнес', lvl: 'B1', min: 5, known: 97, teaser: 'Диваны носят имена шведских городов, а ковры — датских: логика каталога из 12 000 позиций.' },
+    { id: 6, title: 'What Octopuses Know', topic: 'Наука', lvl: 'C1', min: 12, known: 87, teaser: 'Две трети нейронов осьминога находятся в щупальцах. Что это говорит о природе разума?' },
+    { id: 7, title: 'The Machine Stops', topic: 'Классика', lvl: 'C1', min: 24, known: 84, teaser: 'Антиутопия 1909 года, предсказавшая видеозвонки, ленты новостей и жизнь, не выходя из комнаты.' },
+    { id: 8, title: 'Atomic Habits — Chapter 1', topic: 'Наука', lvl: 'B2', min: 14, known: 92, imported: true, teaser: 'Из вашего PDF · Почему улучшение на 1% в день меняет больше, чем громкие цели.', prog: 35, read: 0.35 }
+  ]; }
+  digestData() { return [
+    { id: 'd1', tag: 'Технологии', glyph: 'AI', title: 'Europe Rewrites Its AI Rulebook', lvl: 'B2', min: 4, known: 93, teaser: 'Что меняется для компаний и пользователей с новым сводом правил — и почему спорят юристы.', topic: 'Новости' },
+    { id: 'd2', tag: 'Наука', glyph: 'Hº', title: 'A Quieter Way to Cool Cities', lvl: 'B1', min: 3, known: 95, teaser: 'Белая краска, деревья и вода: три недорогих способа снизить температуру улиц на 4 °C.', topic: 'Наука' },
+    { id: 'd3', tag: 'Экономика', glyph: '¥', title: 'Why Coffee Got Expensive', lvl: 'B2', min: 4, known: 92, teaser: 'От урожая в Бразилии до вашей чашки: цепочка, в которой цена растёт четыре раза.', topic: 'Бизнес' },
+    { id: 'd4', tag: 'Культура', glyph: '№', title: 'The Return of the Paper Diary', lvl: 'B1', min: 3, known: 96, teaser: 'Продажи бумажных планеров выросли впервые за десять лет. Аргументы обеих сторон.', topic: 'Классика' },
+    { id: 'd5', tag: 'Спорт', glyph: 'Ø', title: 'The Sub-Two-Hour Question', lvl: 'B2', min: 4, known: 94, teaser: 'Марафон без рекордных кроссовок: где заканчивается техника и начинается человек.', topic: 'Рассказы' }
+  ]; }
+  renderVals() {
+    const st = this.state;
+    const q = (st.q || '').trim().toLowerCase();
+    const all = this.texts();
+    const allRead = (this.props.catalogState ?? 'обычный') === 'всё прочитано';
+    const pro = (this.props.plan ?? 'Pro') === 'Pro';
+    const vis = all
+      .filter(c => (st.topic === 'all' || c.topic === st.topic) && (!q || (c.title + ' ' + c.teaser + ' ' + c.topic).toLowerCase().indexOf(q) > -1))
+      .map((c, i) => {
+        const cf = this.comfort(c.known);
+        const cv = this.cover(c.topic, i);
+        if (allRead) { c = Object.assign({}, c, { read: 1, retold: 1, cards: 1, prog: 0 }); }
+        const stage = [c.read ? '#4F46E5' : '#E5E7EB', c.retold ? '#10B981' : '#E5E7EB', c.cards ? '#F59E0B' : '#E5E7EB'];
+        return {
+          key: c.id, title: c.title, teaser: c.teaser, lvl: c.lvl, meta: c.topic + ' · ' + c.min + ' мин',
+          imported: !!c.imported, coverBg: cv.coverBg, pattern: cv.pattern, glyph: c.title.trim().charAt(0),
+          cBg: cf.bg, cBd: cf.bd, cCl: cf.cl, cDot: cf.dot, cTxt: cf.label + ' · ' + c.known + '%',
+          knownTitle: 'Вы уже знаете ' + c.known + '% слов этого текста',
+          hasProg: !!c.prog, progPct: (c.prog || 0) + '%',
+          dots: stage.map((color, k) => ({ key: k, color })),
+          cycleTitle: 'Цикл: чтение → разговор → карточки',
+          open: () => this.toastMsg('Открываю «' + c.title + '»…')
+        };
+      });
+    const chipTopics = [['all', 'Все', null], ['Новости', 'Новости', '#475569'], ['Наука', 'Наука', '#0D9488'], ['Рассказы', 'Рассказы', '#4F46E5'], ['Бизнес', 'Бизнес', '#B45309'], ['Классика', 'Классика', '#BE185D']];
+    const chips = chipTopics.map(p => ({
+      key: p[0], label: p[1], hasDot: !!p[2], dot: p[2] || '#9CA3AF',
+      bg: st.topic === p[0] ? '#EEF2FF' : '#fff', bd: st.topic === p[0] ? '#C7D2FE' : '#E5E7EB',
+      cl: st.topic === p[0] ? '#4338CA' : '#4B5563', fw: st.topic === p[0] ? 600 : 400,
+      on: () => this.setState({ topic: p[0] })
+    }));
+    const steps = [
+      ['1', 'Каталог', 'выбрать текст', 'Fluenta Library v2.dc.html', true],
+      ['2', 'Текст', 'читать со словарём', 'Fluenta Reader.dc.html', false],
+      ['3', 'Разговор', 'обсудить голосом', 'Fluenta Tutor.dc.html', false],
+      ['4', 'Трекинг', 'слова и прогресс', 'Fluenta Progress.dc.html', false],
+      ['5', 'Профиль', 'цели и подписка', 'Fluenta Profile.dc.html', false]
+    ].map(s => ({
+      key: s[0], n: s[0], label: s[2] ? s[1] : s[1], hint: s[2], href: s[3],
+      bg: s[4] ? '#EEF2FF' : '#fff', bd: s[4] ? '#C7D2FE' : '#EAEAE6',
+      dotBg: s[4] ? '#4F46E5' : '#F0F0EE', dotCl: s[4] ? '#fff' : '#9CA3AF',
+      cl: s[4] ? '#4338CA' : '#374151'
+    }));
+    const week = [
+      ['пн', 22, true], ['вт', 14, true], ['ср', 0, false], ['чт', 31, true],
+      ['пт', 18, true], ['сб', 26, true], ['вс', 6, false]
+    ];
+    const max = 34;
+    const bars = week.map((w, i) => ({
+      key: w[0], day: w[0], h: Math.max(4, Math.round((w[1] / max) * 100)) + '%',
+      color: w[1] === 0 ? '#EFEFEB' : (w[2] ? '#4F46E5' : '#C7D2FE'),
+      delay: (i * 0.05).toFixed(2) + 's',
+      title: w[0] + ': ' + (w[1] ? w[1] + ' мин занятий' : 'пропуск')
+    }));
+    const goal = 80, done = 68;
+    return {
+      cards: vis, chips, steps, bars,
+      countLabel: 'Показано ' + vis.length + ' из ' + all.length,
+      q: st.q, qChange: e => this.setState({ q: e.target.value }),
+      digestOn: this.props.showDigest ?? true,
+      digest: this.digestData().map((d, i) => {
+        const cv = this.cover(d.topic, i + 1);
+        return Object.assign({ key: d.id }, d, cv, { open: () => this.toastMsg('Открываю «' + d.title + '»…') });
+      }),
+      ownBadge: pro ? 'Pro · без лимита' : 'Free · 1 в месяц',
+      ownLimit: pro ? 'На Pro — сколько угодно текстов и книг целиком.' : 'На Free — один свой текст в месяц; на Pro ограничений нет.',
+      ownCount: pro ? '4 своих текста · 2 за июль' : '1 из 1 в этом месяце',
+      ownWays: [['Ссылка на статью'], ['PDF · EPUB · DOCX'], ['Вставить текст']].map(w => ({ key: w[0], label: w[0] })),
+      addOwn: () => this.toastMsg(pro ? 'Открываю импорт — ссылка, файл или текст' : 'На Free остался 0 импортов — оформите Pro'),
+      allReadOn: allRead,
+      nextUp: [
+        ['Новые тексты', 'подбор по вашему уровню', 'утром', '#4F46E5'],
+        ['Дайджест недели', '5 новостей под B2', 'в субботу', '#0D9488'],
+        ['Уровень C1', 'откроется после 6 текстов C1', 'скоро', '#B45309']
+      ].map(n => ({ key: n[0], label: n[0], hint: n[1], when: n[2], dot: n[3] })),
+      ringDash: Math.round((done / goal) * 106.8) + ' 106.8',
+      weekPct: Math.round((done / goal) * 100) + '%',
+      toastOn: !!st.toast, toast: st.toast || '',
+      noop: e => { if (e && e.preventDefault) e.preventDefault(); this.toastMsg('В прототипе этот раздел ещё не открывается'); }
+    };
+  }
+}
+</script>
+</body>
+</html>

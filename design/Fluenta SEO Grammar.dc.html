@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #FAFAF8; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+  ::selection { background: rgba(79,70,229,.14); }
+  html { scroll-behavior: smooth; }
+  button:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid #4F46E5; outline-offset: 2px; }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  #stickyCta { display: none; }
+  @media (max-width: 639px) { #stickyCta { display: flex !important; } #navLinks { display: none !important; } }
+  @media (max-width: 720px) { #grTblWrap { overflow-x: auto; } }
+</style>
+</helmet>
+<div data-screen-label="SEO Grammar — Past Perfect vs Past Simple" style="min-height:100vh;background:#FAFAF8;">
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8;user-select:none;">
+    <div style="display:flex;align-items:center;gap:16px;height:58px;padding:0 clamp(16px,4vw,40px);max-width:1220px;margin:0 auto;">
+      <a href="Fluenta Landing.dc.html" style="display:flex;align-items:center;gap:9px;flex:none;color:#1A1A1A;text-decoration:none;">
+        <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif;">f</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:-.01em;">fluenta.wiki</span>
+      </a>
+      <div id="navLinks" style="display:flex;align-items:center;gap:10px;font-size:13px;color:#6B7280;">
+        <span>Я говорю</span>
+        <span style="position:relative;display:inline-flex;">
+          <select value="{{ nativeSel }}" onChange="{{ onNative }}" aria-label="Родной язык" style="appearance:none;-webkit-appearance:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1A1A1A;background:#fff;border:1px solid #E5E7EB;border-radius:9px;padding:7px 26px 7px 11px;cursor:pointer;">
+            <sc-for list="{{ nativeLangs }}" as="l" hint-placeholder-count="3"><option value="{{ l.code }}">{{ l.name }}</option></sc-for>
+          </select>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+        <span>· учу</span>
+        <span style="position:relative;display:inline-flex;">
+          <select value="{{ targetSel }}" onChange="{{ onTarget }}" aria-label="Изучаемый язык" style="appearance:none;-webkit-appearance:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#4F46E5;background:#fff;border:1px solid #C7D2FE;border-radius:9px;padding:7px 26px 7px 11px;cursor:pointer;">
+            <sc-for list="{{ targetLangs }}" as="l" hint-placeholder-count="3"><option value="{{ l.code }}">{{ l.name }}</option></sc-for>
+          </select>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+        <span style="font-size:11.5px;color:#9CA3AF;background:#F3F4F6;border-radius:999px;padding:3px 9px;white-space:nowrap;">35 языков</span>
+      </div>
+      <div style="flex:1;"></div>
+      <a href="Fluenta Library v2.dc.html" style="font-size:13.5px;font-weight:500;color:#6B7280;flex:none;" style-hover="color:#1A1A1A;">Войти</a>
+      <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:flex;align-items:center;justify-content:center;height:34px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:13px;font-weight:500;flex:none;" style-hover="background:#4338CA;color:#fff;">Начать бесплатно</a>
+    </div>
+  </div>
+  <sc-if value="{{ pairNote }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:60;background:#1A1A1A;color:#fff;font-size:12.5px;border-radius:10px;padding:9px 14px;box-shadow:0 10px 26px rgba(26,26,26,.24);animation:rise .2s ease;max-width:90vw;">{{ pairNote }}</div>
+  </sc-if>
+
+  <main style="max-width:900px;margin:0 auto;padding:88px clamp(16px,4vw,40px) 0;box-sizing:border-box;">
+    <nav aria-label="Хлебные крошки" style="max-width:68ch;margin:0 auto;">
+      <ol style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;list-style:none;margin:0;padding:0;font-size:12.5px;color:#9CA3AF;">
+        <li><a href="Fluenta Landing.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Главная</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Английский</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="#related" style="color:#6B7280;" style-hover="color:#1A1A1A;">Грамматика</a></li>
+        <li aria-hidden="true">›</li>
+        <li style="color:#9CA3AF;">Past Perfect vs Past Simple</li>
+      </ol>
+    </nav>
+
+    <article style="max-width:68ch;margin:0 auto;">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(30px,4.6vw,44px);font-weight:700;letter-spacing:-.015em;line-height:1.2;margin:18px 0 0;text-wrap:pretty;">Past Perfect и Past Simple: в&nbsp;чём разница</h1>
+      <p style="font-family:'Source Serif 4',serif;font-size:18px;line-height:1.7;color:#374151;margin:18px 0 0;text-wrap:pretty;">Короткий ответ: Past Simple — это точка на линии прошлого («она открыла окно»), а Past Perfect — «прошлое до прошлого»: действие, которое завершилось <em>до</em> другого прошедшего события («улица уже затихла — до того, как она открыла»). Ниже — правило, живые примеры с разбором и мини-тест.</p>
+      <div style="display:flex;align-items:center;gap:11px;margin-top:22px;padding-top:18px;border-top:1px solid #ECECE8;flex-wrap:wrap;">
+        <span style="width:34px;height:34px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none;">ЕМ</span>
+        <div style="font-size:12.5px;line-height:1.45;">
+          <div style="font-weight:600;">Fluenta — независимый проект <a href="Fluenta About.dc.html">Евгения Мойкина</a></div>
+          <div style="color:#9CA3AF;">Обновлено 20 июля 2026 · 5 мин чтения</div>
+        </div>
+      </div>
+
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:44px 0 0;">Правило в трёх абзацах</h2>
+      <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;"><strong>Past Simple</strong> (V2: opened, went, saw) рассказывает события в том порядке, в котором они случились: она пришла, открыла окно, села. Каждый глагол — следующая точка на линии времени. Маркеры: yesterday, ago, in 2019, last week — любая конкретная точка прошлого.</p>
+      <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;"><strong>Past Perfect</strong> (had + V3: had opened, had gone) делает шаг назад с этой линии: событие произошло <em>раньше</em> той точки, о которой вы говорите. По-русски мы выражаем это словом «уже» или просто порядком слов: «поезд ушёл (до того)». Маркеры: by the time, already, before, after, when … had.</p>
+      <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;">Главный секрет: Past Perfect нужен <em>только</em> когда порядок событий не очевиден и его надо восстановить. Если события названы по порядку (First… then…, after + действие), носители спокойно обходятся Past Simple. Не «украшайте» им каждое прошедшее — это самая частая ошибка.</p>
+
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:20px 22px;margin-top:24px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;">Линия времени</div>
+        <div style="position:relative;height:64px;margin-top:22px;">
+          <div style="position:absolute;left:2%;right:2%;top:50%;height:2px;background:#E5E7EB;"></div>
+          <div style="position:absolute;left:18%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#FBBF24;border:3px solid #fff;box-shadow:0 0 0 1px #FBBF24;"></div>
+          <div lang="en" style="position:absolute;left:18%;top:0;transform:translateX(-50%);font-family:'Source Serif 4',serif;font-size:13px;font-weight:600;white-space:nowrap;">had gone quiet</div>
+          <div style="position:absolute;left:18%;bottom:0;transform:translateX(-50%);font-size:11px;color:#9CA3AF;white-space:nowrap;">раньше · Past Perfect</div>
+          <div style="position:absolute;left:52%;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#4F46E5;border:3px solid #fff;box-shadow:0 0 0 1px #4F46E5;"></div>
+          <div lang="en" style="position:absolute;left:52%;top:0;transform:translateX(-50%);font-family:'Source Serif 4',serif;font-size:13px;font-weight:600;white-space:nowrap;">opened the window</div>
+          <div style="position:absolute;left:52%;bottom:0;transform:translateX(-50%);font-size:11px;color:#9CA3AF;white-space:nowrap;">точка рассказа · Past Simple</div>
+          <div style="position:absolute;left:88%;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #9CA3AF;"></div>
+          <div style="position:absolute;left:88%;bottom:0;transform:translateX(-50%);font-size:11px;color:#9CA3AF;">сейчас</div>
+        </div>
+      </div>
+
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:48px 0 0;">Сравнительная таблица</h2>
+      <div id="grTblWrap" style="margin-top:16px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px;">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;padding:13px 18px;border-bottom:1px solid #E5E7EB;"> </th>
+              <th scope="col" style="text-align:left;font-weight:600;padding:13px 12px;border-bottom:1px solid #E5E7EB;color:#4F46E5;">Past Simple</th>
+              <th scope="col" style="text-align:left;font-weight:600;padding:13px 18px 13px 12px;border-bottom:1px solid #E5E7EB;color:#B45309;">Past Perfect</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ grRows }}" as="r" hint-placeholder-count="4">
+              <tr>
+                <th scope="row" style="text-align:left;font-weight:500;color:#6B7280;padding:13px 18px;border-bottom:1px solid #F3F4F6;vertical-align:top;">{{ r.f }}</th>
+                <td style="padding:13px 12px;border-bottom:1px solid #F3F4F6;color:#374151;line-height:1.55;vertical-align:top;">{{ r.a }}</td>
+                <td style="padding:13px 18px 13px 12px;border-bottom:1px solid #F3F4F6;color:#374151;line-height:1.55;vertical-align:top;">{{ r.b }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:48px 0 0;">Пять примеров с разбором</h2>
+      <p style="font-size:14px;line-height:1.65;color:#6B7280;margin:10px 0 0;">Наведите на слово — перевод. Нажмите на выделенный глагол — объяснение, почему выбрана эта форма. Так это работает в читалке Fluenta с любым текстом.</p>
+    </article>
+
+    <section style="max-width:68ch;margin:18px auto 0;" aria-label="Примеры">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ examples }}" as="ex" hint-placeholder-count="5">
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 20px;">
+            <div style="display:flex;align-items:baseline;gap:10px;">
+              <span style="font-family:'Source Serif 4',serif;font-size:13px;color:#D1D5DB;flex:none;">{{ ex.n }}</span>
+              <p lang="en" data-demo-words="1" style="font-family:'Source Serif 4',serif;font-size:clamp(17px,2.4vw,20px);line-height:1.75;margin:0;">
+                <sc-for list="{{ ex.tokens }}" as="tok" hint-placeholder-count="8"><span onMouseEnter="{{ tok.enter }}" onMouseLeave="{{ tok.leave }}" onClick="{{ tok.click }}" style="{{ tok.style }}">{{ tok.w }}</span> </sc-for>
+              </p>
+            </div>
+            <div style="font-size:13px;color:#9CA3AF;margin-top:6px;padding-left:24px;">{{ ex.ru }}</div>
+            <sc-if value="{{ ex.whyOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:12px;margin-left:24px;background:#FAFAF8;border:1px solid #ECECE8;border-radius:12px;padding:14px 16px;animation:rise .2s ease;">
+                <div style="display:flex;align-items:center;gap:7px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><circle cx="12" cy="12" r="10"></circle><path d="M12 17h.01"></path></svg>
+                  <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#B45309;">Почему {{ ex.formName }}</span>
+                </div>
+                <div style="font-size:13px;line-height:1.65;color:#374151;margin-top:8px;">{{ ex.why }}</div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:68ch;margin:56px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:0;">Частые ошибки</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px;">
+        <sc-for list="{{ mistakes }}" as="m" hint-placeholder-count="4">
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 20px;">
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div lang="en" style="display:flex;align-items:baseline;gap:9px;font-family:'Source Serif 4',serif;font-size:16px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" style="flex:none;align-self:center;"><path d="M18 6L6 18"></path><path d="M6 6l12 12"></path></svg>
+                <span style="color:#9CA3AF;text-decoration:line-through;text-decoration-color:rgba(220,38,38,.5);">{{ m.wrong }}</span>
+              </div>
+              <div lang="en" style="display:flex;align-items:baseline;gap:9px;font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;align-self:center;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>{{ m.right }}</span>
+              </div>
+            </div>
+            <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:8px;">{{ m.note }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-label="Видео" style="max-width:68ch;margin:56px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:0;">То же правило — в коротком видео</h2>
+      <p style="font-size:14px;line-height:1.65;color:#6B7280;margin:10px 0 0;">Past Perfect и Past Simple за 90 секунд, голосом и на примерах.</p>
+      <div style="position:relative;margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;background:#1A1A1A;aspect-ratio:16/9;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <sc-if value="{{ ytIdle }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ ytHasId }}" hint-placeholder-val="{{ false }}">
+            <div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ ytThumb }});background-size:cover;background-position:center;opacity:.85;"></div>
+          </sc-if>
+          <button onClick="{{ playYt }}" aria-label="Смотреть видео" style="position:absolute;inset:0;width:100%;height:100%;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">
+            <span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.35);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#4F46E5" style="margin-left:3px;"><path d="M8 5v14l11-7z"></path></svg>
+            </span>
+            <sc-if value="{{ ytNoId }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(255,255,255,.75);">Место под видео — укажите YouTube ID в настройках</span>
+            </sc-if>
+          </button>
+        </sc-if>
+        <sc-if value="{{ ytPlaying }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ ytSrc }}" title="Past Perfect vs Past Simple за 90 секунд" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen="{{ true }}"></iframe>
+        </sc-if>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#9CA3AF;margin-top:8px;">
+        <span>Видео: правило «прошлое до прошлого» на живых примерах</span>
+        <span style="flex:1;"></span>
+        <sc-if value="{{ ytHasId }}" hint-placeholder-val="{{ false }}"><a href="{{ ytWatch }}" target="_blank" rel="noopener" style="font-weight:500;">Смотреть на YouTube →</a></sc-if>
+      </div>
+    </section>
+
+    <section style="max-width:68ch;margin:56px auto 0;" aria-label="Мини-тест">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:0;">Проверьте себя</h2>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px;">
+        <sc-for list="{{ quiz }}" as="q" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 20px;">
+            <div style="display:flex;align-items:baseline;gap:10px;">
+              <span style="font-family:'Source Serif 4',serif;font-size:13px;color:#D1D5DB;flex:none;">{{ q.n }}</span>
+              <div lang="en" style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.65;">{{ q.text }}</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-left:24px;">
+              <button onClick="{{ q.pickA }}" class="fl-tap" style="{{ q.aStyle }}">{{ q.a }}</button>
+              <button onClick="{{ q.pickB }}" class="fl-tap" style="{{ q.bStyle }}">{{ q.b }}</button>
+            </div>
+            <sc-if value="{{ q.showFb }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:8px;align-items:flex-start;margin-top:12px;margin-left:24px;font-size:13px;line-height:1.6;animation:rise .2s ease;color:{{ q.fbColor }};">
+                <span style="font-weight:600;flex:none;">{{ q.fbMark }}</span>
+                <span style="color:#374151;">{{ q.fb }}</span>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ quizDone }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;font-size:13.5px;color:#6B7280;background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:14px;animation:rise .25s ease;">Результат: <strong style="color:#1A1A1A;">{{ quizScore }} из 3</strong> · {{ quizVerdict }} <button onClick="{{ quizReset }}" style="background:none;border:none;padding:0;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#4F46E5;cursor:pointer;text-decoration:underline;">Пройти ещё раз</button></div>
+        </sc-if>
+      </div>
+    </section>
+
+    <aside style="max-width:68ch;margin:48px auto 0;background:#4F46E5;border-radius:16px;padding:26px clamp(18px,3.5vw,30px);display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+      <div style="flex:1 1 300px;min-width:240px;">
+        <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);border-radius:9px;padding:6px 11px;margin-bottom:10px;text-wrap:pretty;">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+        <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#fff;">Эта грамматика — в каждом тексте, который вы читаете</div>
+        <div style="font-size:13.5px;color:#C7D2FE;margin-top:6px;">В читалке Fluenta нажмите на любой глагол — и увидите такой же разбор «почему эта форма» прямо в контексте.</div>
+      </div>
+      <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 20px;background:#fff;color:#4F46E5;border-radius:10px;font-size:13.5px;font-weight:600;" style-hover="background:#EEF2FF;color:#4338CA;">Читать с разбором</a>
+    </aside>
+
+    <section id="related" style="max-width:820px;margin:64px auto 0;scroll-margin-top:80px;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;">Читать дальше</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px;">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="4">
+          <a href="{{ r.href }}" title="{{ r.title }}" style="display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 18px;color:#1A1A1A;" style-hover="border-color:#C7D2FE;box-shadow:0 4px 14px rgba(26,26,26,.06);color:#1A1A1A;">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">{{ r.kind }}</span>
+            <span style="font-family:'Source Serif 4',serif;font-size:15.5px;font-weight:600;line-height:1.4;">{{ r.t }}</span>
+            <span style="font-size:12px;color:#9CA3AF;">{{ r.slug }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <sc-if value="{{ showPassport }}" hint-placeholder-val="{{ true }}">
+      <details style="max-width:820px;margin:64px auto 0;border:1px dashed #D1D5DB;border-radius:12px;padding:0 18px;background:#FDFDFC;">
+        <summary style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:13px 0;font-size:12.5px;font-weight:600;color:#6B7280;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          SEO-паспорт страницы: meta, slug, hreflang, JSON-LD
+          <span style="flex:1;"></span>
+          <span style="font-size:11px;color:#9CA3AF;font-weight:500;">для разработчика</span>
+        </summary>
+        <div style="padding:4px 0 18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:12.5px;line-height:1.7;color:#374151;">
+            <div><span style="color:#9CA3AF;">slug:</span> <code style="background:#F3F4F6;border-radius:5px;padding:1px 6px;">/ru/en/grammar/past-perfect-vs-past-simple</code></div>
+            <div style="margin-top:6px;"><span style="color:#9CA3AF;">title:</span> Past Perfect и Past Simple: разница, правило, примеры с разбором — Fluenta</div>
+            <div><span style="color:#9CA3AF;">description:</span> Чем Past Perfect отличается от Past Simple: правило в трёх абзацах, сравнительная таблица, 5 примеров с объяснением формы и мини-тест. Просто и без зубрёжки.</div>
+            <div style="margin-top:6px;"><span style="color:#9CA3AF;">hreflang:</span> объяснение на 35 родных языках: <code style="background:#F3F4F6;border-radius:5px;padding:1px 6px;">/{native}/en/grammar/past-perfect-vs-past-simple</code></div>
+          </div>
+          <div style="position:relative;">
+            <pre style="margin:0;background:#1A1A1A;color:#D1D5DB;border-radius:10px;padding:14px 16px;font-size:11px;line-height:1.55;overflow-x:auto;max-height:260px;">{{ jsonLd }}</pre>
+            <button onClick="{{ copyJsonLd }}" style="position:absolute;top:10px;right:10px;background:#374151;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;" style-hover="background:#4B5563;">{{ copyLabel }}</button>
+          </div>
+        </div>
+      </details>
+    </sc-if>
+
+    <section aria-label="От автора" style="max-width:68ch;margin:56px auto 0;">
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:24px clamp(18px,3.5vw,28px);">
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+          <div style="width:64px;height:64px;flex:none;border-radius:50%;overflow:hidden;border:1px solid #E5E7EB;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-portrait" shape="circle" fit="cover" placeholder="Фото" hint-size="64px,64px"></x-import>
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;">От автора</div>
+            <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;margin-top:5px;">Евгений Мойкин</div>
+            <div style="font-size:12.5px;color:#9CA3AF;margin-top:2px;">Создатель fluenta.wiki · независимый проект, один человек</div>
+          </div>
+        </div>
+        <p style="font-family:'Source Serif 4',serif;font-size:16px;line-height:1.75;color:#374151;margin:16px 0 0;text-wrap:pretty;">Этот разбор вырос из моих собственных ошибок: «ошибку украшения» — Past Perfect в каждой фразе — я делал годами. Правило закрепилось, только когда я стал замечать его в живых текстах, а не в таблицах. Поэтому во Fluenta грамматика объясняется прямо в том, что вы читаете.</p>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-family:'Source Serif 4',serif;font-style:italic;font-size:15px;color:#6B7280;">— Евгений</span>
+          <span style="flex:1;"></span>
+          <a href="Fluenta About.dc.html" style="font-size:13px;font-weight:500;">Читать историю проекта →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer style="max-width:820px;margin:56px auto 0;padding:28px 0 110px;border-top:1px solid #ECECE8;">
+      <div style="display:flex;gap:32px;flex-wrap:wrap;">
+        <div style="flex:1 1 220px;min-width:200px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;font-family:'Source Serif 4',serif;">f</span>
+            <span style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;">fluenta.wiki</span>
+          </div>
+          <div style="font-size:12.5px;color:#9CA3AF;line-height:1.6;margin-top:8px;">Учите язык через чтение и пересказ. Независимый проект Евгения Мойкина.</div>
+        </div>
+        <div style="flex:0 1 auto;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">Продукт</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px;font-size:13px;">
+            <a href="Fluenta Library v2.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Библиотека</a>
+            <a href="Fluenta Tutor.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Голосовой тьютор</a>
+            <a href="Fluenta Pricing.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Тарифы</a>
+          </div>
+        </div>
+        <div style="flex:0 1 auto;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">Учить английский</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px;font-size:13px;">
+            <a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Как выучить английский по текстам</a>
+            <a href="Fluenta SEO Texts B1.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Тексты с переводом (B1)</a>
+            <a href="Fluenta SEO Career.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Английский для собеседования</a>
+            <a href="Fluenta About.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">О проекте</a>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:24px;">© 2026 Fluenta · fluenta.wiki</div>
+    </footer>
+  </main>
+
+  <sc-if value="{{ tipShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:{{ tipX }}px;top:{{ tipY }}px;transform:translate(-50%,-108%);z-index:90;background:#1A1A1A;color:#fff;border-radius:10px;padding:8px 12px;max-width:250px;box-shadow:0 10px 26px rgba(26,26,26,.24);pointer-events:none;">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:'Source Serif 4',serif;font-size:14.5px;font-weight:600;">{{ tipWord }}</span><span style="font-size:13px;color:#D1D5DB;">{{ tipT }}</span></div>
+      <sc-if value="{{ tipNote }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px;color:#9CA3AF;margin-top:4px;line-height:1.45;">{{ tipNote }}</div></sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ stickyShow }}" hint-placeholder-val="{{ false }}">
+    <div id="stickyCta" style="position:fixed;left:10px;right:10px;bottom:10px;z-index:70;display:none;align-items:center;gap:10px;background:rgba(255,255,255,.98);border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 10px 30px rgba(26,26,26,.14);padding:10px 12px;animation:rise .3s ease;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12.5px;font-weight:600;">Грамматика — в любом тексте</div>
+        <div style="font-size:11px;color:#9CA3AF;">Читайте с разбором бесплатно</div>
+      </div>
+      <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:36px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:12.5px;font-weight:500;flex:none;" style-hover="background:#4338CA;color:#fff;">Начать</a>
+      <button onClick="{{ dismissSticky }}" aria-label="Скрыть" style="width:28px;height:28px;border:none;background:none;color:#9CA3AF;font-size:16px;cursor:pointer;flex:none;padding:0;" style-hover="color:#1A1A1A;">×</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;youtubeId&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Видео&quot;},
+  &quot;stickyCta&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Поведение&quot;},
+  &quot;showSeoPassport&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Поведение&quot;}
+}">
+class Component extends DCLogic {
+  state = { native: 'ru', target: 'en', tip: null, pairNote: null, ytPlaying: false, whyOpen: -1, quiz: {}, copied: false, stickyDismissed: false, scrolled: false };
+
+  NATIVE = [
+    { code: 'ru', name: 'Русский' }, { code: 'uk', name: 'Українська' }, { code: 'en', name: 'English' }, { code: 'es', name: 'Español' }, { code: 'de', name: 'Deutsch' },
+    { code: 'fr', name: 'Français' }, { code: 'it', name: 'Italiano' }, { code: 'pt', name: 'Português' }, { code: 'pl', name: 'Polski' }, { code: 'tr', name: 'Türkçe' }
+  ];
+  TARGET = [
+    { code: 'en', name: 'Английский' }, { code: 'es', name: 'Испанский' }, { code: 'de', name: 'Немецкий' }, { code: 'fr', name: 'Французский' }, { code: 'it', name: 'Итальянский' },
+    { code: 'pt', name: 'Португальский' }, { code: 'nl', name: 'Нидерландский' }, { code: 'ja', name: 'Японский' }, { code: 'ko', name: 'Корейский' }, { code: 'zh', name: 'Китайский' }
+  ];
+
+  EXAMPLES = [
+    { ru: 'Когда мы приехали, фильм уже начался (мы опоздали).', formName: 'Past Perfect', 
+      why: 'Фильм начался ДО нашего приезда — порядок событий обратный порядку слов, поэтому had started. Уберите had — и смысл изменится (см. следующий пример).',
+      tokens: [
+        { w: 'When', t: 'когда' }, { w: 'we', t: 'мы' }, { w: 'arrived,', t: 'приехали', n: 'arrive + -d, Past Simple' },
+        { w: 'the', t: 'артикль' }, { w: 'film', t: 'фильм' }, { w: 'had', t: '(вспом.)', hl: 1 }, { w: 'started.', t: 'начался (до этого)', hl: 1, n: 'start + -ed, III форма' }
+      ] },
+    { ru: 'Когда мы приехали, фильм начался (в этот момент — мы успели).', formName: 'Past Simple',
+      why: 'Та же фраза без had — и события идут по порядку: приехали → начался. Past Simple рассказывает хронологию; сравните с примером 1 — вся разница в одном had.',
+      tokens: [
+        { w: 'When', t: 'когда' }, { w: 'we', t: 'мы' }, { w: 'arrived,', t: 'приехали' },
+        { w: 'the', t: 'артикль' }, { w: 'film', t: 'фильм' }, { w: 'started.', t: 'начался (тогда же)', hl: 2, n: 'start + -ed, Past Simple' }
+      ] },
+    { ru: 'До того лета она никогда не видела моря.', formName: 'Past Perfect',
+      why: 'never + опыт ДО точки в прошлом (that summer). Это Present Perfect (has never seen), сдвинутый на шаг в прошлое: точкой отсчёта стало не «сейчас», а «то лето».',
+      tokens: [
+        { w: 'She', t: 'она' }, { w: 'had', t: '(вспом.)', hl: 1 }, { w: 'never', t: 'никогда' }, { w: 'seen', t: 'не видела', hl: 1, n: 'see → seen, III форма' },
+        { w: 'the', t: 'артикль' }, { w: 'sea', t: 'море' }, { w: 'before', t: 'до' }, { w: 'that', t: 'того' }, { w: 'summer.', t: 'лета' }
+      ] },
+    { ru: 'Я потерял ключи, которые мне дал брат.', formName: 'Past Perfect',
+      why: 'Брат дал ключи РАНЬШЕ, чем я их потерял: had given восстанавливает порядок. Главное событие рассказа (lost) остаётся в Past Simple.',
+      tokens: [
+        { w: 'I', t: 'я' }, { w: 'lost', t: 'потерял', hl: 2, n: 'lose → lost, Past Simple' }, { w: 'the', t: 'артикль' }, { w: 'keys', t: 'ключи', n: 'key + -s' },
+        { w: 'that', t: 'которые' }, { w: 'my', t: 'мой' }, { w: 'brother', t: 'брат' }, { w: 'had', t: '(вспом.)', hl: 1 }, { w: 'given', t: 'дал (до этого)', hl: 1, n: 'give → given, III форма' }, { w: 'me.', t: 'мне' }
+      ] },
+    { ru: 'К моменту, когда приехала полиция, вор уже исчез.', formName: 'Past Perfect',
+      why: 'by the time — классический маркер Past Perfect: к некоторой точке прошлого действие уже завершилось. came — сама эта точка, Past Simple.',
+      tokens: [
+        { w: 'By', t: 'к', hl: 1 }, { w: 'the', t: '—', hl: 1 }, { w: 'time', t: 'моменту', hl: 1, n: 'by the time — маркер Past Perfect' },
+        { w: 'the', t: 'артикль' }, { w: 'police', t: 'полиция' }, { w: 'came,', t: 'приехала', n: 'come → came, Past Simple' },
+        { w: 'the', t: 'артикль' }, { w: 'thief', t: 'вор' }, { w: 'had', t: '(вспом.)', hl: 1 }, { w: 'disappeared.', t: 'исчез (до этого)', hl: 1, n: 'disappear + -ed, III форма' }
+      ] }
+  ];
+
+  QUIZ = [
+    { text: 'When Anna got to the station, the train ___ .', a: 'left', b: 'had left', correct: 'b',
+      fb: 'Поезд ушёл ДО того, как Анна пришла, — «прошлое до прошлого», поэтому had left. С left получилось бы, что поезд тронулся в момент её прихода.' },
+    { text: 'I ___ my homework yesterday evening.', a: 'did', b: 'had done', correct: 'a',
+      fb: 'Yesterday evening — конкретная точка прошлого, событие одно, сравнивать не с чем: обычный Past Simple. Past Perfect здесь — самая частая «ошибка украшения».' },
+    { text: 'She was sad because she ___ her phone.', a: 'lost', b: 'had lost', correct: 'b',
+      fb: 'Сначала потеряла телефон, ПОТОМ грустила: причина случилась раньше состояния — had lost. (В разговорной речи скажут и lost, но had lost точнее.)' }
+  ];
+
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this.state.tip) this.setState({ tip: null });
+      const sc = window.scrollY > 500;
+      if (sc !== this.state.scrolled) this.setState({ scrolled: sc });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onDocDown = (e) => { if (this.state.tip && !(e.target.closest && e.target.closest('[data-demo-words]'))) this.setState({ tip: null }); };
+    document.addEventListener('pointerdown', this._onDocDown, true);
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._onScroll); document.removeEventListener('pointerdown', this._onDocDown, true); clearTimeout(this._noteT); }
+
+  pairChange(kind, code) {
+    this.setState({ [kind]: code }, () => {
+      this.setState({ pairNote: 'Каждая пара — отдельный URL: /' + this.state.native + '/' + this.state.target + '/grammar/… (hreflang свяжет 35 версий)' });
+      clearTimeout(this._noteT);
+      this._noteT = setTimeout(() => this.setState({ pairNote: null }), 3200);
+    });
+  }
+
+  jsonLd() {
+    const vid = this.props.youtubeId || 'VIDEO_ID';
+    return JSON.stringify([
+      { '@context': 'https://schema.org', '@type': 'Article', headline: 'Past Perfect и Past Simple: в чём разница',
+        inLanguage: 'ru', dateModified: '2026-07-20',
+        author: { '@type': 'Person', name: 'Yevgeniy Moykin', url: 'https://fluenta.wiki/about' },
+        publisher: { '@type': 'Organization', name: 'Fluenta', url: 'https://fluenta.wiki' },
+        mainEntityOfPage: 'https://fluenta.wiki/ru/en/grammar/past-perfect-vs-past-simple' },
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://fluenta.wiki/ru' },
+        { '@type': 'ListItem', position: 2, name: 'Английский', item: 'https://fluenta.wiki/ru/en' },
+        { '@type': 'ListItem', position: 3, name: 'Грамматика', item: 'https://fluenta.wiki/ru/en/grammar' },
+        { '@type': 'ListItem', position: 4, name: 'Past Perfect vs Past Simple' } ] },
+      { '@context': 'https://schema.org', '@type': 'Quiz', about: { '@type': 'Thing', name: 'Past Perfect vs Past Simple' },
+        educationalLevel: 'B1', inLanguage: 'ru' },
+      { '@context': 'https://schema.org', '@type': 'VideoObject', name: 'Past Perfect vs Past Simple за 90 секунд',
+        description: 'Правило «прошлое до прошлого» на живых примерах, голосом.',
+        thumbnailUrl: 'https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg', uploadDate: '2026-07-20',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/' + vid, contentUrl: 'https://www.youtube.com/watch?v=' + vid }
+    ], null, 2);
+  }
+
+  renderVals() {
+    const baseStyle = 'cursor:pointer;border-bottom:1px dashed #C7CBD4;border-radius:3px;';
+    const hlPP = 'cursor:pointer;background:rgba(251,191,36,.35);border-radius:3px;padding:0 2px;';
+    const hlPS = 'cursor:pointer;background:rgba(79,70,229,.14);border-radius:3px;padding:0 2px;';
+    const tip = this.state.tip;
+    const yt = this.props.youtubeId ?? '';
+    const btnBase = 'font-family:\'Source Serif 4\',serif;font-size:15px;font-weight:600;border-radius:10px;padding:9px 16px;cursor:pointer;border:1px solid #E5E7EB;background:#fff;color:#1A1A1A;';
+    const answered = this.QUIZ.filter((q, i) => this.state.quiz[i]).length;
+    const score = this.QUIZ.reduce((n, q, i) => n + (this.state.quiz[i] === q.correct ? 1 : 0), 0);
+    return {
+      nativeLangs: this.NATIVE, targetLangs: this.TARGET,
+      ytHasId: !!yt, ytNoId: !yt, ytPlaying: !!yt && this.state.ytPlaying, ytIdle: !(!!yt && this.state.ytPlaying),
+      ytThumb: 'https://i.ytimg.com/vi/' + yt + '/maxresdefault.jpg',
+      ytSrc: 'https://www.youtube-nocookie.com/embed/' + yt + '?autoplay=1&rel=0',
+      ytWatch: 'https://www.youtube.com/watch?v=' + yt,
+      playYt: () => { if (yt) this.setState({ ytPlaying: true }); },
+      nativeSel: this.state.native, targetSel: this.state.target,
+      onNative: (e) => this.pairChange('native', e.target.value),
+      onTarget: (e) => this.pairChange('target', e.target.value),
+      pairNote: this.state.pairNote,
+      grRows: [
+        { f: 'Форма', a: 'V2: opened, went, saw', b: 'had + V3: had opened, had gone' },
+        { f: 'Смысл', a: 'Точка на линии прошлого; события по порядку', b: 'Действие завершилось ДО другого прошедшего события' },
+        { f: 'Маркеры', a: 'yesterday, ago, in 2019, last week', b: 'by the time, already, before, after, never … before' },
+        { f: 'Пример', a: 'The film started at 8. — Фильм начался в 8.', b: 'The film had started when we arrived. — Уже начался, когда мы приехали.' }
+      ],
+      examples: this.EXAMPLES.map((ex, i) => ({
+        n: String(i + 1).padStart(2, '0'), ru: ex.ru, formName: ex.formName, why: ex.why,
+        whyOpen: this.state.whyOpen === i,
+        tokens: ex.tokens.map(tok => ({
+          w: tok.w,
+          style: tok.hl === 1 ? hlPP : tok.hl === 2 ? hlPS : baseStyle,
+          enter: (e) => this.showTip(tok, e), leave: () => this.setState({ tip: null }),
+          click: tok.hl ? () => this.setState(s => ({ whyOpen: s.whyOpen === i ? -1 : i, tip: null })) : (e) => this.showTip(tok, e)
+        }))
+      })),
+      mistakes: [
+        { wrong: 'I had gone to the cinema yesterday.', right: 'I went to the cinema yesterday.', note: 'Past Perfect без второго события не нужен: yesterday — просто точка в прошлом. «Прошлое до прошлого» требует пары событий.' },
+        { wrong: 'After he had ate breakfast, he left.', right: 'After he had eaten breakfast, he left.', note: 'После had — только третья форма: eat → eaten. Форма ate — это Past Simple, она с had не сочетается.' },
+        { wrong: 'When I got home, the meeting started (имея в виду «уже шла»).', right: 'When I got home, the meeting had started.', note: 'Без had выходит, что встреча началась в момент вашего прихода. Если она началась раньше — нужен Past Perfect.' },
+        { wrong: 'She had opened the door, had entered and had sat down.', right: 'She opened the door, entered and sat down.', note: 'События по порядку — обычный Past Simple. Past Perfect в каждой фразе — «ошибка украшения», текст становится тяжёлым.' }
+      ],
+      quiz: this.QUIZ.map((q, i) => {
+        const picked = this.state.quiz[i];
+        const st = (key) => {
+          if (!picked) return btnBase;
+          if (key === q.correct) return btnBase + 'border-color:#10B981;background:rgba(16,185,129,.08);color:#065F46;';
+          if (picked === key) return btnBase + 'border-color:rgba(220,38,38,.45);background:rgba(220,38,38,.05);color:#991B1B;';
+          return btnBase + 'opacity:.55;';
+        };
+        return {
+          n: String(i + 1).padStart(2, '0'), text: q.text, a: q.a, b: q.b,
+          aStyle: st('a'), bStyle: st('b'),
+          pickA: () => { if (!this.state.quiz[i]) this.setState(s => ({ quiz: { ...s.quiz, [i]: 'a' } })); },
+          pickB: () => { if (!this.state.quiz[i]) this.setState(s => ({ quiz: { ...s.quiz, [i]: 'b' } })); },
+          showFb: !!picked,
+          fbMark: picked === q.correct ? 'Верно ✓' : 'Не совсем',
+          fbColor: picked === q.correct ? '#10B981' : '#B45309',
+          fb: q.fb
+        };
+      }),
+      quizDone: answered === this.QUIZ.length,
+      quizScore: score,
+      quizVerdict: score === 3 ? 'отлично, форма под контролем.' : score === 2 ? 'хорошо — гляньте разбор выше ещё раз.' : 'перечитайте правило — и попробуйте снова.',
+      quizReset: () => this.setState({ quiz: {} }),
+      related: [
+        { kind: 'Метод', t: 'Как выучить английский по текстам', slug: '/ru/en/kak-vyuchit-anglijskij-po-tekstam', href: 'Fluenta SEO Pillar.dc.html', title: 'Открыть' },
+        { kind: 'Тексты', t: 'Тексты на английском с переводом — B1', slug: '/ru/en/teksty-b1', href: 'Fluenta SEO Texts B1.dc.html', title: 'Открыть' },
+        { kind: 'Грамматика', t: 'Present Perfect и Past Simple: когда какое', slug: '/ru/en/grammar/present-perfect-vs-past-simple', href: '#', title: 'страница в работе' },
+        { kind: 'Грамматика', t: 'Неправильные глаголы: как учить без списков', slug: '/ru/en/grammar/irregular-verbs', href: '#', title: 'страница в работе' }
+      ],
+      jsonLd: this.jsonLd(),
+      copyJsonLd: () => {
+        navigator.clipboard.writeText(this.jsonLd()).then(() => {
+          this.setState({ copied: true });
+          setTimeout(() => this.setState({ copied: false }), 1600);
+        });
+      },
+      copyLabel: this.state.copied ? 'Скопировано ✓' : 'Копировать',
+      showPassport: this.props.showSeoPassport ?? true,
+      stickyShow: (this.props.stickyCta ?? true) && this.state.scrolled && !this.state.stickyDismissed,
+      dismissSticky: () => this.setState({ stickyDismissed: true }),
+      tipShow: !!tip, tipX: tip ? tip.x : 0, tipY: tip ? tip.y : 0,
+      tipWord: tip ? tip.w : '', tipT: tip ? tip.t : '', tipNote: tip ? tip.note : null
+    };
+  }
+
+  showTip(tok, e) {
+    const rct = e.currentTarget.getBoundingClientRect();
+    const note = tok.hl ? (tok.n ? tok.n + ' · нажмите — почему эта форма' : 'нажмите — почему эта форма') : (tok.n || null);
+    this.setState({ tip: { w: tok.w.replace(/[.,?!]$/, ''), t: tok.t, note, x: Math.round(rct.left + rct.width / 2), y: Math.round(rct.top) } });
+  }
+}
+</script>
+</body>
+</html>

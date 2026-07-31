@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<script src="fluenta-speak.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes crPulse{0%{transform:scale(1);opacity:.5}70%{transform:scale(1.5);opacity:0}100%{opacity:0}}
+</style>
+</helmet>
+<div data-screen-label="Career" style="min-height:100vh;font-family:'Inter',sans-serif;color:#1A1A1A">
+<dc-import name="FluentaShell2" active="career" title="Карьера" due="14" hint-size="100%,0px"></dc-import>
+
+<div class="fl-page" style="max-width:1240px;margin:0 auto;padding:92px clamp(16px,4vw,40px) 64px;animation:fadein .22s ease-out">
+
+  <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:22px">
+    <div style="flex:1 1 420px;min-width:280px">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(26px,3.4vw,33px);font-weight:700;letter-spacing:-.015em;margin:0">Карьера</h1>
+      <div style="font-size:13.5px;line-height:1.6;color:#6B7280;margin-top:7px;max-width:70ch">Профессиональный язык, самопрезентация и репетиция собеседования — на текстах вашей профессии.</div>
+      <div style="font-size:12.5px;color:#9CA3AF;margin-top:4px">Цель — превратить то, что вы читаете, в то, что вы можете сказать</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:10px 14px;min-width:172px">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF">Голос в этом месяце</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:5px;margin-top:5px">
+          <span style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:700;letter-spacing:-.01em">{{ minsLeft }}</span>
+          <span style="font-size:12.5px;color:#6B7280">из {{ minsTotal }} мин</span>
+        </div>
+        <div style="height:5px;border-radius:999px;background:#F0F0EE;margin-top:8px;overflow:hidden">
+          <div style="height:100%;border-radius:999px;background:{{ minsColor }};width:{{ minsPct }}"></div>
+        </div>
+        <a href="Fluenta Pricing.dc.html" style="display:inline-block;font-size:12px;font-weight:500;margin-top:8px">{{ minsCta }}</a>
+      </div>
+      <div style="display:inline-flex;background:#F0F0EE;border-radius:999px;padding:3px">
+        <button onClick="{{ setTracks }}" style="height:32px;padding:0 15px;border:none;border-radius:999px;background:{{ tabTracksBg }};color:{{ tabTracksCl }};box-shadow:{{ tabTracksSh }};font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer">Треки</button>
+        <button onClick="{{ setSprint }}" style="height:32px;padding:0 15px;border:none;border-radius:999px;background:{{ tabSprintBg }};color:{{ tabSprintCl }};box-shadow:{{ tabSprintSh }};font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer">Спринт к собеседованию</button>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ isSprint }}" hint-placeholder-val="{{ false }}">
+    <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:22px 24px;margin-bottom:22px">
+      <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div style="flex:1 1 320px;min-width:260px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">План подготовки</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:700;letter-spacing:-.01em;margin-top:6px">Собеседование через {{ days }} — успеваем</div>
+          <div style="font-size:13px;color:#6B7280;margin-top:5px">{{ sprintTrackName }} · шесть шагов, {{ sprintVoice }} мин голоса из вашего запаса</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button onClick="{{ dayMinus }}" title="Раньше" style="width:32px;height:32px;border:1px solid #E5E7EB;background:#fff;border-radius:9px;color:#6B7280;font-size:15px;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4F46E5">−</button>
+          <div style="font-size:12.5px;font-weight:600;color:#374151;min-width:74px;text-align:center">{{ dateLabel }}</div>
+          <button onClick="{{ dayPlus }}" title="Позже" style="width:32px;height:32px;border:1px solid #E5E7EB;background:#fff;border-radius:9px;color:#6B7280;font-size:15px;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4F46E5">+</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px;margin-top:18px">
+        <sc-for list="{{ sprint }}" as="st" hint-placeholder-count="6">
+          <button onClick="{{ st.open }}" style="text-align:left;border:1px solid {{ st.bd }};background:{{ st.bg }};border-radius:12px;padding:13px 14px;cursor:pointer;font-family:'Inter',sans-serif">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:{{ st.dayCl }}">{{ st.day }}</span>
+              <span style="font-size:11px;font-weight:600;color:{{ st.stCl }}">{{ st.status }}</span>
+            </div>
+            <div style="font-size:13.5px;font-weight:600;color:#1A1A1A;margin-top:7px">{{ st.name }}</div>
+            <div style="font-size:12px;color:#6B7280;margin-top:4px;line-height:1.45">{{ st.note }}</div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Цифровые и офисные</div>
+    <div style="flex:1;height:1px;background:#ECECE8"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:12px">
+    <sc-for list="{{ digital }}" as="t" hint-placeholder-count="6">
+      <button onClick="{{ t.pick }}" style="text-align:left;border:1px solid {{ t.bd }};background:{{ t.bg }};border-radius:14px;padding:15px 16px;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:{{ t.sh }}" style-hover="border-color:#C7D2FE">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+          <span style="font-size:14.5px;font-weight:600;color:#1A1A1A;line-height:1.3">{{ t.name }}</span>
+          <span style="flex:none;font-size:10.5px;font-weight:600;letter-spacing:.03em;color:{{ t.tagCl }};background:{{ t.tagBg }};border:1px solid {{ t.tagBd }};border-radius:6px;padding:2px 6px">{{ t.tag }}</span>
+        </div>
+        <div style="font-size:12px;color:#9CA3AF;margin-top:4px">{{ t.en }}</div>
+        <div style="font-size:12.5px;color:#6B7280;margin-top:9px;line-height:1.45">{{ t.sub }}</div>
+        <div style="display:flex;align-items:center;gap:9px;font-size:11.5px;color:#6B7280;margin-top:11px">
+          <span style="font-weight:600;color:#4338CA">{{ t.terms }} слов</span>
+          <span>·</span><span>{{ t.level }}</span>
+        </div>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:26px 0 10px">
+    <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Рабочие профессии</div>
+    <div style="flex:1;height:1px;background:#ECECE8"></div>
+    <div style="font-size:12px;color:#9CA3AF">Терминология площадки, допуски и инструктажи</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:12px">
+    <sc-for list="{{ trades }}" as="t" hint-placeholder-count="4">
+      <button onClick="{{ t.pick }}" style="text-align:left;border:1px solid {{ t.bd }};background:{{ t.bg }};border-radius:14px;padding:15px 16px;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:{{ t.sh }}" style-hover="border-color:#C7D2FE">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+          <span style="font-size:14.5px;font-weight:600;color:#1A1A1A;line-height:1.3">{{ t.name }}</span>
+          <span style="flex:none;font-size:10.5px;font-weight:600;letter-spacing:.03em;color:{{ t.tagCl }};background:{{ t.tagBg }};border:1px solid {{ t.tagBd }};border-radius:6px;padding:2px 6px">{{ t.tag }}</span>
+        </div>
+        <div style="font-size:12px;color:#9CA3AF;margin-top:4px">{{ t.en }}</div>
+        <div style="font-size:12.5px;color:#6B7280;margin-top:9px;line-height:1.45">{{ t.sub }}</div>
+        <div style="display:flex;align-items:center;gap:9px;font-size:11.5px;color:#6B7280;margin-top:11px">
+          <span style="font-weight:600;color:#4338CA">{{ t.terms }} слов</span>
+          <span>·</span><span>{{ t.level }}</span>
+        </div>
+      </button>
+    </sc-for>
+  </div>
+
+  <div style="background:#fff;border:1px solid #E5E7EB;border-radius:18px;box-shadow:0 1px 2px rgba(26,26,26,.04);margin-top:26px;overflow:hidden">
+    <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:22px 24px 18px;border-bottom:1px solid #F3F4F6">
+      <div style="flex:1 1 340px;min-width:260px">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Трек</div>
+        <div style="font-family:'Source Serif 4',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;margin-top:5px">{{ curName }}</div>
+        <div style="font-size:13px;color:#6B7280;margin-top:5px">{{ curEn }} · {{ curTerms }} терминов · уровень {{ curLevel }}</div>
+      </div>
+      <sc-if value="{{ curLocked }}" hint-placeholder-val="{{ false }}">
+        <a href="Fluenta Pricing.dc.html" style="display:inline-flex;align-items:center;height:38px;padding:0 16px;background:#4F46E5;color:#fff;border-radius:10px;font-size:13px;font-weight:500" style-hover="background:#4338CA;color:#fff">Открыть все треки в Pro</a>
+      </sc-if>
+      <sc-if value="{{ curOpen }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:#047857;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:9px;padding:7px 12px">Ваш бесплатный трек · сменить можно раз в месяц</div>
+      </sc-if>
+    </div>
+
+    <sc-if value="{{ curLocked }}" hint-placeholder-val="{{ false }}">
+      <div style="padding:34px 24px 40px;text-align:center">
+        <div style="width:40px;height:40px;border-radius:12px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;margin:0 auto">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+        </div>
+        <div style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin-top:14px">«{{ curName }}» входит в Pro</div>
+        <div style="font-size:13.5px;line-height:1.6;color:#6B7280;margin:8px auto 0;max-width:52ch">На Free открыт один трек — сейчас это «{{ freeName }}». В Pro доступны все десять треков, включая рабочие профессии, и 150 голосовых минут в месяц.</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px">
+          <a href="Fluenta Pricing.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 20px;background:#4F46E5;color:#fff;border-radius:10px;font-size:13.5px;font-weight:500" style-hover="background:#4338CA;color:#fff">Сравнить тарифы</a>
+          <button onClick="{{ makeFree }}" style="height:42px;padding:0 18px;border:1px solid #E5E7EB;background:#fff;border-radius:10px;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:500;color:#374151;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4F46E5">Сделать этот трек бесплатным</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ curOpen }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;gap:4px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid #F3F4F6;background:#FCFCFB">
+        <sc-for list="{{ modules }}" as="m" hint-placeholder-count="6">
+          <button onClick="{{ m.pick }}" style="display:flex;align-items:center;gap:8px;border:1px solid {{ m.bd }};background:{{ m.bg }};border-radius:10px;padding:8px 12px;cursor:pointer;font-family:'Inter',sans-serif" style-hover="border-color:#C7D2FE">
+            <span style="font-family:'Source Serif 4',serif;font-size:12px;font-weight:700;color:{{ m.nCl }}">{{ m.n }}</span>
+            <span style="font-size:12.5px;font-weight:{{ m.fw }};color:{{ m.cl }}">{{ m.name }}</span>
+            <span style="font-size:11px;color:#9CA3AF">{{ m.meta }}</span>
+          </button>
+        </sc-for>
+      </div>
+
+      <div style="padding:22px 24px 26px">
+
+        <sc-if value="{{ isPitch }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:16px">
+            <div style="flex:1 1 420px;min-width:280px">
+              <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">Как рассказать о себе на {{ curLangName }}</div>
+              <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:6px;max-width:66ch">Гайд открывается в читалке — те же механики: нажимаете на непонятную фразу, получаете разбор, потом пересказываете вслух своими словами. Каркас держит структуру, слова остаются вашими.</div>
+            </div>
+            <div style="display:flex;gap:9px;flex-wrap:wrap">
+              <a href="Fluenta Reader.dc.html" style="display:inline-flex;align-items:center;height:38px;padding:0 15px;background:#4F46E5;color:#fff;border-radius:10px;font-size:13px;font-weight:500" style-hover="background:#4338CA;color:#fff">Открыть гайд в читалке</a>
+              <a href="Fluenta Tutor.dc.html" style="display:inline-flex;align-items:center;height:38px;padding:0 15px;border:1px solid #E5E7EB;color:#374151;border-radius:10px;font-size:13px;font-weight:500" style-hover="border-color:#C7D2FE;color:#4F46E5">Пересказать вслух · 3 мин</a>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:12px">
+            <sc-for list="{{ pitch }}" as="p" hint-placeholder-count="3">
+              <div style="border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <span style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#4F46E5">{{ p.kicker }}</span>
+                  <span style="font-size:11.5px;color:#9CA3AF">{{ p.time }}</span>
+                </div>
+                <div style="font-size:14px;font-weight:600;margin-top:8px">{{ p.title }}</div>
+                <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15px;line-height:1.65;color:#1A1A1A;margin-top:10px">{{ p.en }}</div>
+                <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-top:9px">{{ p.ru }}</div>
+                <div style="font-size:12px;line-height:1.5;color:#B45309;background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.35);border-radius:9px;padding:8px 10px;margin-top:11px">{{ p.tip }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isTerms }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+            <div style="flex:1 1 300px;min-width:240px">
+              <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">Термины профессии</div>
+              <div style="font-size:13px;color:#6B7280;margin-top:5px">{{ curTerms }} слов в треке · {{ inReview }} уже в ваших повторениях · произношение по клику</div>
+            </div>
+            <button onClick="{{ addReview }}" style="display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 15px;border:1px solid #E5E7EB;background:#fff;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#374151;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4F46E5">{{ addLabel }}</button>
+          </div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px">
+            <sc-for list="{{ subtopics }}" as="s" hint-placeholder-count="4">
+              <span style="font-size:12px;font-weight:500;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 11px">{{ s.label }}</span>
+            </sc-for>
+          </div>
+          <div style="border:1px solid #E5E7EB;border-radius:14px;overflow:hidden">
+            <sc-for list="{{ terms }}" as="w" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:14px;padding:13px 16px;border-bottom:1px solid #F3F4F6;flex-wrap:wrap">
+                <button onClick="{{ w.say }}" title="Прослушать" style="flex:none;width:32px;height:32px;border:1px solid #E0E7FF;background:#EEF2FF;border-radius:9px;color:#4F46E5;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#E0E7FF">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"></path><path d="M16 9a4 4 0 0 1 0 6"></path></svg>
+                </button>
+                <div style="flex:1 1 200px;min-width:150px">
+                  <div lang="en" style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600">{{ w.en }}</div>
+                  <div style="font-size:12px;color:#9CA3AF;margin-top:2px">{{ w.ipa }}</div>
+                </div>
+                <div style="flex:1 1 160px;min-width:130px;font-size:13.5px;color:#374151">{{ w.ru }}</div>
+                <div style="flex:2 1 260px;min-width:200px;font-size:12.5px;line-height:1.5;color:#6B7280">{{ w.note }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isMock }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div style="flex:1 1 420px;min-width:300px">
+              <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">Репетиция собеседования</div>
+              <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:6px;max-width:60ch">Тьютор задаёт вопрос голосом, вы отвечаете свободно. После ответа — две вещи: разбор структуры (S-T-A-R) и точные правки формулировок. Ошибки уходят в повторения на завтра.</div>
+              <sc-if value="{{ mockIdle }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#FAFAF8;border:1px solid #ECECE8;border-radius:14px;padding:16px 18px;margin-top:16px">
+                  <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF">Перед началом</div>
+                  <div style="font-size:13.5px;line-height:1.6;color:#374151;margin-top:8px">{{ mockWarn }}</div>
+                  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px">
+                    <button onClick="{{ startMock }}" style="display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:none;border-radius:10px;background:#4F46E5;color:#fff;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer" style-hover="background:#4338CA">Начать сессию · {{ mockCost }} мин</button>
+                    <span style="font-size:12.5px;color:#9CA3AF">{{ mockPlanNote }}</span>
+                  </div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ mockRunning }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff;border:1px solid #C7D2FE;border-radius:14px;padding:16px 18px;margin-top:16px;box-shadow:0 8px 24px rgba(79,70,229,.1)">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="position:relative;display:flex;width:11px;height:11px">
+                      <span style="position:absolute;inset:0;border-radius:50%;background:#4F46E5;opacity:.35;animation:crPulse 1.8s ease-out infinite"></span>
+                      <span style="position:relative;width:11px;height:11px;border-radius:50%;background:#4F46E5"></span>
+                    </span>
+                    <span style="font-size:12.5px;font-weight:600;color:#4338CA">Слушаю · {{ clock }}</span>
+                    <span style="flex:1"></span>
+                    <button onClick="{{ stopMock }}" style="height:32px;padding:0 13px;border:1px solid #E5E7EB;background:#fff;border-radius:9px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:#374151;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4F46E5">Завершить</button>
+                  </div>
+                  <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF;margin-top:14px">Вопрос</div>
+                  <div lang="en" style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.55;margin-top:5px">{{ mockQ }}</div>
+                  <div style="font-size:12.5px;color:#9CA3AF;margin-top:4px">{{ mockQRu }}</div>
+                  <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF;margin-top:14px">Ваш ответ</div>
+                  <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15px;line-height:1.7;color:#374151;margin-top:5px">{{ mockTranscript }}</div>
+                  <div style="font-size:12.5px;color:#9CA3AF;margin-top:10px">Минут останется: {{ minsAfter }}</div>
+                </div>
+              </sc-if>
+            </div>
+            <div style="flex:1 1 300px;min-width:260px">
+              <div style="border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px">
+                <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF">Разбор структуры прошлого ответа</div>
+                <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
+                  <sc-for list="{{ starBars }}" as="b" hint-placeholder-count="4">
+                    <div>
+                      <div style="display:flex;align-items:center;justify-content:space-between;font-size:12.5px">
+                        <span style="font-weight:600;color:#374151">{{ b.label }}</span>
+                        <span style="color:{{ b.cl }};font-weight:600">{{ b.verdict }}</span>
+                      </div>
+                      <div style="height:6px;border-radius:999px;background:#F0F0EE;margin-top:5px;overflow:hidden">
+                        <div style="height:100%;border-radius:999px;background:{{ b.cl }};width:{{ b.w }}"></div>
+                      </div>
+                      <div style="font-size:12px;line-height:1.5;color:#6B7280;margin-top:5px">{{ b.note }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px;margin-top:12px">
+                <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF">Вопросы этого трека</div>
+                <div style="display:flex;flex-direction:column;gap:10px;margin-top:11px">
+                  <sc-for list="{{ questions }}" as="q" hint-placeholder-count="3">
+                    <div style="font-size:13px;line-height:1.5">
+                      <div lang="en" style="font-family:'Source Serif 4',serif;font-weight:600">{{ q.en }}</div>
+                      <div style="font-size:12px;color:#9CA3AF;margin-top:2px">{{ q.ru }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isStar }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">Шаблоны STAR</div>
+          <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:5px;max-width:66ch">Каркас для поведенческих вопросов: ситуация, задача, действия, результат. Связки — готовые, содержание — ваше. Каждый шаблон можно сразу проговорить вслух.</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:16px">
+            <sc-for list="{{ star }}" as="s" hint-placeholder-count="4">
+              <div style="border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px">
+                <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15.5px;font-weight:700;line-height:1.4">{{ s.q }}</div>
+                <div style="font-size:12px;color:#9CA3AF;margin-top:3px">{{ s.qRu }}</div>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+                  <sc-for list="{{ s.rows }}" as="r" hint-placeholder-count="4">
+                    <div style="display:flex;gap:10px">
+                      <span style="flex:none;width:22px;height:22px;border-radius:7px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">{{ r.k }}</span>
+                      <span lang="en" style="font-family:'Source Serif 4',serif;font-size:13.5px;line-height:1.55;color:#374151">{{ r.t }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <a href="Fluenta Tutor.dc.html" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;margin-top:12px">Проговорить вслух · 2 мин</a>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isJd }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div style="flex:1 1 380px;min-width:280px">
+              <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">Разбор своей вакансии или резюме</div>
+              <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:6px;max-width:60ch">Вставьте текст вакансии — Fluenta соберёт из неё термины, вопросы, которые почти наверняка зададут, и план ответа на каждый.</div>
+              <div style="border:1px dashed #D1D5DB;border-radius:14px;background:#FCFCFB;padding:16px 18px;margin-top:14px">
+                <div style="font-size:12.5px;line-height:1.6;color:#9CA3AF">Вставьте ссылку на вакансию, текст описания или своё резюме — до 12 000 знаков.</div>
+                <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:13px">
+                  <button onClick="{{ runJd }}" style="height:38px;padding:0 16px;border:none;border-radius:10px;background:#4F46E5;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer" style-hover="background:#4338CA">{{ jdLabel }}</button>
+                  <button onClick="{{ runJd }}" style="height:38px;padding:0 16px;border:1px solid #E5E7EB;background:#fff;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:#374151;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4F46E5">Загрузить файл</button>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1 1 320px;min-width:260px">
+              <sc-if value="{{ jdDone }}" hint-placeholder-val="{{ true }}">
+                <div style="border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px">
+                  <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF">Из вашей вакансии</div>
+                  <div style="font-size:13.5px;font-weight:600;margin-top:7px">{{ jdTitle }}</div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:11px">
+                    <sc-for list="{{ jdTerms }}" as="j" hint-placeholder-count="6">
+                      <span style="font-size:12px;font-weight:500;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:8px;padding:4px 9px">{{ j.label }}</span>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;margin-top:15px">Спросят почти наверняка</div>
+                  <div style="display:flex;flex-direction:column;gap:9px;margin-top:9px">
+                    <sc-for list="{{ jdQs }}" as="q" hint-placeholder-count="3">
+                      <div style="font-size:13px;line-height:1.5;color:#374151">{{ q.label }}</div>
+                    </sc-for>
+                  </div>
+                  <a href="Fluenta Review.dc.html" style="display:inline-flex;align-items:center;font-size:12.5px;font-weight:500;margin-top:13px">Отправить термины в повторения →</a>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isTexts }}" hint-placeholder-val="{{ false }}">
+          <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">Тексты по профессии</div>
+          <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:5px;max-width:66ch">Настоящие материалы вашей работы: статьи, документация, инструкции и кейсы. Доля знакомых слов посчитана по вашей базе — берите то, где 94% и выше.</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:12px;margin-top:16px">
+            <sc-for list="{{ texts }}" as="t" hint-placeholder-count="3">
+              <a href="Fluenta Reader.dc.html" style="display:block;border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px;color:#1A1A1A" style-hover="border-color:#C7D2FE;color:#1A1A1A">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+                  <span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">{{ t.kind }}</span>
+                  <span style="font-size:11.5px;font-weight:600;color:{{ t.knownCl }}">{{ t.known }} знакомо</span>
+                </div>
+                <div style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;line-height:1.35;margin-top:8px">{{ t.title }}</div>
+                <div style="font-size:12.5px;color:#6B7280;margin-top:8px">{{ t.level }} · {{ t.mins }} мин чтения · пересказ {{ t.retell }}</div>
+              </a>
+            </sc-for>
+          </div>
+        </sc-if>
+
+      </div>
+    </sc-if>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:18px 22px;margin-top:22px">
+    <div style="flex:1 1 340px;min-width:260px">
+      <div style="font-size:14px;font-weight:600">Не нашли свою профессию?</div>
+      <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-top:4px">Загрузите три текста своей работы — Fluenta соберёт трек: термины, вопросы и гайд самопрезентации под вашу специальность.</div>
+    </div>
+    <a href="Fluenta Admin Add Text.dc.html" style="display:inline-flex;align-items:center;height:38px;padding:0 16px;border:1px solid #E5E7EB;color:#374151;border-radius:10px;font-size:13px;font-weight:500" style-hover="border-color:#C7D2FE;color:#4F46E5">Собрать свой трек</a>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:940},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;tracks&quot;,&quot;sprint&quot;],&quot;default&quot;:&quot;tracks&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Вид&quot;},&quot;plan&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;free&quot;,&quot;pro&quot;],&quot;default&quot;:&quot;free&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Тариф&quot;},&quot;minutesLeft&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:128,&quot;min&quot;:0,&quot;max&quot;:400,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Тариф&quot;},&quot;minutesTotal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:150,&quot;min&quot;:10,&quot;max&quot;:400,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Тариф&quot;},&quot;daysToInterview&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;min&quot;:3,&quot;max&quot;:60,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Вид&quot;}}">
+class Component extends DCLogic {
+  state = { view: null, track: 'dev', free: 'dev', mod: 'pitch', mock: 'idle', sec: 0, added: false, jd: true };
+
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  DATA() {
+    return {
+      dev: { name: 'Разработка / IT', en: 'Software engineering', terms: 240, level: 'B1–C1', group: 'digital',
+        sub: 'Ревью кода, инциденты, планирование спринта, интервью по системному дизайну.',
+        subtopics: ['Код и ревью', 'Инциденты', 'Планирование', 'System design'],
+        terms5: [
+          ['code review', 'ревью кода', '/kəʊd rɪˈvjuː/', '«I left a few comments on your PR» — так просят правки, не «fix it»'],
+          ['deployment', 'деплой, выкладка', '/dɪˈplɔɪmənt/', 'В речи чаще: we ship / we roll out'],
+          ['incident', 'инцидент, авария', '/ˈɪnsɪdənt/', 'postmortem — разбор после инцидента, без поиска виноватых'],
+          ['trade-off', 'компромисс', '/ˈtreɪd ɒf/', '«the trade-off here is latency versus cost» — каркас ответа'],
+          ['estimate', 'оценка сроков', '/ˈestɪmət/', 'Существительное — /ˈestɪmət/, глагол — /ˈestɪmeɪt/']
+        ],
+        qs: [['Tell me about a system you designed end to end.', 'Расскажите о системе, которую спроектировали целиком.'],
+             ['How do you handle a production incident?', 'Как вы действуете при аварии на проде?'],
+             ['Describe a technical decision you later regretted.', 'Технич. решение, о котором вы позже пожалели.']],
+        texts: [['Документация', 'Postgres: индексы и планы запросов', 'B2', '96%', 7, '2 мин'],
+                ['Инженерный блог', 'How we cut deploy time from 40 to 6 minutes', 'B2', '94%', 9, '3 мин'],
+                ['Кейс', 'Postmortem: очередь задач и потерянные сообщения', 'C1', '91%', 11, '3 мин']] },
+      design: { name: 'Продуктовый дизайн', en: 'Product design', terms: 180, level: 'B1–C1', group: 'digital',
+        sub: 'Защита решений, критика макетов, передача в разработку, портфолио-ревью.',
+        subtopics: ['Критика', 'Исследование', 'Хендофф', 'Портфолио'],
+        terms5: [
+          ['user flow', 'пользовательский путь', '/ˈjuːzə fləʊ/', '«let me walk you through the flow» — начало показа'],
+          ['edge case', 'крайний случай', '/edʒ keɪs/', 'Главное слово на любом ревью макетов'],
+          ['rationale', 'обоснование решения', '/ˌræʃəˈnɑːl/', '«the rationale behind this screen was…»'],
+          ['handoff', 'передача в разработку', '/ˈhændɒf/', 'design handoff — этап, а не событие'],
+          ['scope', 'объём работы', '/skəʊp/', 'out of scope — вежливый способ сказать «не сейчас»']
+        ],
+        qs: [['Walk me through your strongest case study.', 'Проведите меня по вашему сильнейшему кейсу.'],
+             ['How do you handle disagreement with an engineer?', 'Как решаете спор с разработчиком?'],
+             ['How do you measure whether a design worked?', 'Как понимаете, что дизайн сработал?']],
+        texts: [['Статья', 'Designing for the empty state', 'B2', '95%', 6, '2 мин'],
+                ['Кейс', 'Rebuilding onboarding around one moment', 'B2', '93%', 10, '3 мин'],
+                ['Гайдлайн', 'Accessibility: contrast and hit targets', 'B1', '97%', 5, '2 мин']] },
+      sales: { name: 'Продажи и аккаунты', en: 'Sales & account management', terms: 210, level: 'B1–C1', group: 'digital',
+        sub: 'Звонки-открытия, работа с возражениями, продления, эскалации.',
+        subtopics: ['Discovery', 'Возражения', 'Продления', 'Эскалации'],
+        terms5: [
+          ['pipeline', 'воронка сделок', '/ˈpaɪplaɪn/', '«my pipeline for Q3 looks like…»'],
+          ['objection', 'возражение', '/əbˈdʒekʃn/', 'objection handling — навык, который спросят на интервью'],
+          ['renewal', 'продление', '/rɪˈnjuːəl/', 'churn — противоположный исход'],
+          ['discovery call', 'вводный звонок', '/dɪˈskʌvəri kɔːl/', 'Цель — вопросы, а не презентация'],
+          ['quota', 'план продаж', '/ˈkwəʊtə/', '«I closed 118% of quota» — формула ответа о результатах']
+        ],
+        qs: [['Tell me about the biggest deal you lost.', 'Самая крупная сделка, которую вы потеряли.'],
+             ['How do you handle a price objection?', 'Как отвечаете на возражение о цене?'],
+             ['How do you save an account that wants to leave?', 'Как удерживаете клиента, готового уйти?']],
+        texts: [['Статья', 'Discovery questions that actually work', 'B2', '96%', 6, '2 мин'],
+                ['Кейс', 'From pilot to enterprise contract in nine months', 'B2', '93%', 9, '3 мин'],
+                ['Скрипт', 'Renewal call: structure and phrases', 'B1', '97%', 5, '2 мин']] },
+      finance: { name: 'Финансы и консалтинг', en: 'Finance & consulting', terms: 260, level: 'B2–C1', group: 'digital',
+        sub: 'Защита модели, кейс-интервью, комментарии к отчётности.',
+        subtopics: ['Кейс-интервью', 'Отчётность', 'Модели', 'Сделки'],
+        terms5: [
+          ['due diligence', 'проверка перед сделкой', '/djuː ˈdɪlɪdʒəns/', 'В речи сокращают до DD'],
+          ['margin', 'маржа', '/ˈmɑːdʒɪn/', 'gross / operating margin — уточняйте, какая именно'],
+          ['forecast', 'прогноз', '/ˈfɔːkɑːst/', '«we revised the forecast downwards»'],
+          ['runway', 'запас средств', '/ˈrʌnweɪ/', '«eighteen months of runway»'],
+          ['covenant', 'ковенант, условие займа', '/ˈkʌvənənt/', 'breach a covenant — нарушить условие']
+        ],
+        qs: [['Walk me through a model you built.', 'Проведите меня по модели, которую вы построили.'],
+             ['How would you value this business?', 'Как бы вы оценили этот бизнес?'],
+             ['Tell me about a recommendation the client rejected.', 'Рекомендация, которую клиент отверг.']],
+        texts: [['Отчёт', 'Quarterly results: reading the MD&A section', 'C1', '92%', 10, '3 мин'],
+                ['Статья', 'Unit economics for subscription products', 'B2', '95%', 7, '2 мин'],
+                ['Кейс', 'Cost programme in a mid-size manufacturer', 'B2', '93%', 9, '3 мин']] },
+      science: { name: 'Наука и академия', en: 'Research & academia', terms: 300, level: 'B2–C2', group: 'digital',
+        sub: 'Доклад на конференции, защита метода, заявки на гранты, рецензии.',
+        subtopics: ['Доклад', 'Метод', 'Гранты', 'Рецензии'],
+        terms5: [
+          ['peer review', 'рецензирование', '/pɪə rɪˈvjuː/', '«the paper is under review» — стандартный статус'],
+          ['sample size', 'размер выборки', '/ˈsɑːmpl saɪz/', 'underpowered — выборка слишком мала'],
+          ['confounder', 'смешивающий фактор', '/kənˈfaʊndə/', 'Главный вопрос после доклада'],
+          ['grant proposal', 'заявка на грант', '/ɡrɑːnt prəˈpəʊzl/', 'call for proposals — объявление конкурса'],
+          ['replicate', 'воспроизвести', '/ˈreplɪkeɪt/', 'replication study — проверка чужого результата']
+        ],
+        qs: [['Summarise your research in two minutes.', 'Изложите ваше исследование за две минуты.'],
+             ['What are the limitations of your method?', 'Какие ограничения у вашего метода?'],
+             ['How would you respond to reviewer two?', 'Как ответите второму рецензенту?']],
+        texts: [['Статья', 'Writing a limitations section that helps you', 'C1', '91%', 8, '3 мин'],
+                ['Абстракт', 'Structured abstracts: four moves', 'B2', '95%', 4, '2 мин'],
+                ['Грант', 'Impact statement: what funders read first', 'B2', '93%', 7, '3 мин']] },
+      med: { name: 'Медицина', en: 'Medicine & nursing', terms: 320, level: 'B1–C1', group: 'digital',
+        sub: 'Разговор с пациентом, передача смены, документы, экзамены и интервью.',
+        subtopics: ['Пациент', 'Передача смены', 'Документы', 'Экзамены'],
+        terms5: [
+          ['discharge', 'выписка', '/ˈdɪstʃɑːdʒ/', 'discharge summary — выписной эпикриз'],
+          ['referral', 'направление', '/rɪˈfɜːrəl/', '«I will refer you to a specialist»'],
+          ['dosage', 'дозировка', '/ˈdəʊsɪdʒ/', 'twice daily — дважды в день, не «two times»'],
+          ['informed consent', 'информированное согласие', '/ɪnˈfɔːmd kənˈsent/', 'Обязательная формулировка в разговоре'],
+          ['side effect', 'побочный эффект', '/saɪd ɪˈfekt/', 'adverse event — в документах']
+        ],
+        qs: [['Explain a diagnosis to a patient in plain words.', 'Объясните диагноз пациенту простыми словами.'],
+             ['Hand over a patient to the next shift.', 'Передайте пациента следующей смене.'],
+             ['Describe a time you disagreed with a senior doctor.', 'Случай спора со старшим врачом.']],
+        texts: [['Инструкция', 'Patient handover: the SBAR structure', 'B1', '96%', 5, '2 мин'],
+                ['Статья', 'Explaining risk without frightening people', 'B2', '94%', 7, '3 мин'],
+                ['Документ', 'Reading a discharge summary line by line', 'B2', '92%', 8, '3 мин']] },
+      weld: { name: 'Сварка и металлоконструкции', en: 'Welding & fabrication', terms: 160, level: 'A2–B2', group: 'trades',
+        sub: 'Допуски на огневые работы, дефекты шва, инструктаж, разговор с инспектором.',
+        subtopics: ['Допуски', 'Дефекты шва', 'Оборудование', 'Инспекция'],
+        terms5: [
+          ['weld bead', 'сварной шов', '/weld biːd/', '«the bead looks clean» — похвала работе'],
+          ['filler metal', 'присадочный материал', '/ˈfɪlə ˈmetl/', 'Спросят марку: which filler did you use?'],
+          ['undercut', 'подрез', '/ˈʌndəkʌt/', 'Дефект: инспектор назовёт его первым'],
+          ['hot work permit', 'разрешение на огневые работы', '/hɒt wɜːk ˈpɜːmɪt/', 'Без него на площадку не пустят'],
+          ['fume extraction', 'вытяжка сварочных дымов', '/fjuːm ɪkˈstrækʃn/', 'Вопрос по охране труда на интервью']
+        ],
+        qs: [['Which welding processes are you certified for?', 'По каким процессам у вас аттестация?'],
+             ['How do you check a weld before the inspector does?', 'Как проверяете шов до инспектора?'],
+             ['Describe a time you stopped a job for safety.', 'Когда вы останавливали работу из-за безопасности?']],
+        texts: [['Инструкция', 'Hot work permit: what the form asks', 'A2', '97%', 5, '2 мин'],
+                ['Гайд', 'Common weld defects and their causes', 'B1', '94%', 7, '2 мин'],
+                ['Смена', 'Toolbox talk: fumes and ventilation', 'A2', '96%', 4, '2 мин']] },
+      rig: { name: 'Монтаж и такелаж', en: 'Rigging & installation', terms: 150, level: 'A2–B2', group: 'trades',
+        sub: 'Сигналы крановщику, грузовые таблицы, инструктажи, приёмка работ.',
+        subtopics: ['Такелаж', 'Сигналы', 'Инструктаж', 'Приёмка'],
+        terms5: [
+          ['sling', 'стропа', '/slɪŋ/', 'round sling, chain sling — уточняйте тип'],
+          ['load chart', 'грузовая таблица', '/ləʊd tʃɑːt/', '«check the load chart first» — правильный ответ'],
+          ['banksman', 'сигнальщик', '/ˈbæŋksmən/', 'В США чаще signal person'],
+          ['toolbox talk', 'инструктаж на площадке', '/ˈtuːlbɒks tɔːk/', 'Пятиминутка перед сменой'],
+          ['exclusion zone', 'опасная зона', '/ɪkˈskluːʒn zəʊn/', '«keep the exclusion zone clear»']
+        ],
+        qs: [['How do you plan a lift?', 'Как планируете подъём груза?'],
+             ['What do you check before every shift?', 'Что проверяете перед каждой сменой?'],
+             ['Explain a near miss you reported.', 'Расскажите о происшествии, которое вы зафиксировали.']],
+        texts: [['Инструкция', 'Lift plan: five things it must state', 'A2', '96%', 5, '2 мин'],
+                ['Гайд', 'Hand signals every rigger must know', 'A2', '98%', 4, '2 мин'],
+                ['Кейс', 'Near miss report: writing it clearly', 'B1', '93%', 6, '2 мин']] },
+      elec: { name: 'Электрика', en: 'Electrical work', terms: 170, level: 'A2–B2', group: 'trades',
+        sub: 'Блокировки, расчёт нагрузки, приёмка щитов, разговор с заказчиком.',
+        subtopics: ['Безопасность', 'Нагрузки', 'Щиты', 'Заказчик'],
+        terms5: [
+          ['circuit breaker', 'автоматический выключатель', '/ˈsɜːkɪt ˈbreɪkə/', 'trip — сработал, выбило'],
+          ['earthing / grounding', 'заземление', '/ˈɜːðɪŋ/', 'Британский и американский вариант — оба спросят'],
+          ['conduit', 'кабель-канал, труба', '/ˈkɒndjuɪt/', 'run the conduit — прокладывать'],
+          ['lockout tagout', 'блокировка и маркировка', '/ˈlɒkaʊt ˈtæɡaʊt/', 'LOTO — обязателен в ответе про безопасность'],
+          ['load calculation', 'расчёт нагрузки', '/ləʊd ˌkælkjʊˈleɪʃn/', '«I ran the load calculation for the panel»']
+        ],
+        qs: [['Walk me through your lockout procedure.', 'Опишите вашу процедуру блокировки.'],
+             ['How do you size a breaker for a new circuit?', 'Как подбираете автомат для новой линии?'],
+             ['Explain a fault you found and fixed.', 'Неисправность, которую нашли и устранили.']],
+        texts: [['Инструкция', 'Lockout tagout, step by step', 'A2', '97%', 5, '2 мин'],
+                ['Гайд', 'Reading a panel schedule', 'B1', '94%', 6, '2 мин'],
+                ['Отчёт', 'Fault finding: how to write it up', 'B1', '93%', 6, '2 мин']] },
+      plumb: { name: 'Сантехника и HVAC', en: 'Plumbing & HVAC', terms: 165, level: 'A2–B2', group: 'trades',
+        sub: 'Опрессовка, обратный поток, объяснение работ заказчику, приёмка.',
+        subtopics: ['Монтаж', 'Испытания', 'Заказчик', 'Приёмка'],
+        terms5: [
+          ['shut-off valve', 'запорный кран', '/ˈʃʌt ɒf vælv/', '«I isolated the line at the shut-off valve»'],
+          ['backflow', 'обратный поток', '/ˈbækfləʊ/', 'backflow preventer — обратный клапан'],
+          ['soldered joint', 'паяное соединение', '/ˈsɒldəd dʒɔɪnt/', 'press fitting — альтернатива без огня'],
+          ['pressure test', 'опрессовка', '/ˈpreʃə test/', '«we held pressure for two hours»'],
+          ['HVAC', 'отопление, вентиляция, кондиционирование', '/ˌeɪtʃ viː eɪ ˈsiː/', 'Читается по буквам, не «хвак»']
+        ],
+        qs: [['How do you pressure test a new line?', 'Как проводите опрессовку новой линии?'],
+             ['Explain the job to a customer who is worried about cost.', 'Объясните работу заказчику, которого беспокоит цена.'],
+             ['Describe a leak you traced to an unexpected cause.', 'Протечка с неожиданной причиной.']],
+        texts: [['Инструкция', 'Pressure testing: acceptance criteria', 'A2', '96%', 5, '2 мин'],
+                ['Гайд', 'Backflow prevention in plain English', 'B1', '94%', 6, '2 мин'],
+                ['Разговор', 'Explaining a quote to a customer', 'A2', '97%', 4, '2 мин']] }
+    };
+  }
+
+  MODS() {
+    return [['pitch', '01', 'Самопрезентация', 'гайд + пересказ'], ['terms', '02', 'Термины', 'с произношением'],
+            ['mock', '03', 'Mock interview', 'голос'], ['star', '04', 'STAR-ответы', '6 вопросов'],
+            ['jd', '05', 'Своя вакансия', 'загрузить'], ['texts', '06', 'Тексты профессии', 'читалка']];
+  }
+
+  renderVals() {
+    const D = this.DATA();
+    const ids = Object.keys(D);
+    const view = this.state.view || this.props.variant || 'tracks';
+    const plan = this.props.plan || 'free';
+    const freeId = this.state.free;
+    const curId = D[this.state.track] ? this.state.track : 'dev';
+    const cur = D[curId];
+    const locked = plan === 'free' && curId !== freeId;
+    const total = Number(this.props.minutesTotal || 150);
+    const left = Math.max(0, Number(this.props.minutesLeft != null ? this.props.minutesLeft : 128));
+    const cost = 12;
+    const days = Number(this.props.daysToInterview != null ? this.props.daysToInterview : 14) + (this.state.dayShift || 0);
+    const mock = this.state.mock;
+    const sec = this.state.sec;
+    const mm = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
+
+    const card = (id) => {
+      const t = D[id];
+      const isCur = id === curId;
+      const lk = plan === 'free' && id !== freeId;
+      return {
+        key: id, name: t.name, en: t.en, sub: t.sub, terms: String(t.terms), level: t.level,
+        bg: isCur ? '#F5F5FF' : '#FFFFFF', bd: isCur ? '#C7D2FE' : '#E5E7EB',
+        sh: isCur ? '0 8px 24px rgba(79,70,229,.09)' : '0 1px 2px rgba(26,26,26,.04)',
+        tag: lk ? 'Pro' : (id === freeId ? 'Free' : 'Открыт'),
+        tagCl: lk ? '#4338CA' : '#047857', tagBg: lk ? '#EEF2FF' : '#ECFDF5', tagBd: lk ? '#E0E7FF' : '#A7F3D0',
+        pick: () => this.setState({ track: id, mod: 'pitch', mock: 'idle', sec: 0 })
+      };
+    };
+
+    const sprintPlan = [
+      ['День 1–2', 'Термины трека', '40 слов в повторения, без голоса', 'done'],
+      ['День 3', 'Самопрезентация', 'гайд в читалке + пересказ 3 мин', 'done'],
+      ['День 5', 'STAR-ответы', 'четыре истории, 6 мин голоса', 'today'],
+      ['День 7', 'Mock interview №1', '12 мин голоса, разбор структуры', 'next'],
+      ['День 10', 'Разбор вакансии', 'термины и вопросы из описания', 'next'],
+      ['День ' + Math.max(12, days - 1), 'Mock interview №2', '12 мин голоса, только слабые места', 'next']
+    ];
+    const SM = { done: ['#ECFDF5', '#A7F3D0', '#047857', 'готово', '#047857'], today: ['#FFFBEB', 'rgba(251,191,36,.5)', '#B45309', 'сегодня', '#B45309'], next: ['#FFFFFF', '#E5E7EB', '#9CA3AF', 'дальше', '#9CA3AF'] };
+    const modOf = { 'Термины трека': 'terms', 'Самопрезентация': 'pitch', 'STAR-ответы': 'star', 'Mock interview №1': 'mock', 'Разбор вакансии': 'jd', 'Mock interview №2': 'mock' };
+
+    const pitch = [
+      { kicker: '30 секунд', time: 'elevator pitch', title: 'Кто вы и чем полезны',
+        en: '“I’m a ' + cur.en.toLowerCase() + ' specialist with six years in the field. Most of my work is ' + cur.subtopics[0].toLowerCase() + '. Right now I’m looking for a team where…”',
+        ru: 'Три части: роль → область → чего ищете. Ни истории, ни хронологии — только адрес.',
+        tip: 'Не начинайте с «My name is». Имя уже прозвучало — начните с роли.' },
+      { kicker: '90 секунд', time: '«Tell me about yourself»', title: 'Короткая история пути',
+        en: '“I started in ' + cur.subtopics[1].toLowerCase() + ', then moved closer to ' + cur.subtopics[0].toLowerCase() + '. The turning point was a project where…”',
+        ru: 'Одна линия, один поворотный проект, один вывод. Без перечисления всех работ.',
+        tip: 'Держите три предложения на каждый этап — так вы не выйдете за 90 секунд.' },
+      { kicker: 'Финал', time: '«Why you»', title: 'Почему именно вы',
+        en: '“What I bring is ' + cur.subtopics[2].toLowerCase() + ' — and I can show it: last year I…”',
+        ru: 'Одно обещание + одно доказательство. Дальше молчите и дайте задать вопрос.',
+        tip: 'Доказательство всегда с числом или сроком — иначе это мнение.' }
+    ];
+
+    const star = [
+      ['Tell me about a time you disagreed with your manager.', 'Спор с руководителем'],
+      ['Describe a mistake that taught you something.', 'Ошибка, которая чему-то научила'],
+      ['Give an example of working under a hard deadline.', 'Работа в жёсткий срок'],
+      ['Tell me about a time you had to explain something difficult.', 'Пришлось объяснять сложное']
+    ].map((q, i) => ({
+      key: i, q: q[0], qRu: q[1],
+      rows: [
+        { key: 'S', k: 'S', t: '“Last year, on a ' + cur.subtopics[i % cur.subtopics.length].toLowerCase() + ' project, we…”' },
+        { key: 'T', k: 'T', t: '“My job was to…”' },
+        { key: 'A', k: 'A', t: '“So I did three things. First… then… and finally…”' },
+        { key: 'R', k: 'R', t: '“As a result, we… and since then the team…”' }
+      ]
+    }));
+
+    const jdT = ['stakeholder', 'roadmap', cur.terms5[0][0], cur.terms5[3][0], 'handover', 'compliance'];
+    const jdQ = ['Why do you want this role, in your own words?', 'How does your experience match ' + cur.subtopics[0].toLowerCase() + '?', 'Which part of the job description worries you?'];
+
+    return {
+      minsLeft: String(left), minsTotal: String(total), minsPct: Math.round((left / total) * 100) + '%',
+      minsColor: left / total > 0.3 ? '#4F46E5' : '#F59E0B',
+      minsCta: left / total > 0.3 ? 'Пакеты доп. минут' : 'Добавить минуты',
+      isSprint: view === 'sprint',
+      tabTracksBg: view === 'tracks' ? '#FFFFFF' : 'transparent', tabTracksCl: view === 'tracks' ? '#1A1A1A' : '#6B7280',
+      tabTracksSh: view === 'tracks' ? '0 1px 2px rgba(26,26,26,.08)' : 'none',
+      tabSprintBg: view === 'sprint' ? '#FFFFFF' : 'transparent', tabSprintCl: view === 'sprint' ? '#1A1A1A' : '#6B7280',
+      tabSprintSh: view === 'sprint' ? '0 1px 2px rgba(26,26,26,.08)' : 'none',
+      setTracks: () => this.setState({ view: 'tracks' }), setSprint: () => this.setState({ view: 'sprint' }),
+      days: days + (days % 10 === 1 && days !== 11 ? ' день' : ' дней'),
+      dateLabel: days + ' дн.', sprintTrackName: cur.name, sprintVoice: '30',
+      dayMinus: () => this.setState((s) => ({ dayShift: (s.dayShift || 0) - 1 })),
+      dayPlus: () => this.setState((s) => ({ dayShift: (s.dayShift || 0) + 1 })),
+      sprint: sprintPlan.map((s, i) => {
+        const c = SM[s[3]];
+        return { key: i, day: s[0], name: s[1], note: s[2], bg: c[0], bd: c[1], dayCl: c[2], status: c[3], stCl: c[4],
+          open: () => this.setState({ mod: modOf[s[1]] || 'pitch', view: 'sprint' }) };
+      }),
+      digital: ids.filter((i) => D[i].group === 'digital').map(card),
+      trades: ids.filter((i) => D[i].group === 'trades').map(card),
+      curName: cur.name, curEn: cur.en, curTerms: String(cur.terms), curLevel: cur.level,
+      curLangName: 'английском', freeName: D[freeId].name,
+      curLocked: locked, curOpen: !locked,
+      makeFree: () => this.setState({ free: curId }),
+      modules: this.MODS().map((m) => ({
+        key: m[0], n: m[1], name: m[2], meta: m[3],
+        bg: this.state.mod === m[0] ? '#EEF2FF' : '#FFFFFF', bd: this.state.mod === m[0] ? '#C7D2FE' : '#E5E7EB',
+        cl: this.state.mod === m[0] ? '#1A1A1A' : '#374151', fw: this.state.mod === m[0] ? '600' : '500',
+        nCl: this.state.mod === m[0] ? '#4F46E5' : '#D1D5DB',
+        pick: () => this.setState({ mod: m[0] })
+      })),
+      isPitch: this.state.mod === 'pitch', isTerms: this.state.mod === 'terms', isMock: this.state.mod === 'mock',
+      isStar: this.state.mod === 'star', isJd: this.state.mod === 'jd', isTexts: this.state.mod === 'texts',
+      pitch: pitch.map((p, i) => Object.assign({ key: i }, p)),
+      subtopics: cur.subtopics.map((s) => ({ key: s, label: s })),
+      terms: cur.terms5.map((w) => ({
+        key: w[0], en: w[0], ru: w[1], ipa: w[2], note: w[3],
+        say: () => { if (window.FluentaSpeak) window.FluentaSpeak.say(w[0], { lang: 'en-US' }); }
+      })),
+      inReview: this.state.added ? '62' : '42',
+      addLabel: this.state.added ? '20 слов добавлено ✓' : 'Добавить 20 слов в повторения',
+      addReview: () => this.setState({ added: true }),
+      mockIdle: mock === 'idle', mockRunning: mock === 'running',
+      mockCost: String(cost), clock: mm,
+      mockWarn: 'Сессия займёт около ' + cost + ' минут из ' + left + ' голосовых минут этого месяца. Останется ' + Math.max(0, left - cost) + '. Чтение и повторения счётчик не расходуют.',
+      mockPlanNote: plan === 'free' ? 'На Free — один пересказ в неделю' : 'Pro · 150 минут в месяц, пакеты по 60 и 180',
+      startMock: () => { this.setState({ mock: 'running', sec: 0 }); if (this._t) clearInterval(this._t); this._t = setInterval(() => this.setState((s) => ({ sec: s.sec + 1 })), 1000); },
+      stopMock: () => { if (this._t) clearInterval(this._t); this.setState({ mock: 'idle', sec: 0 }); },
+      minsAfter: String(Math.max(0, left - Math.max(1, Math.ceil(sec / 60)))),
+      mockQ: cur.qs[0][0], mockQRu: cur.qs[0][1],
+      mockTranscript: '“Sure. Last year I worked on a ' + cur.subtopics[0].toLowerCase() + ' project where we had to…”',
+      starBars: [
+        { key: 'S', label: 'Situation — контекст', verdict: 'есть', cl: '#10B981', w: '92%', note: 'Место и время названы в первом предложении.' },
+        { key: 'T', label: 'Task — ваша задача', verdict: 'есть', cl: '#10B981', w: '84%', note: 'Роль прозвучала, но без ограничений по срокам.' },
+        { key: 'A', label: 'Action — действия', verdict: 'размыто', cl: '#F59E0B', w: '48%', note: 'Четыре действия слились в одно предложение — разделите на «first… then… finally…».' },
+        { key: 'R', label: 'Result — результат', verdict: 'нет', cl: '#EF4444', w: '14%', note: 'Числа не было. Добавьте одну метрику — это главный дефект ответа.' }
+      ],
+      questions: cur.qs.map((q, i) => ({ key: i, en: q[0], ru: q[1] })),
+      star,
+      jdDone: this.state.jd, jdLabel: this.state.jd ? 'Разобрать заново' : 'Разобрать вакансию',
+      runJd: () => this.setState((s) => ({ jd: !s.jd })),
+      jdTitle: cur.en + ' · vacancy, mid-level',
+      jdTerms: jdT.map((t) => ({ key: t, label: t })),
+      jdQs: jdQ.map((q, i) => ({ key: i, label: q })),
+      texts: cur.texts.map((t, i) => ({
+        key: i, kind: t[0], title: t[1], level: t[2], known: t[3], mins: String(t[4]), retell: t[5],
+        knownCl: parseInt(t[3], 10) >= 94 ? '#047857' : '#B45309'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

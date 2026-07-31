@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@keyframes lmBob{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-7px) rotate(-1.4deg)}}
+@keyframes lmWave{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2.5deg)}}
+@keyframes lmBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@keyframes lmIn{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes lmBubble{from{opacity:0;transform:translateY(7px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes lmRing{0%{opacity:.5;transform:scale(.72)}100%{opacity:0;transform:scale(1.3)}}
+.lm-wrap{position:fixed;z-index:70;display:flex;align-items:flex-end;gap:10px;animation:lmIn .32s cubic-bezier(.2,.8,.3,1) both;user-select:none}
+.lm-fig{position:relative;flex:none;cursor:pointer}
+.lm-x{position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;border:1px solid #E5E7EB;background:#fff;color:#9CA3AF;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:opacity .15s;padding:0}
+.lm-wrap:hover .lm-x{opacity:1}
+.lm-x:hover{color:#374151;border-color:#D1D5DB}
+@media (max-width:639px){.lm-wrap{bottom:78px !important}.lm-bubble{max-width:190px !important;font-size:12px !important}}
+</style>
+</helmet>
+<sc-if value="{{ shown }}" hint-placeholder-val="{{ true }}">
+  <div class="lm-wrap" style="{{ place }}">
+    <sc-if value="{{ leftBubble }}" hint-placeholder-val="{{ true }}">
+      <div class="lm-bubble" style="max-width:250px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;border-bottom-right-radius:5px;box-shadow:0 10px 26px rgba(26,26,26,.12);padding:11px 13px;animation:lmBubble .26s ease-out .12s both;margin-bottom:14px;pointer-events:none">
+        <div style="font-size:12.5px;line-height:1.5;color:#1A1A1A">{{ message }}</div>
+        <sc-if value="{{ hasAction }}" hint-placeholder-val="{{ false }}">
+          <a href="{{ actionHref }}" style="display:inline-block;font-size:12px;font-weight:600;margin-top:7px;pointer-events:auto">{{ actionLabel }}</a>
+        </sc-if>
+      </div>
+    </sc-if>
+    <div class="lm-fig" onClick="{{ toggle }}" style="width:{{ size }};height:{{ size }}">
+      <sc-if value="{{ ringOn }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:100%;height:100%;border-radius:50%;border:2px solid rgba(79,70,229,.38);animation:lmRing 1.6s ease-out infinite"></span>
+      </sc-if>
+      <span style="position:absolute;left:50%;bottom:2px;transform:translateX(-50%);width:64%;height:9px;border-radius:50%;background:rgba(26,26,26,.1);filter:blur(4px)"></span>
+      <div title="{{ title }}" style="position:absolute;inset:0;background-image:{{ bg }};background-size:contain;background-position:center bottom;background-repeat:no-repeat;animation:{{ anim }};filter:drop-shadow(0 6px 12px rgba(79,70,229,.16))"></div>
+      <button onClick="{{ hide }}" class="lm-x" title="Скрыть Люмена" aria-label="Скрыть Люмена">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <sc-if value="{{ rightBubble }}" hint-placeholder-val="{{ false }}">
+      <div class="lm-bubble" style="max-width:250px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;border-bottom-left-radius:5px;box-shadow:0 10px 26px rgba(26,26,26,.12);padding:11px 13px;animation:lmBubble .26s ease-out .12s both;margin-bottom:14px;pointer-events:none">
+        <div style="font-size:12.5px;line-height:1.5;color:#1A1A1A">{{ message }}</div>
+        <sc-if value="{{ hasAction }}" hint-placeholder-val="{{ false }}">
+          <a href="{{ actionHref }}" style="display:inline-block;font-size:12px;font-weight:600;margin-top:7px;pointer-events:auto">{{ actionLabel }}</a>
+        </sc-if>
+      </div>
+    </sc-if>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:220},&quot;pose&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;wave&quot;,&quot;listen&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;message&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Я Люмен — помогу разобраться&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;actionLabel&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;actionHref&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;side&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;right&quot;,&quot;left&quot;],&quot;default&quot;:&quot;right&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;size&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:104,&quot;min&quot;:64,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;},&quot;bottom&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:22,&quot;min&quot;:0,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { gone: false, muted: false, bubble: true, low: false };
+  componentDidMount() {
+    this._t = setTimeout(() => this.setState({ bubble: false }), 9000);
+    this._fit = () => {
+      const low = window.innerHeight < 600;
+      if (low !== this.state.low) this.setState({ low });
+    };
+    this._fit();
+    window.addEventListener('resize', this._fit);
+  }
+  componentWillUnmount() { clearTimeout(this._t); window.removeEventListener('resize', this._fit); }
+  renderVals() {
+    const p = this.props;
+    const pose = ['idle', 'wave', 'listen'].indexOf(p.pose) > -1 ? p.pose : 'idle';
+    const IMG = { idle: 'mascot/idle.png', wave: 'mascot/wave.png', listen: 'mascot/listen.png' };
+    const ANIM = { idle: 'lmBob 3.6s ease-in-out infinite', wave: 'lmWave 2.4s ease-in-out infinite', listen: 'lmBreathe 2.6s ease-in-out infinite' };
+    const side = p.side === 'left' ? 'left' : 'right';
+    const bottom = p.bottom != null ? p.bottom : 22;
+    const size = (p.size || 104) + 'px';
+    const place = side === 'left'
+      ? 'left:clamp(14px,3vw,28px);bottom:' + bottom + 'px;flex-direction:row-reverse'
+      : 'right:clamp(14px,3vw,28px);bottom:' + bottom + 'px';
+    return {
+      shown: !this.state.gone,
+      place, size,
+      bg: 'url("' + IMG[pose] + '")',
+      anim: ANIM[pose],
+      ringOn: pose === 'listen',
+      title: 'Люмен — ваш компаньон',
+      message: p.message || 'Я Люмен — помогу разобраться',
+      leftBubble: side === 'right' && this.state.bubble && !this.state.low,
+      rightBubble: side === 'left' && this.state.bubble && !this.state.low,
+      hasAction: !!p.actionLabel,
+      actionLabel: p.actionLabel || '', actionHref: p.actionHref || '#',
+      toggle: () => { clearTimeout(this._t); this.setState(s => ({ bubble: !s.bubble })); },
+      hide: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ gone: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

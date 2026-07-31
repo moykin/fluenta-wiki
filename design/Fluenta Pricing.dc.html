@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #FAFAF8; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+  ::selection { background: rgba(79,70,229,.14); }
+  @keyframes prPop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  @media (max-width: 639px) { #prTabs { display: none !important; } }
+</style>
+</helmet>
+<div data-screen-label="Pricing" style="min-height:100vh;background:#FAFAF8;">
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8;user-select:none;">
+    <div style="display:flex;align-items:center;gap:22px;height:58px;padding:0 clamp(16px,4vw,40px);max-width:1220px;margin:0 auto;">
+      <a href="Fluenta Library v2.dc.html" style="display:flex;align-items:center;gap:9px;flex:none;color:#1A1A1A;text-decoration:none;">
+        <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif;">f</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:-.01em;">fluenta.wiki</span>
+      </a>
+      <div id="prTabs" style="display:flex;align-items:stretch;gap:4px;height:58px;">
+        <a href="Fluenta Library v2.dc.html" style="display:flex;align-items:center;padding:0 10px;font-size:13.5px;font-weight:500;color:#6B7280;text-decoration:none;" style-hover="color:#1A1A1A;">Библиотека</a>
+        <a href="Fluenta Progress.dc.html" style="display:flex;align-items:center;padding:0 10px;font-size:13.5px;font-weight:500;color:#6B7280;text-decoration:none;" style-hover="color:#1A1A1A;">Прогресс</a>
+        <span style="display:flex;align-items:center;padding:0 10px;font-size:13.5px;font-weight:600;color:#1A1A1A;border-bottom:2px solid #4F46E5;margin-bottom:-1px;">Тарифы</span>
+      </div>
+      <div style="flex:1;"></div>
+      <div title="Анна · уровень B2" style="width:30px;height:30px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex:none;">А</div>
+    </div>
+  </div>
+  <div style="max-width:960px;margin:0 auto;padding:92px clamp(16px,4vw,40px) 56px;">
+    <div id="pr-bannerwrap" style="margin-bottom:36px;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;margin-bottom:8px;">Так Pro появляется в приложении — вежливо, не блокируя</div>
+      <div id="pr-banner" style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:14px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <span style="flex:none;width:36px;height:36px;border-radius:50%;background:rgba(251,191,36,.16);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        </span>
+        <div style="flex:1;min-width:220px;">
+          <div style="font-size:13.5px;font-weight:600;">Вы использовали 10 минут тьютора на сегодня</div>
+          <div style="font-size:12.5px;color:#6B7280;margin-top:2px;">Бесплатные минуты вернутся завтра. С Pro дневного лимита нет.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex:none;">
+          <button id="pr-ban-pro" class="fl-tap" style="height:34px;padding:0 14px;background:#4F46E5;color:#fff;border:none;border-radius:9px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;" style-hover="background:#4338CA;">Продолжить с Pro</button>
+          <button id="pr-ban-later" class="fl-tap" style="height:34px;padding:0 12px;background:#fff;color:#6B7280;border:1px solid #E5E7EB;border-radius:9px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;" style-hover="background:#FAFAF8;">Завтра</button>
+          <button id="pr-ban-close" aria-label="Закрыть" class="fl-tap" style="width:30px;height:30px;border:none;background:transparent;border-radius:8px;color:#9CA3AF;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#F0F0EE;color:#1A1A1A;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;max-width:620px;margin:0 auto;">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(30px,4.2vw,40px);font-weight:700;letter-spacing:-.01em;line-height:1.2;margin:0;">От чтения — к речи</h1>
+      <div style="font-family:'Source Serif 4',serif;font-size:17.5px;line-height:1.5;font-weight:600;color:#1A1A1A;margin:12px auto 0;max-width:24em;text-wrap:pretty;">Fluenta превращает то, что вы читаете, в то, что вы можете сказать.</div>
+      <div style="font-size:14.5px;line-height:1.65;color:#6B7280;margin-top:12px;">Бесплатно — чтобы начать читать. Pro — чтобы заговорить: 150 голосовых минут в месяц, все карьерные треки и разбор каждой ошибки. Чтение и повторения счётчик минут не расходуют.</div>
+      <div style="display:inline-flex;background:#F0F0EE;border-radius:999px;padding:3px;margin-top:22px;">
+        <button id="pr-bm" class="fl-tap" style="height:32px;padding:0 16px;border:none;border-radius:999px;background:#fff;color:#1A1A1A;box-shadow:0 1px 2px rgba(26,26,26,.08);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">Помесячно</button>
+        <button id="pr-by" class="fl-tap" style="height:32px;padding:0 16px;border:none;border-radius:999px;background:transparent;color:#6B7280;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">На год <span style="color:#10B981;font-weight:600;">−35%</span></button>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:34px;">
+      <div style="flex:1 1 300px;max-width:420px;background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:26px 26px 22px;box-sizing:border-box;">
+        <div style="font-size:15px;font-weight:600;">Free</div>
+        <div style="font-size:12.5px;color:#6B7280;margin-top:3px;">Читайте каждый день, говорите раз в неделю</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-top:16px;">
+          <span style="font-family:'Source Serif 4',serif;font-size:38px;font-weight:600;">$0</span>
+          <span style="font-size:13px;color:#9CA3AF;">навсегда</span>
+        </div>
+        <a href="Fluenta Library v2.dc.html" class="fl-tap" style="display:flex;align-items:center;justify-content:center;height:42px;margin-top:18px;border:1px solid #E5E7EB;border-radius:10px;background:#fff;color:#1A1A1A;font-size:13.5px;font-weight:500;text-decoration:none;" style-hover="background:#FAFAF8;border-color:#D1D5DB;">Начать бесплатно</a>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:#374151;">
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Мгновенный перевод слов и фраз</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>3 импорта своих текстов в месяц</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Повторения из своих текстов — счётчика минут нет</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Голос: один пересказ в неделю (≈15 мин в месяц)</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Один карьерный трек на выбор</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;color:#9CA3AF;"><span style="flex:none;width:15px;text-align:center;">—</span>Без глубоких объяснений грамматики и mock interview</div>
+        </div>
+      </div>
+      <div style="flex:1 1 300px;max-width:420px;position:relative;background:#fff;border:1px solid #4F46E5;border-radius:16px;box-shadow:0 8px 28px rgba(79,70,229,.1);padding:26px 26px 22px;box-sizing:border-box;">
+        <span style="position:absolute;top:-11px;left:26px;background:#4F46E5;color:#fff;font-size:11px;font-weight:600;letter-spacing:.03em;border-radius:999px;padding:3px 10px;">Самый популярный</span>
+        <div style="font-size:15px;font-weight:600;color:#4F46E5;">Pro</div>
+        <div style="font-size:12.5px;color:#6B7280;margin-top:3px;">Полный цикл: чтение → пересказ → память → собеседование</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-top:16px;">
+          <span id="pr-price" style="font-family:'Source Serif 4',serif;font-size:38px;font-weight:600;">$19</span>
+          <span id="pr-per" style="font-size:13px;color:#9CA3AF;">в месяц</span>
+        </div>
+        <div id="pr-note" style="font-size:12px;color:#6B7280;margin-top:4px;">или $149 при оплате за год — экономия 35%</div>
+        <button id="pr-cta" style="display:flex;align-items:center;justify-content:center;width:100%;height:42px;margin-top:14px;border:none;border-radius:10px;background:#4F46E5;color:#fff;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;" style-hover="background:#4338CA;">Попробовать 7 дней бесплатно</button>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:#374151;">
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Полный разбор «почему так переводится»</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Импорт текстов — счётчика нет</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Повторения и синхронизация устройств — без счётчика</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Голос: 150 минут в месяц ≈ 25 пересказов</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Все 10 карьерных треков и mock interview</div>
+          <div style="display:flex;gap:9px;align-items:flex-start;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Аналитика памяти, ошибок и минут речи</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:26px;font-size:12.5px;color:#6B7280;">
+      <span style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>7 дней бесплатно — карта не нужна</span>
+      <span style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Отмена в один клик</span>
+      <span style="display:flex;align-items:center;gap:6px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Студентам — скидка 40%</span>
+    </div>
+    <div style="max-width:820px;margin:48px auto 0;">
+      <div style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:700;letter-spacing:-.01em;">Сравнение планов</div>
+      <div style="margin-top:14px;border:1px solid #E5E7EB;border-radius:14px;background:#fff;box-shadow:0 1px 2px rgba(26,26,26,.04);overflow:hidden;">
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);padding:12px 18px 12px;border-bottom:1px solid #F3F4F6;">
+          <span style="font-size:12px;font-weight:600;color:#9CA3AF;"></span>
+          <span style="font-size:12.5px;font-weight:600;text-align:center;color:#6B7280;">Free</span>
+          <span style="font-size:12.5px;font-weight:600;text-align:center;color:#4F46E5;background:#FAFAFF;border:1px solid #E0E7FF;border-bottom:none;border-radius:10px 10px 0 0;padding:6px 0;margin:-6px 0 -12px;">Pro</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);padding:10px 18px 4px;">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF;">Чтение</span><span></span>
+          <span style="background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-10px 0 -4px;"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Мгновенный перевод слов и фраз</span>
+          <span style="text-align:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Разбор «почему так переводится»: грамматика, формы, идиомы</span>
+          <span style="text-align:center;color:#D1D5DB;">—</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Импорт своих текстов — PDF, EPUB, ссылки</span>
+          <span style="text-align:center;font-size:12.5px;color:#6B7280;">3 в месяц</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">счётчика нет</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);padding:12px 18px 4px;">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF;">Речь</span><span></span>
+          <span style="background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-12px 0 -4px;"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Голосовые минуты: пересказы, тьютор, mock interview</span>
+          <span style="text-align:center;font-size:12.5px;color:#6B7280;">≈15 мин/мес</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">150 мин/мес</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Обратная связь по пересказу</span>
+          <span style="text-align:center;font-size:12.5px;color:#6B7280;">базовая</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">грамматика + стиль</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Карьерные треки: термины, самопрезентация, тексты профессии</span>
+          <span style="text-align:center;font-size:12.5px;color:#6B7280;">1 трек</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">10 треков</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Mock interview: вопрос голосом, разбор структуры ответа</span>
+          <span style="text-align:center;color:#D1D5DB;">—</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">✓</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Пакеты дополнительных минут</span>
+          <span style="text-align:center;color:#D1D5DB;">—</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">+60 и +180 мин</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);padding:12px 18px 4px;">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF;">Память и прогресс</span><span></span>
+          <span style="background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-12px 0 -4px;"></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Карточки FSRS из ваших текстов и ошибок</span>
+          <span style="text-align:center;font-size:12.5px;color:#6B7280;">20 карточек</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;font-size:12.5px;font-weight:600;color:#1A1A1A;">счётчика нет</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px;">
+          <span style="font-size:13.5px;color:#374151;">Синхронизация между устройствами</span>
+          <span style="text-align:center;color:#D1D5DB;">—</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;margin:-9px 0;padding:9px 0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr minmax(84px,140px) minmax(84px,140px);align-items:center;padding:9px 18px 12px;">
+          <span style="font-size:13.5px;color:#374151;">Аналитика памяти, ошибок и уровня</span>
+          <span style="text-align:center;color:#D1D5DB;">—</span>
+          <span style="text-align:center;background:#FAFAFF;border-left:1px solid #E0E7FF;border-right:1px solid #E0E7FF;border-bottom:1px solid #E0E7FF;border-radius:0 0 10px 10px;margin:-9px 0 -12px;padding:9px 0 12px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:820px;margin:22px auto 0;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:22px 24px;">
+      <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;">
+        <div style="flex:1 1 320px;min-width:250px;">
+          <div style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;letter-spacing:-.01em;">Если минут не хватило</div>
+          <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:6px;max-width:56ch;">Пакет докупается отдельно и не меняет подписку. Минуты пакета остаются с вами, пока не потратите — они не сгорают в конце месяца.</div>
+        </div>
+        <div style="font-size:12.5px;color:#9CA3AF;">Расходуются только пересказы, тьютор и mock interview</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px;">
+        <div style="border:1px solid #E5E7EB;border-radius:12px;padding:15px 16px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">Пакет</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:6px;"><span style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;">+60</span><span style="font-size:12.5px;color:#6B7280;">минут</span></div>
+          <div style="font-size:13px;color:#374151;margin-top:6px;">$6 — примерно 10 пересказов</div>
+        </div>
+        <div style="border:1px solid #C7D2FE;background:#FAFAFF;border-radius:12px;padding:15px 16px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#4F46E5;">Перед собеседованием</div>
+          <div style="display:flex;align-items:baseline;gap:6px;margin-top:6px;"><span style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;">+180</span><span style="font-size:12.5px;color:#6B7280;">минут</span></div>
+          <div style="font-size:13px;color:#374151;margin-top:6px;">$15 — спринт из 12 сессий</div>
+        </div>
+        <div style="border:1px solid #E5E7EB;border-radius:12px;padding:15px 16px;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">Что не тратит минуты</div>
+          <div style="font-size:13px;line-height:1.6;color:#374151;margin-top:8px;">Чтение, перевод, разборы, карточки и повторения — счётчика у них нет.</div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:820px;margin:22px auto 0;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:22px 24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+      <div style="flex:1;min-width:260px;">
+        <div style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;letter-spacing:-.01em;">Для школ и команд</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;font-size:13px;color:#374151;">
+          <div style="display:flex;gap:8px;align-items:flex-start;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>Дашборд прогресса группы для преподавателя</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg>Домашнее чтение и отчёты по пересказам</div>
+          <div style="display:flex;gap:8px;align-items:flex-start;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px;"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9.5" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path><path d="M15.5 3.1a4 4 0 0 1 0 7.8"></path></svg>Общие подборки текстов и управление местами</div>
+        </div>
+      </div>
+      <div style="flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:7px;">
+        <button id="pr-b2b" class="fl-tap" style="height:40px;padding:0 18px;background:#fff;border:1px solid #E5E7EB;border-radius:10px;color:#1A1A1A;font-family:'Inter',sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;" style-hover="background:#FAFAF8;border-color:#D1D5DB;">Связаться с нами</button>
+        <span style="font-size:11.5px;color:#9CA3AF;">от 5 мест · счёт для организаций</span>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:12.5px;color:#9CA3AF;margin-top:56px;">fluenta.wiki · честные цены: без таймеров, скрытых списаний и «сгорающих скидок» · <a href="Fluenta About.dc.html" style="color:#6B7280;text-decoration:underline;text-underline-offset:3px;">Кто делает Fluenta?</a></div>
+  </div>
+  <div id="pr-toast" class="fl-toast" style="position:fixed;top:70px;right:24px;z-index:80;background:#1A1A1A;color:#fff;font-size:13px;font-weight:500;padding:8px 14px;border-radius:10px;box-shadow:0 8px 20px rgba(26,26,26,.18);display:none;animation:prPop .18s ease-out;user-select:none;"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;defaultBilling&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;monthly&quot;, &quot;yearly&quot;], &quot;default&quot;: &quot;monthly&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Тарифы&quot;},
+  &quot;showPaywallDemo&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Тарифы&quot;}
+}">
+class Component extends DCLogic {
+  renderVals() { return {}; }
+  componentDidMount() {
+    this.$ = (id) => document.getElementById(id);
+    this.billing = 'monthly';
+    this.applyProps();
+    this.bind();
+  }
+  componentDidUpdate() { this.applyProps(); }
+  applyProps() {
+    const b = this.props.defaultBilling || 'monthly';
+    if (b !== this.propBilling) { this.propBilling = b; this.setBilling(b); }
+    const w = this.$('pr-bannerwrap');
+    if (w) w.style.display = (this.props.showPaywallDemo != null ? this.props.showPaywallDemo : true) ? 'block' : 'none';
+  }
+  setBilling(b) {
+    this.billing = b;
+    const m = b === 'monthly';
+    this.$('pr-price').textContent = m ? '$19' : '$149';
+    this.$('pr-per').textContent = m ? 'в месяц' : 'в год';
+    this.$('pr-note').textContent = m ? 'или $149 при оплате за год — экономия 35%' : '≈ $12 в месяц · списание раз в год';
+    const bm = this.$('pr-bm'), by = this.$('pr-by');
+    bm.style.background = m ? '#fff' : 'transparent';
+    bm.style.color = m ? '#1A1A1A' : '#6B7280';
+    bm.style.boxShadow = m ? '0 1px 2px rgba(26,26,26,.08)' : 'none';
+    by.style.background = m ? 'transparent' : '#fff';
+    by.style.color = m ? '#6B7280' : '#1A1A1A';
+    by.style.boxShadow = m ? 'none' : '0 1px 2px rgba(26,26,26,.08)';
+  }
+  toast(t) {
+    const el = this.$('pr-toast');
+    el.textContent = t;
+    el.style.display = 'block';
+    clearTimeout(this.toastT);
+    this.toastT = setTimeout(() => { el.style.display = 'none'; }, 2100);
+  }
+  bind() {
+    const $ = this.$;
+    $('pr-bm').addEventListener('click', () => this.setBilling('monthly'));
+    $('pr-by').addEventListener('click', () => this.setBilling('yearly'));
+    $('pr-cta').addEventListener('click', () => this.toast('Триал начнётся после регистрации — карта не нужна'));
+    $('pr-ban-pro').addEventListener('click', () => this.toast('Триал начнётся после регистрации — карта не нужна'));
+    $('pr-ban-later').addEventListener('click', () => { $('pr-bannerwrap').style.display = 'none'; this.toast('Напомним завтра, когда вернутся бесплатные минуты'); });
+    $('pr-ban-close').addEventListener('click', () => { $('pr-bannerwrap').style.display = 'none'; });
+    $('pr-b2b').addEventListener('click', () => this.toast('Ответим в течение рабочего дня — sales@fluenta.wiki'));
+  }
+}
+</script>
+</body>
+</html>

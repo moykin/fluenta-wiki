@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8}
+body{font-family:'Inter',system-ui,sans-serif;color:#1A1A1A;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.14)}
+html{scroll-behavior:smooth}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+summary{list-style:none}summary::-webkit-details-marker{display:none}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sv-h2{font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0;scroll-margin-top:80px}
+.sv-p{font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty}
+.sv-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px}
+.sv-chip{display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:500;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 12px}
+.sv-chip:hover{background:#E0E7FF;color:#4338CA}
+#svSticky{display:none}
+@media (max-width:639px){#svSticky{display:flex !important}#svNav{display:none !important}}
+@media (max-width:760px){.sv-two{grid-template-columns:1fr !important}.sv-scroll{overflow-x:auto}}
+</style>
+</helmet>
+<div data-screen-label="SEO · Видео" style="min-height:100vh;background:#FAFAF8">
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8">
+    <div style="display:flex;align-items:center;gap:16px;height:58px;padding:0 clamp(16px,4vw,40px);max-width:1220px;margin:0 auto">
+      <a href="Fluenta Landing.dc.html" style="display:flex;align-items:center;gap:9px;flex:none;color:#1A1A1A">
+        <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif">f</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:-.01em">fluenta.wiki</span>
+      </a>
+      <div id="svNav" style="display:flex;align-items:center;gap:14px;font-size:13.5px;color:#6B7280">
+        <a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Метод</a>
+        <a href="Fluenta SEO Texts.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Тексты</a>
+        <a href="Fluenta SEO Grammar.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Грамматика</a>
+        <a href="Fluenta SEO Career.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Для работы</a>
+      </div>
+      <div style="flex:1"></div>
+      <a href="Fluenta Library v2.dc.html" style="font-size:13.5px;font-weight:500;color:#6B7280;flex:none" style-hover="color:#1A1A1A">Войти</a>
+      <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:flex;align-items:center;justify-content:center;height:34px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:13px;font-weight:500;flex:none" style-hover="background:#4338CA;color:#fff">Начать бесплатно</a>
+    </div>
+  </div>
+
+  <main style="max-width:1060px;margin:0 auto;padding:88px clamp(16px,4vw,40px) 0;box-sizing:border-box">
+    <nav aria-label="Хлебные крошки" style="max-width:68ch;margin:0 auto">
+      <ol style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;list-style:none;margin:0;padding:0;font-size:12.5px;color:#9CA3AF">
+        <li><a href="Fluenta Landing.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Главная</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Метод</a></li>
+        <li aria-hidden="true">›</li>
+        <li style="color:#9CA3AF">Как учить язык по видео</li>
+      </ol>
+    </nav>
+
+    <article style="max-width:68ch;margin:0 auto">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(30px,4.6vw,44px);font-weight:700;letter-spacing:-.015em;line-height:1.2;margin:18px 0 0;text-wrap:pretty">Как учить язык по видео: понимание на слух, память, пересказ и&nbsp;грамматика</h1>
+      <p style="font-family:'Source Serif 4',serif;font-size:18px;line-height:1.7;color:#374151;margin:18px 0 0;text-wrap:pretty">Смотреть ролики на языке — не то же самое, что учиться по ним. Разница в том, что вы делаете с роликом после просмотра. Здесь — цикл из пяти проходов по одному видео на 20 минут: он закрывает слух, память, пересказ и грамматику разом, потому что все четыре навыка работают на одном материале.</p>
+      <div style="display:flex;align-items:center;gap:11px;margin-top:22px;padding-top:18px;border-top:1px solid #ECECE8;flex-wrap:wrap">
+        <span style="width:34px;height:34px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">ЕМ</span>
+        <div style="font-size:12.5px;line-height:1.45">
+          <div style="font-weight:600">Fluenta — независимый проект <a href="Fluenta About.dc.html">Евгения Мойкина</a></div>
+          <div style="color:#9CA3AF">Обновлено 28 июля 2026 · 8 мин чтения</div>
+        </div>
+      </div>
+      <nav aria-label="Содержание" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px">
+        <a href="#why" class="sv-chip fl-tap">Почему видео сложнее</a>
+        <a href="#cycle" class="sv-chip fl-tap">Пять проходов</a>
+        <a href="#skills" class="sv-chip fl-tap">Что тренирует каждый шаг</a>
+        <a href="#which" class="sv-chip fl-tap">Какие ролики брать</a>
+        <a href="#faq" class="sv-chip fl-tap">Вопросы</a>
+      </nav>
+
+      <h2 id="why" class="sv-h2" style="margin-top:52px">Почему видео сложнее текста — и почему это полезно</h2>
+      <p class="sv-p">У текста вы задаёте темп сами. У речи темп задаёт говорящий: 150–180 слов в минуту, без пауз на подумать, и сказанное сразу исчезает. Поэтому знакомое на бумаге слово в потоке речи вы не узнаёте — это не пробел в словаре, а пробел в скорости распознавания.</p>
+      <p class="sv-p">Именно поэтому видео — лучший тренажёр памяти из всех. Чтобы пересказать ролик, приходится удерживать смысл, а не формулировки: подглядеть некуда. Текст можно перечитать, видео — надо запомнить.</p>
+      <div class="sv-card" style="padding:18px 20px;margin-top:20px">
+        <div style="font-size:12.5px;line-height:1.65;color:#374151">Три разрыва, которые ломают обучение по видео:<br>— <b>скорость</b>: вы понимаете 60% и теряете нить;<br>— <b>исчезновение</b>: непонятную фразу не переслушать, не потеряв следующую;<br>— <b>иллюзия понимания</b>: с русскими субтитрами кажется, что вы поняли ролик, но вы прочитали перевод.</div>
+      </div>
+    </article>
+
+    <div style="max-width:820px;margin:36px auto 0">
+      <div style="height:clamp(200px,36vw,340px);border-radius:16px;overflow:hidden;border:1px solid #E5E7EB">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="seo-video-hero" shape="rect" placeholder="Скриншот раздела «Видео»: плеер, транскрипт, выжимка — перетащите сюда" hint-size="100%,100%"></x-import>
+      </div>
+      <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px">Раздел «Видео» в Fluenta: расшифровка с таймкодами и выжимка в трёх уровнях</div>
+    </div>
+
+    <section id="cycle" style="max-width:820px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="sv-h2">Цикл: пять проходов по одному ролику</h2>
+        <p class="sv-p">Один ролик на 8–12 минут даёт материал на 20 минут работы. Нажмите на шаг — увидите, что именно происходит и сколько это занимает.</p>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:22px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <button onClick="{{ s.on }}" style="display:flex;align-items:center;gap:9px;border:1px solid {{ s.bd }};background:{{ s.bg }};border-radius:12px;padding:10px 14px;cursor:pointer;font-family:Inter,sans-serif;text-align:left" style-hover="border-color:#C7D2FE">
+            <span style="width:22px;height:22px;border-radius:50%;background:{{ s.nbg }};color:{{ s.ncl }};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none">{{ s.n }}</span>
+            <span style="font-size:13px;font-weight:{{ s.fw }};color:{{ s.cl }}">{{ s.label }}</span>
+            <span style="font-size:11.5px;color:#9CA3AF">{{ s.mins }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div class="sv-card" style="padding:24px clamp(16px,3.5vw,30px);margin-top:14px;box-shadow:0 12px 34px rgba(26,26,26,.07)">
+        <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+          <span style="font-family:'Source Serif 4',serif;font-size:14px;color:#D1D5DB">{{ actNum }}</span>
+          <h3 style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;margin:0">{{ actTitle }}</h3>
+          <span style="margin-left:auto;font-size:11.5px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:3px 10px">тренирует: {{ actSkill }}</span>
+        </div>
+        <p class="sv-p" style="font-size:16px">{{ actBody }}</p>
+        <div style="background:#FAFAF8;border:1px solid #F0F0EE;border-radius:12px;padding:15px 17px;margin-top:16px">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.09em;color:#9CA3AF;margin-bottom:9px">{{ actDemoLabel }}</div>
+          <sc-for list="{{ actLines }}" as="l" hint-placeholder-count="3">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:6px 0">
+              <span style="flex:none;font-size:11.5px;font-weight:600;color:#4F46E5;font-variant-numeric:tabular-nums;padding-top:2px;min-width:34px">{{ l.tag }}</span>
+              <span style="font-size:13.5px;line-height:1.6;color:#374151;min-width:0">{{ l.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px 14px;margin-top:14px">
+          <span style="flex:none;font-weight:700;color:#B45309">!</span>
+          <span style="font-size:12.5px;line-height:1.55;color:#78350F">{{ actWarn }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" style="max-width:900px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="sv-h2">Что именно тренирует каждый навык</h2>
+        <p class="sv-p">Один ролик — четыре навыка. Не потому что «всё сразу полезно», а потому что каждый проход нагружает свой механизм.</p>
+      </div>
+      <div class="sv-two" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px">
+        <sc-for list="{{ skills }}" as="k" hint-placeholder-count="4">
+          <div class="sv-card" style="padding:18px 20px">
+            <div style="display:flex;align-items:center;gap:9px">
+              <span style="width:28px;height:28px;border-radius:9px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:none">{{ k.glyph }}</span>
+              <div style="font-size:15.5px;font-weight:600">{{ k.name }}</div>
+            </div>
+            <div style="font-size:13px;line-height:1.65;color:#374151;margin-top:11px">{{ k.how }}</div>
+            <div style="font-size:12px;line-height:1.55;color:#6B7280;margin-top:9px;padding-top:9px;border-top:1px solid #F3F4F6"><b>Проверка:</b> {{ k.check }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="which" style="max-width:900px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="sv-h2">Какие ролики брать — и какие не стоит</h2>
+        <p class="sv-p">Хорошее учебное видео — не то, которое интереснее, а то, где речь опирается на картинку и говорит один человек. Ориентир по уровню:</p>
+      </div>
+      <div class="sv-scroll" style="margin-top:20px">
+        <div class="sv-card" style="overflow:hidden;min-width:560px">
+          <div style="display:grid;grid-template-columns:70px 1.4fr 1fr 90px;gap:0;background:#FAFAF8;border-bottom:1px solid #E5E7EB;padding:11px 16px;font-size:11.5px;font-weight:600;letter-spacing:.05em;color:#6B7280">
+            <span>Уровень</span><span>Что смотреть</span><span>Чего избегать</span><span style="text-align:right">Длина</span>
+          </div>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:70px 1.4fr 1fr 90px;gap:0;padding:13px 16px;border-bottom:1px solid #F3F4F6;align-items:start">
+              <span style="font-size:12.5px;font-weight:700;color:#4F46E5">{{ r.lvl }}</span>
+              <span style="font-size:13px;line-height:1.55;color:#1A1A1A;padding-right:12px">{{ r.good }}</span>
+              <span style="font-size:13px;line-height:1.55;color:#6B7280;padding-right:12px">{{ r.bad }}</span>
+              <span style="font-size:12.5px;color:#374151;text-align:right">{{ r.len }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div class="sv-card" style="padding:18px 20px;margin-top:14px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:9px">Признаки ролика, на котором вы застрянете</div>
+        <div style="font-size:13px;line-height:1.7;color:#374151">Двое перебивают друг друга · музыка громче речи · нарезка по 2 секунды на план · юмор, построенный на игре слов · сильный незнакомый акцент в первые 30 секунд · длина больше 20 минут. Всё это можно смотреть для удовольствия — но не как учебный материал.</div>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:64px auto 0">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="sv-h2">Неделя с видео: четыре ролика вместо семи</h2>
+        <p class="sv-p">Один ролик живёт три дня: разбор, пересказ по памяти, повторение фраз. Возвращение к тому же материалу и есть то, что переводит слова из «узнаю» в «говорю».</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:20px">
+        <sc-for list="{{ week }}" as="d" hint-placeholder-count="5">
+          <div class="sv-card" style="padding:14px 15px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;color:#9CA3AF">{{ d.day }}</div>
+            <div style="font-size:13.5px;font-weight:600;margin-top:6px">{{ d.what }}</div>
+            <div style="font-size:12px;line-height:1.55;color:#6B7280;margin-top:5px">{{ d.note }}</div>
+            <div style="font-size:11.5px;color:#4F46E5;font-weight:600;margin-top:8px">{{ d.mins }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0">
+      <div class="sv-card" style="padding:26px clamp(18px,3.5vw,30px);background:#141518;border-color:#141518">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+          <div style="flex:1 1 320px;min-width:0">
+            <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#C7D2FE;background:rgba(79,70,229,.2);border:1px solid rgba(199,210,254,.3);border-radius:9px;padding:6px 11px;margin-bottom:10px;text-wrap:pretty">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+            <h2 style="font-family:'Source Serif 4',serif;font-size:24px;font-weight:700;color:#fff;margin:0">Вставьте ссылку — остальное сделает Fluenta</h2>
+            <p style="font-size:13.5px;line-height:1.65;color:#9BA0A8;margin:10px 0 0">Gemini расшифрует речь с таймкодами, соберёт выжимку в трёх уровнях и план пересказа. Вы смотрите оригинал, говорите вслух и получаете разбор: что упустили и как это сказать точнее.</p>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap">
+            <a href="Fluenta Video.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 18px;background:#4F46E5;color:#fff;border-radius:10px;font-size:14px;font-weight:600" style-hover="background:#4338CA;color:#fff">Открыть раздел «Видео»</a>
+            <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:10px;font-size:14px;font-weight:600" style-hover="border-color:rgba(255,255,255,.5);color:#fff">Начать бесплатно</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="max-width:820px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="sv-h2">Частые вопросы</h2>
+      </div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px">
+        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+          <details style="border-bottom:1px solid #ECECE8">
+            <summary style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:16px 2px;font-size:15.5px;font-weight:600">
+              <span style="min-width:0">{{ f.q }}</span>
+              <span style="margin-left:auto;flex:none;color:#9CA3AF;font-size:18px">+</span>
+            </summary>
+            <div style="font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.7;color:#374151;padding:0 2px 18px;max-width:66ch">{{ f.a }}</div>
+          </details>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.09em;color:#9CA3AF;margin-bottom:12px">ЧИТАТЬ ДАЛЬШЕ</div>
+      <div class="sv-two" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="4">
+          <a href="{{ r.href }}" class="sv-card" style="display:block;padding:16px 18px;color:#1A1A1A" style-hover="border-color:#C7D2FE">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;color:#9CA3AF">{{ r.kind }}</div>
+            <div style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;line-height:1.35;margin-top:6px">{{ r.t }}</div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <footer style="max-width:820px;margin:64px auto 0;padding:28px 0 44px;border-top:1px solid #ECECE8">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#6B7280">
+        <a href="Fluenta Landing.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Главная</a>
+        <a href="Fluenta SEO Texts.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Работа с текстами</a>
+        <a href="Fluenta Pricing.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Тарифы</a>
+        <a href="Fluenta About.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">О проекте</a>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:20px">© 2026 Fluenta · fluenta.wiki</div>
+    </footer>
+  </main>
+
+  <sc-if value="{{ stickyShow }}" hint-placeholder-val="{{ false }}">
+    <div id="svSticky" style="position:fixed;left:10px;right:10px;bottom:10px;z-index:70;display:none;align-items:center;gap:10px;background:rgba(255,255,255,.98);border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 10px 30px rgba(26,26,26,.14);padding:10px 12px;animation:rise .3s ease">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12.5px;font-weight:600">Разобрать своё видео</div>
+        <div style="font-size:11px;color:#9CA3AF">Ссылка → расшифровка → выжимка</div>
+      </div>
+      <a href="Fluenta Video.dc.html" style="display:inline-flex;align-items:center;height:36px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:12.5px;font-weight:500;flex:none" style-hover="background:#4338CA;color:#fff">Открыть</a>
+      <button onClick="{{ hideSticky }}" aria-label="Скрыть" style="width:28px;height:28px;border:none;background:none;color:#9CA3AF;font-size:16px;cursor:pointer;flex:none;padding:0" style-hover="color:#1A1A1A">×</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:2400},&quot;stickyCta&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Поведение&quot;}}">
+class Component extends DCLogic {
+  state = { step: 0, scrolled: false, dismissed: false };
+  componentDidMount() {
+    this._sc = () => { const s = window.scrollY > 600; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
+    window.addEventListener('scroll', this._sc, { passive: true });
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._sc); }
+  renderVals() {
+    const STEPS = [
+      {
+        n: '1', label: 'Прогон вслепую', mins: '2 мин', skill: 'слух',
+        title: 'Смотрите без субтитров и ставите одну гипотезу',
+        body: 'Первый просмотр — не для понимания, а для настройки уха на голос, темп и тему. В конце сформулируйте одно предложение: о чём это было. Ошибиться здесь нормально и даже полезно: неверная гипотеза делает второй проход осмысленным.',
+        demoLabel: 'ЧТО ВЫ ДЕЛАЕТЕ',
+        lines: [
+          ['0:00', 'Смотрите целиком, ничего не останавливая и не переводя.'],
+          ['после', 'Одно предложение вслух: «Это про то, что…».'],
+          ['потом', 'Отмечаете 2–3 момента, где потеряли нить, — к ним вернётесь.']
+        ],
+        warn: 'Не включайте субтитры на родном языке. С ними вы читаете перевод, а слух не работает вообще.'
+      },
+      {
+        n: '2', label: 'Выжимка', mins: '3 мин', skill: 'понимание',
+        title: 'Читаете тезисы и понимаете суть до разбора',
+        body: 'Выжимка — не спойлер, а опора. Когда вы знаете пять тезисов ролика, свободные ресурсы уходят на язык, а не на угадывание смысла. В Fluenta та же выжимка есть в трёх уровнях: возьмите на ступень ниже своего, если тема новая.',
+        demoLabel: 'ВЫЖИМКА РОЛИКА, B2',
+        lines: [
+          ['0:18', 'The water leaves the well at about 90°C — the city pays to move heat, not to make it.'],
+          ['3:05', 'The 1973 oil shock, not the climate, drove the switch.'],
+          ['5:20', 'Several fields are being drawn down faster than the rock reheats them.']
+        ],
+        warn: 'Не заучивайте выжимку наизусть: она нужна, чтобы слушать точнее, а пересказывать вы будете своими словами.'
+      },
+      {
+        n: '3', label: 'Разбор фрагмента', mins: '7 мин', skill: 'грамматика',
+        title: 'Берёте 90 секунд и разбираете речь по конструкциям',
+        body: 'Не весь ролик, а один плотный фрагмент. В транскрипте вы видите текст рядом со звуком — и тут грамматика перестаёт быть таблицей: вы слышите, зачем говорящий выбрал именно эту форму. Две-три конструкции за подход, больше не удержится.',
+        demoLabel: 'ТРИ КОНСТРУКЦИИ ИЗ ОДНОГО ФРАГМЕНТА',
+        lines: [
+          ['4:10', '«What followed was not a green programme» — выносим главное в конец: «то, что было дальше, — не…».'],
+          ['3:05', '«It was the price of oil that forced it» — конструкция it was … that подчёркивает причину.'],
+          ['6:28', '«have cooled by several degrees since the eighties» — Present Perfect + since: процесс тянется до сих пор.']
+        ],
+        warn: 'Разбирайте конструкции из речи, а не из учебника: форма, услышанная в контексте, вспоминается вместе с интонацией.'
+      },
+      {
+        n: '4', label: 'Пересказ по памяти', mins: '5 мин', skill: 'память и речь',
+        title: 'Говорите 60–90 секунд, не глядя в транскрипт',
+        body: 'Это главный шаг: пересказ заставляет достать смысл из памяти, а не узнать его на экране. Тьютор сверяет сказанное с тезисами и показывает, что вы пропустили и где сказали неточно. Пропуски — это не ошибки, а карта того, что вы не поняли.',
+        demoLabel: 'РАЗБОР ПОСЛЕ ЗАПИСИ',
+        lines: [
+          ['✓', 'Передали: цена тепла, устройство контура, настоящая причина перехода.'],
+          ['—', 'Упустили: у модели есть предел (5:20) — вернитесь к этому месту.'],
+          ['язык', '«they make the water hot» → «the water comes up already hot»: воду не греют.']
+        ],
+        warn: 'Пересказ с открытым транскриптом — это чтение вслух. Память при нём не работает.'
+      },
+      {
+        n: '5', label: 'Повторение', mins: '3 мин, назавтра', skill: 'словарь',
+        title: 'Возвращаете фразы через день, а не слова',
+        body: 'В карточки уходят не отдельные слова, а фразы из ролика с таймкодом. Через день вы слышите их снова в исходном звуке — так слово закрепляется вместе со скоростью и интонацией, а не как строчка в словаре.',
+        demoLabel: 'ЧТО ПОПАДАЕТ В ПОВТОРЕНИЕ',
+        lines: [
+          ['фраза', '«a field is not a bottomless cup» — целиком, с контекстом.'],
+          ['через 1 день', 'первое повторение, ещё до того как забудете.'],
+          ['через 3 дня', 'если вспомнили легко — интервал растёт сам.']
+        ],
+        warn: 'Не добавляйте больше 5–7 фраз с одного ролика: длинная очередь повторений разваливается на третий день.'
+      }
+    ];
+    const cur = STEPS[this.state.step] || STEPS[0];
+    return {
+      steps: STEPS.map((s, i) => {
+        const a = this.state.step === i;
+        return {
+          key: s.n, n: s.n, label: s.label, mins: s.mins,
+          bg: a ? '#F7F7FF' : '#fff', bd: a ? '#4F46E5' : '#E5E7EB', cl: a ? '#4338CA' : '#374151', fw: a ? 600 : 500,
+          nbg: a ? '#4F46E5' : '#F2F2EF', ncl: a ? '#fff' : '#9CA3AF',
+          on: () => this.setState({ step: i })
+        };
+      }),
+      actNum: '0' + cur.n, actTitle: cur.title, actBody: cur.body, actSkill: cur.skill,
+      actDemoLabel: cur.demoLabel, actWarn: cur.warn,
+      actLines: cur.lines.map(l => ({ key: l[0] + l[1].slice(0, 12), tag: l[0], text: l[1] })),
+
+      skills: [
+        { key: 'listen', glyph: '◍', name: 'Понимание на слух', how: 'Первый проход без субтитров настраивает ухо на темп и голос; третий — сопоставляет звук с текстом, и знакомые слова начинают узнаваться в потоке, а не только на бумаге.', check: 'на втором ролике той же темы вы понимаете первую минуту без транскрипта.' },
+        { key: 'memory', glyph: '◇', name: 'Память', how: 'Пересказ по памяти — это активное извлечение, самый сильный из известных способов удержать материал. Возврат к ролику назавтра и через три дня растягивает интервалы.', check: 'через сутки вы называете 4 тезиса из 5, не открывая выжимку.' },
+        { key: 'retell', glyph: '◎', name: 'Пересказ', how: 'План из трёх шагов (факт → механизм → оценка) даёт структуру, а связки вроде «what actually changed it was…» — язык, которым эта структура держится.', check: 'полторы минуты речи без пауз на подбор слова и без перехода на русский.' },
+        { key: 'grammar', glyph: '§', name: 'Грамматика', how: 'Две-три конструкции из живой речи вместо таблицы времён. Вы разбираете, зачем говорящий выбрал форму, и слышите её ещё раз при повторении.', check: 'вы сами используете разобранную конструкцию в следующем пересказе.' }
+      ],
+      rows: [
+        { key: 'A2', lvl: 'A2', good: 'Медленные обучающие ролики, «как это работает» с крупной анимацией, детский научпоп.', bad: 'Влоги, интервью, любые диалоги.', len: '3–5 мин' },
+        { key: 'B1', lvl: 'B1', good: 'Объяснялки с графикой, кулинария и ремонт, короткий научпоп: картинка подсказывает смысл.', bad: 'Комедия, ток-шоу, спонтанная речь.', len: '5–8 мин' },
+        { key: 'B2', lvl: 'B2', good: 'Документальные эссе, лекции с одним спикером, разборы новостей.', bad: 'Подкасты на 45 минут, живые стримы.', len: '8–15 мин' },
+        { key: 'C1', lvl: 'C1', good: 'Интервью, дебаты, стендап-лекции, речь с сильной позицией и иронией.', bad: 'Ничего — но берите фрагментами по 10 минут.', len: '10–20 мин' }
+      ],
+      week: [
+        { key: 1, day: 'ПН', what: 'Ролик № 1', note: 'Все пять проходов от начала до конца.', mins: '20 мин' },
+        { key: 2, day: 'ВТ', what: 'Пересказ № 1', note: 'По памяти, через сутки. Плюс новый ролик — только проходы 1–2.', mins: '15 мин' },
+        { key: 3, day: 'СР', what: 'Ролик № 2', note: 'Разбор фрагмента и пересказ. Карточки с понедельника.', mins: '20 мин' },
+        { key: 4, day: 'ЧТ', what: 'Повторение', note: 'Только карточки и один пересказ старого ролика.', mins: '10 мин' },
+        { key: 5, day: 'ПТ', what: 'Ролик № 3', note: 'Возьмите на ступень сложнее — с той же темой вы уже знакомы.', mins: '20 мин' }
+      ],
+      faq: [
+        { key: 1, q: 'Можно ли учить язык, просто много смотря сериалы?', a: 'Просмотр без работы над материалом даёт привыкание к звучанию языка — и почти ничего сверх того. Разница появляется, когда после просмотра вы пересказываете содержание вслух и возвращаетесь к фразам через день: тогда включаются память и активная речь, а не только узнавание.' },
+        { key: 2, q: 'С субтитрами или без?', a: 'Без субтитров — первый проход. С субтитрами на изучаемом языке — разбор фрагмента. Субтитры на родном языке не используйте вовсе: с ними вы читаете перевод и не тренируете ни слух, ни память.' },
+        { key: 3, q: 'Какой длины ролик брать новичку?', a: 'На A2–B1 — от трёх до восьми минут. Дело не в терпении: за 20 минут речи вы не удержите содержание и не сможете пересказать, а без пересказа цикл не замыкается.' },
+        { key: 4, q: 'Насколько точна автоматическая расшифровка?', a: 'Gemini разбирает и звук, и надписи на экране, поэтому связный текст получается точным, а вот имена, названия и числа стоит перепроверять по оригиналу. Расшифровка помечена как машинная, а спорное место можно отправить нам одной кнопкой.' },
+        { key: 5, q: 'Зачем нужна выжимка, если я хочу понять сам?', a: 'Выжимка нужна после первого прохода, а не вместо него. Она снимает нагрузку с угадывания смысла и оставляет силы на язык — а проверить себя вы всё равно будете пересказом по памяти, где выжимка закрыта.' },
+        { key: 6, q: 'Сколько роликов в неделю нужно?', a: 'Три-четыре. Каждый живёт три дня — разбор, пересказ, повторение, — поэтому семь новых роликов в неделю только создают ощущение занятости: слова не успевают вернуться и не закрепляются.' }
+      ],
+      related: [
+        { key: 1, kind: 'Метод', t: 'Как выучить английский по текстам: чтение с пересказом', href: 'Fluenta SEO Pillar.dc.html' },
+        { key: 2, kind: 'Тексты', t: 'Как работать с текстами: память, грамматика, словарь', href: 'Fluenta SEO Texts.dc.html' },
+        { key: 3, kind: 'Грамматика', t: 'Past Perfect и Past Simple: в чём разница', href: 'Fluenta SEO Grammar.dc.html' },
+        { key: 4, kind: 'Приложение', t: 'Раздел «Видео»: расшифровка, выжимка, пересказ', href: 'Fluenta Video.dc.html' }
+      ],
+      stickyShow: (this.props.stickyCta ?? true) && this.state.scrolled && !this.state.dismissed,
+      hideSticky: () => this.setState({ dismissed: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

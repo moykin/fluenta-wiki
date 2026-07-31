@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<script src="fluenta-speak.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA;text-decoration:underline}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+input::placeholder{color:#9CA3AF}
+@keyframes wv{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes ping{from{transform:scale(1);opacity:.5}to{transform:scale(1.85);opacity:0}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,6px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:1439px){#tGrid{grid-template-columns:228px minmax(0,1fr) 272px !important;gap:20px !important}}
+@media (max-width:1023px){#tGrid{grid-template-columns:minmax(0,1fr) !important;gap:16px !important;padding-top:118px !important}#tRail,#tScore{position:static !important}#railX{max-height:84px !important}}
+@media (max-width:639px){#tGrid{padding:112px 14px 300px !important}#dock{left:8px !important;right:8px !important;bottom:calc(74px + env(safe-area-inset-bottom,0px)) !important;transform:none !important;width:auto !important}#dockSub{display:none !important}#liveLbl{display:none !important}}
+</style>
+</helmet>
+<div data-screen-label="Tutor Session" style="min-height:100vh">
+<dc-import name="FluentaLumen" pose="listen" message="Слушаю. Говорите как получается — поправлю после реплики, не посреди фразы." side="left" size="100" bottom="130" hint-size="0px,0px" style="position:fixed;left:0;top:0;width:0;height:0"></dc-import>
+<dc-import name="FluentaShell" active="tutor" title="Пересказ · The Lighthouse Keeper" badge="B1" due="14" hint-size="100%,0px"></dc-import>
+<div style="position:fixed;top:58px;left:0;right:0;height:42px;z-index:45;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8;user-select:none">
+  <div style="display:flex;align-items:center;gap:12px;height:42px;padding:0 20px;max-width:1360px;margin:0 auto">
+    <a href="Fluenta Reader.dc.html" class="fl-tap" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:#6B7280;text-decoration:none;border-radius:8px;padding:4px 9px;margin-left:-9px" style-hover="background:#EFEFEB;color:#1A1A1A">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      К тексту
+    </a>
+    <div style="flex:1"></div>
+    <span id="liveLbl" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:#6B7280"><span style="width:7px;height:7px;border-radius:50%;background:#10B981"></span>идёт сессия</span>
+    <div style="font-size:13px;font-weight:600;color:#374151;font-variant-numeric:tabular-nums;min-width:38px;text-align:right">{{ timerStr }}</div>
+    <span title="Голосовые минуты этого месяца: пересказы, тьютор и mock interview. Чтение и повторения счётчик не расходуют." style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:4px 10px;white-space:nowrap">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path></svg>
+      128 / 150 мин
+    </span>
+  </div>
+</div>
+
+<div id="tGrid" style="display:grid;grid-template-columns:260px minmax(0,1fr) 300px;gap:28px;align-items:start;max-width:1360px;margin:0 auto;padding:128px 24px 190px">
+
+  <aside id="tRail" style="position:sticky;top:118px">
+    <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid #F0F0EE">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.75" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B7280;flex:1">Оригинал</div>
+        <div style="font-size:11.5px;color:#9CA3AF">≈900 слов</div>
+      </div>
+      <div style="position:relative">
+        <div id="railX" aria-hidden="true" style="max-height:200px;overflow:hidden;padding:14px 16px;font-family:'Source Serif 4',serif;font-size:13.5px;line-height:1.7;color:#374151;user-select:none;pointer-events:none;filter:{{ railBlur }};transition:filter .25s">Tomás had kept the light at Cabo Norte for forty years, and in all that time he had never once let it go dark. The island was small — a strip of rock, a jetty, a white tower — and he lived alone at its foot with a dog called Bruma. On the last night of October a storm came up from the south-west faster than the radio had promised. At nine o'clock the lamp's rotation gear jammed; the great beam swung once, froze, and died. Tomás climbed the hundred and four steps with a storm lantern in his hand, and from the gallery he saw it: a fishing boat, low in the water, drifting straight for the rocks.</div>
+        <sc-if value="{{ peekAllowed }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ doPeek }}" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E5E7EB;border-radius:999px;padding:8px 14px;font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;color:#374151;cursor:pointer;box-shadow:0 4px 14px rgba(26,26,26,.08);white-space:nowrap" style-hover="border-color:#C7D2FE;background:#FAFAFF">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            {{ peekBtnLabel }}
+          </button>
+        </sc-if>
+        <sc-if value="{{ strictOn }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E5E7EB;border-radius:999px;padding:8px 14px;font-size:12.5px;font-weight:600;color:#9CA3AF;white-space:nowrap;box-shadow:0 4px 14px rgba(26,26,26,.08)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Строгий режим
+          </div>
+        </sc-if>
+      </div>
+      <div style="padding:12px 16px;border-top:1px solid #F0F0EE;display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#92400E;background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:2px 7px">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Подсмотрено {{ peeks }}×
+          </span>
+        </div>
+        <div style="font-size:12px;line-height:1.5;color:#6B7280">{{ peekNoteText }}</div>
+      </div>
+    </div>
+  </aside>
+
+  <main style="min-width:0">
+    <div style="text-align:center;font-size:11.5px;color:#9CA3AF;margin-bottom:22px;user-select:none">Пересказ начат · сегодня в 19:02</div>
+
+    <div style="margin-bottom:30px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:'Source Serif 4',serif;flex:none">L</div>
+        <div style="font-size:12.5px;font-weight:600">Люмен</div>
+      </div>
+      <div style="font-family:'Source Serif 4',serif;font-size:16.5px;line-height:1.65;color:#1A1A1A;text-wrap:pretty">You've just finished “The Lighthouse Keeper” — about nine hundred words. Now tell it back to me in your own words, in English. Don't aim for perfect: just tell me what happened, and I'll listen.</div>
+    </div>
+
+    <div style="margin-bottom:30px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="width:22px;height:22px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none">А</div>
+        <div style="font-size:12.5px;font-weight:600">Вы</div>
+        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:#9CA3AF">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+          голос · 0:52
+        </span>
+      </div>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;box-shadow:0 1px 2px rgba(26,26,26,.03);padding:15px 17px">
+        <div style="font-family:'Source Serif 4',serif;font-size:16px;line-height:1.75;color:#1A1A1A;text-wrap:pretty">
+          <sc-for list="{{ youTokens }}" as="t" hint-placeholder-count="40">
+            <span onMouseEnter="{{ t.on }}" onMouseLeave="{{ t.off }}" onClick="{{ t.on }}" style="cursor:{{ t.cur }}"><span style="background:{{ t.bg }};box-shadow:{{ t.sh }};border-radius:3px;padding:0 2px">{{ t.w }}</span><sc-if value="{{ t.hasSup }}" hint-placeholder-val="{{ false }}"><sup style="color:#92400E;font-weight:600;font-size:11px;font-family:Inter,sans-serif"> {{ t.sup }}</sup></sc-if></span>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;border-top:1px solid #F3F3F0;margin-top:14px;padding-top:13px">
+          <div style="display:flex;align-items:center;gap:11px">
+            <div style="position:relative;width:46px;height:46px;flex:none">
+              <svg width="46" height="46" viewBox="0 0 42 42" style="transform:rotate(-90deg)">
+                <circle cx="21" cy="21" r="17" fill="none" stroke="#F0F0EE" stroke-width="5"></circle>
+                <circle cx="21" cy="21" r="17" fill="none" stroke="#4F46E5" stroke-width="5" stroke-linecap="round" stroke-dasharray="{{ retellDash }}"></circle>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600">{{ retellPct }}</div>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:600">Качество пересказа</div>
+              <div style="font-size:11.5px;color:#6B7280;margin-top:2px">{{ retellVerdict }}</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px">
+            <sc-for list="{{ retellMetrics }}" as="m" hint-placeholder-count="4">
+              <span title="{{ m.hint }}" style="display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;color:{{ m.cl }};background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:999px;padding:4px 11px;white-space:nowrap"><b style="font-weight:600">{{ m.value }}</b>{{ m.label }}</span>
+            </sc-for>
+          </div>
+          <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF;display:inline-flex;align-items:center;gap:6px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#B4B9C0" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="2.6"></circle></svg>
+            наведите на слово — перевод и разбор
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:30px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:'Source Serif 4',serif;flex:none">L</div>
+        <div style="font-size:12.5px;font-weight:600">Люмен</div>
+      </div>
+      <div style="font-family:'Source Serif 4',serif;font-size:16.5px;line-height:1.65;color:#1A1A1A;text-wrap:pretty">Good retelling, Anna. The backbone of the story is all there — the storm, the dead radio, the fire on the beach. Two details slipped away, and I noted two small grammar points:</div>
+
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 18px;margin-top:14px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;flex:1">Память · ключевые события</div>
+          <div style="font-size:12.5px;font-weight:600;color:#374151;font-variant-numeric:tabular-nums">5 из 7</div>
+        </div>
+        <div style="height:5px;border-radius:3px;background:#ECECE8;overflow:hidden;margin:10px 0 14px"><div style="width:71%;height:100%;background:#4F46E5;border-radius:3px"></div></div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ memItems }}" as="m" hint-placeholder-count="7">
+            <div style="display:flex;align-items:center;gap:9px">
+              <sc-if value="{{ m.isOk }}" hint-placeholder-val="{{ true }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </sc-if>
+              <sc-if value="{{ m.isMiss }}" hint-placeholder-val="{{ false }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="1.75" style="flex:none"><circle cx="12" cy="12" r="8.5" stroke-dasharray="3.5 3.5"></circle></svg>
+              </sc-if>
+              <div style="font-size:13.5px;line-height:1.45;color:{{ m.cl }};flex:1;min-width:0">{{ m.t }}</div>
+              <sc-if value="{{ m.isMiss }}" hint-placeholder-val="{{ false }}">
+                <span style="font-size:11px;font-weight:600;color:#92400E;background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:1px 7px;flex:none">пропущено</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 18px;margin-top:12px">
+        <div style="font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7280">Язык · 2 поправки</div>
+        <div style="display:flex;gap:11px;padding:14px 0;border-bottom:1px solid #F3F3F0">
+          <div style="width:19px;height:19px;flex:none;border-radius:6px;background:#FFFBEB;border:1px solid #FDE68A;color:#92400E;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">1</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-family:'Source Serif 4',serif;font-size:14.5px;color:#6B7280">…and he <span style="text-decoration:line-through;text-decoration-color:#D97706">seen</span> a fishing boat</div>
+            <div style="font-family:'Source Serif 4',serif;font-size:15px;margin-top:3px;color:#1A1A1A">→ and he <b style="color:#047857">saw</b> a fishing boat</div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-top:6px">Past Simple — <b>saw</b>. Форма <i>seen</i> — причастие, она работает только с have/had: <i>he had seen</i>.</div>
+            <span style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:11.5px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:3px 9px">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              → в повторение · завтра
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;gap:11px;padding:14px 0">
+          <div style="width:19px;height:19px;flex:none;border-radius:6px;background:#FFFBEB;border:1px solid #FDE68A;color:#92400E;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center">2</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-family:'Source Serif 4',serif;font-size:14.5px;color:#6B7280">…made a big fire <span style="text-decoration:line-through;text-decoration-color:#D97706">on beach</span></div>
+            <div style="font-family:'Source Serif 4',serif;font-size:15px;margin-top:3px;color:#1A1A1A">→ made a big fire <b style="color:#047857">on the beach</b></div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-top:6px">Нужен артикль <b>the</b>: берег конкретный — тот, что у маяка. Сравните: <i>on the beach, at the harbour</i>.</div>
+            <span style="display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:11.5px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:3px 9px">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              → в повторение · завтра
+            </span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:7px;border-top:1px solid #F3F3F0;padding-top:12px;font-size:12.5px;color:#6B7280">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          «Couldn't call nobody» вы поправили сами по ходу — отличный самоконтроль.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:'Source Serif 4',serif;flex:none">L</div>
+        <div style="font-size:12.5px;font-weight:600">Люмен</div>
+        <div style="display:flex;align-items:center;gap:2.5px;height:18px;margin-left:2px;opacity:{{ msgWaveOp }}">
+          <sc-for list="{{ aiBars }}" as="b" hint-placeholder-count="7">
+            <span style="width:3px;height:{{ b.h }};border-radius:2px;background:#4F46E5;transform-origin:center;animation:wv .9s ease-in-out {{ b.d }} infinite;animation-play-state:{{ wavePlay }}"></span>
+          </sc-for>
+        </div>
+        <span style="font-size:11.5px;color:#9CA3AF">{{ aiStatus }}</span>
+      </div>
+      <div style="font-family:'Source Serif 4',serif;font-size:16.5px;line-height:1.7;color:#1A1A1A;text-wrap:pretty">
+        <sc-for list="{{ aiTokens }}" as="t" hint-placeholder-count="30">
+          <span onMouseEnter="{{ t.on }}" onMouseLeave="{{ t.off }}" onClick="{{ t.on }}" style="cursor:{{ t.cur }}"><span style="background:{{ t.bg }};box-shadow:{{ t.sh }};border-radius:3px;padding:0 2px">{{ t.w }}</span></span>
+        </sc-for>
+      </div>
+    </div>
+
+    <sc-if value="{{ isListen }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:26px;animation:rise .18s ease-out">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:22px;height:22px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none">А</div>
+          <div style="font-size:12.5px;font-weight:600">Вы</div>
+          <span style="font-size:11.5px;color:#9CA3AF">говорите…</span>
+        </div>
+        <div style="font-family:'Source Serif 4',serif;font-size:16px;line-height:1.7;color:#6B7280">The lamp was broken… the gear that turns the light was—<span style="display:inline-block;width:2px;height:16px;background:#4F46E5;vertical-align:-2px;margin-left:2px;animation:blink 1s steps(2) infinite"></span></div>
+      </div>
+    </sc-if>
+  </main>
+
+  <aside id="tScore" style="position:sticky;top:118px">
+    <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:18px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-size:15px;font-weight:600;flex:1">Итоги сессии</div>
+        <span style="font-size:11px;font-weight:500;color:#6B7280;background:#F6F6F3;border:1px solid #ECECE8;border-radius:6px;padding:2px 7px">вживую</span>
+      </div>
+
+      <div style="margin-top:16px">
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:12.5px;font-weight:600;color:#374151;flex:1">Память</div>
+          <div style="font-size:19px;font-weight:600;font-variant-numeric:tabular-nums">{{ memPct }}%</div>
+        </div>
+        <div style="height:5px;border-radius:3px;background:#ECECE8;overflow:hidden;margin-top:7px"><div style="width:{{ memPct }}%;height:100%;background:#4F46E5;border-radius:3px;transition:width .3s"></div></div>
+        <div style="font-size:12px;color:#6B7280;margin-top:6px">5 из 7 ключевых событий</div>
+        <sc-if value="{{ peekPenaltyOn }}" hint-placeholder-val="{{ true }}">
+          <div style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:#92400E;background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:2px 7px;margin-top:7px">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            {{ peekPenaltyLabel }}
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="height:1px;background:#F0F0EE;margin:16px 0"></div>
+
+      <div>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:12.5px;font-weight:600;color:#374151;flex:1">Слова из текста</div>
+          <div style="font-size:12.5px;font-weight:600;color:#374151;font-variant-numeric:tabular-nums">6 из 11</div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:9px">
+          <sc-for list="{{ vocab }}" as="v" hint-placeholder-count="11">
+            <span style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:500;border:{{ v.bd }};background:{{ v.bg }};color:{{ v.cl }};border-radius:999px;padding:2px 8px">
+              <sc-if value="{{ v.used }}" hint-placeholder-val="{{ true }}">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </sc-if>
+              {{ v.w }}
+            </span>
+          </sc-for>
+        </div>
+        <div style="font-size:12px;color:#6B7280;margin-top:8px">Серые слова Люмен предложит в следующем вопросе</div>
+      </div>
+
+      <div style="height:1px;background:#F0F0EE;margin:16px 0"></div>
+
+      <div>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <div style="font-size:12.5px;font-weight:600;color:#374151;flex:1">Грамматика</div>
+          <div style="font-size:19px;font-weight:600;font-variant-numeric:tabular-nums">92%</div>
+        </div>
+        <div style="height:5px;border-radius:3px;background:#ECECE8;overflow:hidden;margin-top:7px"><div style="width:92%;height:100%;background:#10B981;border-radius:3px"></div></div>
+        <div style="font-size:12px;color:#6B7280;margin-top:6px">2 поправки · самоисправление засчитано</div>
+      </div>
+
+      <div style="height:1px;background:#F0F0EE;margin:16px 0"></div>
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:34px;height:34px;border-radius:9px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;flex:none">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </div>
+        <div style="min-width:0">
+          <div style="font-size:13px;font-weight:600">+2 карточки в повторение</div>
+          <div style="font-size:12px;color:#6B7280;margin-top:1px">первый показ — завтра</div>
+        </div>
+      </div>
+
+      <div style="font-size:11.5px;color:#9CA3AF;margin-top:14px;line-height:1.5">Оценки уточняются по ходу разговора. Полный разбор — после завершения.</div>
+    </div>
+  </aside>
+</div>
+
+<div id="dock" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);width:min(760px,calc(100vw - 28px));z-index:60;background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 16px 40px rgba(26,26,26,.10);padding:12px 14px">
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="flex:1;min-width:0;user-select:none">
+      <div style="display:flex;align-items:center;gap:8px">
+        <sc-if value="{{ dockBarsOn }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:2.5px;height:16px;flex:none">
+            <sc-for list="{{ dockBars }}" as="b" hint-placeholder-count="5">
+              <span style="width:2.5px;height:{{ b.h }};border-radius:2px;background:#4F46E5;transform-origin:center;animation:wv .8s ease-in-out {{ b.d }} infinite"></span>
+            </sc-for>
+          </div>
+        </sc-if>
+        <div style="font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ dockT1 }}</div>
+      </div>
+      <div id="dockSub" style="font-size:12px;color:#6B7280;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ dockT2 }}</div>
+    </div>
+    <button onClick="{{ micClick }}" title="{{ micTitle }}" style="position:relative;width:58px;height:58px;border-radius:50%;border:{{ micBd }};background:{{ micBg }};cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s" style-hover="box-shadow:0 0 0 5px rgba(79,70,229,.10)">
+      <sc-if value="{{ isListen }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(79,70,229,.55);animation:ping 1.5s cubic-bezier(0,0,.2,1) infinite;pointer-events:none"></span>
+      </sc-if>
+      <sc-if value="{{ isListen }}" hint-placeholder-val="{{ false }}">
+        <span style="position:absolute;inset:0;border-radius:50%;border:2px solid rgba(79,70,229,.35);animation:ping 1.5s cubic-bezier(0,0,.2,1) .75s infinite;pointer-events:none"></span>
+      </sc-if>
+      <sc-if value="{{ iconStop }}" hint-placeholder-val="{{ false }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" stroke="none"><rect x="7" y="7" width="10" height="10" rx="1.5"></rect></svg>
+      </sc-if>
+      <sc-if value="{{ iconMicW }}" hint-placeholder-val="{{ false }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+      </sc-if>
+      <sc-if value="{{ iconMicI }}" hint-placeholder-val="{{ true }}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+      </sc-if>
+    </button>
+    <div style="flex:1;display:flex;align-items:center;justify-content:flex-end;gap:8px">
+      <button onClick="{{ typeToggle }}" title="Ответить текстом" class="fl-tap" style="width:40px;height:40px;border:1px solid {{ kbBd }};background:{{ kbBg }};border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none" style-hover="border-color:#C7D2FE">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ kbCl }}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M6 14h.01M18 14h.01M10 14h4"></path></svg>
+      </button>
+      <button onClick="{{ finish }}" class="fl-tap" style="border:1px solid #E5E7EB;background:#fff;border-radius:10px;padding:10px 15px;font-family:Inter,sans-serif;font-size:13.5px;font-weight:500;color:#374151;cursor:pointer;flex:none;white-space:nowrap" style-hover="background:#F6F6F3;border-color:#D1D5DB" style-active="background:#EFEFEB">Завершить</button>
+    </div>
+  </div>
+  <sc-if value="{{ typeOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:8px;margin-top:11px;animation:rise .15s ease-out">
+      <input id="typeIn" onKeyDown="{{ typeKey }}" placeholder="Напишите ответ по-английски…" style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px;font-family:Inter,sans-serif;font-size:13.5px;color:#1A1A1A;background:#FAFAF8">
+      <button onClick="{{ sendTyped }}" title="Отправить" class="fl-tap" style="width:40px;height:40px;border:none;background:#4F46E5;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none" style-hover="background:#4338CA" style-active="background:#3730A3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </div>
+  </sc-if>
+</div>
+
+<sc-if value="{{ popOn }}" hint-placeholder-val="{{ false }}">
+  <div onMouseEnter="{{ popKeep }}" onMouseLeave="{{ popHide }}" style="position:fixed;left:{{ popX }};top:{{ popY }};transform:{{ popTr }};z-index:90;width:306px;max-height:calc(100vh - 24px);overflow-y:auto;box-sizing:border-box;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 16px 40px rgba(26,26,26,.16);padding:14px 15px;animation:rise .13s ease-out">
+    <div style="display:flex;gap:12px">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:baseline;gap:7px;flex-wrap:wrap">
+          <span style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;letter-spacing:-.01em">{{ popWord }}</span>
+          <span style="font-size:12px;color:#9CA3AF">{{ popPhon }}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px">
+          <span style="font-size:10.5px;font-weight:600;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:5px;padding:1.5px 7px">{{ popLvl }}</span>
+          <span style="font-size:11.5px;color:#6B7280">{{ popPos }}</span>
+          <sc-if value="{{ popInDeck }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:10.5px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:5px;padding:1.5px 7px">в колоде</span>
+          </sc-if>
+        </div>
+      </div>
+      <div style="width:74px;height:56px;border-radius:9px;flex:none;position:relative;overflow:hidden;background:{{ popImgBg }}">
+        <span style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.14) 0 2px,transparent 2px 10px)"></span>
+        <span style="position:absolute;right:5px;bottom:-6px;font-family:'Source Serif 4',serif;font-size:34px;font-weight:700;color:rgba(255,255,255,.42);line-height:.8">{{ popGlyph }}</span>
+        <span style="position:absolute;left:5px;top:4px;font-size:8.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.9)">картинка</span>
+      </div>
+    </div>
+    <div style="font-family:'Source Serif 4',serif;font-size:15.5px;font-weight:600;color:#4338CA;margin-top:11px">{{ popRu }}</div>
+    <div style="font-size:12px;line-height:1.55;color:#6B7280;margin-top:3px">{{ popRuMore }}</div>
+    <div style="background:#FAFAF8;border:1px solid #F0F0EE;border-radius:10px;padding:9px 11px;margin-top:11px">
+      <div style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;margin-bottom:4px">Пример</div>
+      <div style="font-family:'Source Serif 4',serif;font-size:13.5px;line-height:1.55;color:#1A1A1A">{{ popExample }}</div>
+      <div style="font-size:11.5px;color:#9CA3AF;margin-top:4px">{{ popExampleRu }}</div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:11px">
+      <span style="flex:none;width:17px;height:17px;border-radius:5px;background:#F2F2EF;color:#9CA3AF;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">⌘</span>
+      <div style="font-size:11.5px;line-height:1.5;color:#6B7280;min-width:0">{{ popOrigin }}</div>
+    </div>
+    <div style="display:flex;gap:7px;margin-top:13px">
+      <button onClick="{{ popAdd }}" style="flex:1;border:none;background:#4F46E5;color:#fff;border-radius:9px;padding:8px 10px;font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;cursor:pointer" style-hover="background:#4338CA">{{ popAddLabel }}</button>
+      <button onClick="{{ popSay }}" aria-label="Прослушать произношение" title="Прослушать" style="flex:none;width:36px;border:1px solid {{ popSayBd }};background:{{ popSayBg }};border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#C7D2FE">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{ popSayFg }}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      </button>
+      <button onClick="{{ popSlow }}" aria-label="Прослушать медленно" title="Медленно" style="flex:none;width:42px;border:1px solid {{ popSlowBd }};background:{{ popSlowBg }};color:{{ popSlowFg }};border-radius:9px;font-family:Inter,sans-serif;font-size:11px;font-weight:700;cursor:pointer" style-hover="border-color:#C7D2FE">0,5×</button>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div class="fl-toast" style="position:fixed;bottom:24px;left:50%;transform:translate(-50%,0);z-index:80;background:#1A1A1A;color:#fff;font-size:13px;font-weight:500;padding:8px 14px;border-radius:10px;box-shadow:0 8px 20px rgba(26,26,26,.18);animation:toastin .18s ease-out;user-select:none">{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;voiceState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;speaking&quot;,&quot;listening&quot;,&quot;idle&quot;],&quot;default&quot;:&quot;speaking&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Voice&quot;},&quot;strictPeek&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Peeking&quot;},&quot;peekPenalty&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:3,&quot;min&quot;:0,&quot;max&quot;:10,&quot;step&quot;:1,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Peeking&quot;}}">
+class Component extends DCLogic {
+  state = {voice:null,typeOpen:false,peeks:1,peeking:false,peekLeft:0,toast:null,sec:272,hover:null,deck:{},saying:null};
+  speak(w,rate){
+    const F=window.FluentaSpeak, on=this.state.saying;
+    if(!w)return;
+    if(!F){this.toastMsg('Озвучиваю «'+w+'»');return}
+    if(on&&on.w===w&&Math.abs(on.rate-rate)<.01){F.stop();return}
+    F.say(w,{lang:'en-GB',rate:rate,
+      onStart:()=>this.setState({saying:{w:w,rate:rate}}),
+      onEnd:()=>this.setState(s=>(s.saying&&s.saying.w===w&&Math.abs(s.saying.rate-rate)<.01?{saying:null}:{}))});
+  }
+  dict(){return {
+    lighthouse:['маяк','сооружение с сигнальным огнём для судов','B1','сущ.','/ˈlaɪt.haʊs/','The lighthouse stood on the cliff for two hundred years.','Маяк стоял на утёсе двести лет.','Сложено из light «свет» и house «дом» — буквально «дом света». Слово фиксируется с 1620-х годов.','#0D9488'],
+    keeper:['смотритель, хранитель','тот, кто следит за чем-то и отвечает за это','B2','сущ.','/ˈkiː.pər/','He was the last keeper before the light went automatic.','Он был последним смотрителем до автоматизации маяка.','От keep «держать, хранить» + -er. Родственно goalkeeper и beekeeper — «тот, кто держит».','#4F46E5'],
+    storm:['шторм, буря','сильный ветер с дождём или снегом','A2','сущ.','/stɔːm/','An October storm hit the island at night.','Октябрьский шторм ударил по острову ночью.','Древнеанглийское storm, общегерманское — родня немецкому Sturm и русскому «штурм» через немецкий.','#475569'],
+    radio:['радио, рация','устройство связи по радиоволнам','A2','сущ.','/ˈreɪ.di.əʊ/','The radio was dead — no way to call for help.','Рация не работала — позвать помощь было нечем.','От латинского radius «луч»: сигнал «излучается». Сокращение от radiotelegraphy, 1900-е.','#B45309'],
+    broken:['сломанный, нерабочий','который перестал работать или разбит','A2','прич.','/ˈbrəʊ.kən/','The gear was broken, so the beam went dark.','Механизм сломался, и луч погас.','Третья форма break. Тот же корень, что в русском «брешь» (через французское brèche).','#BE185D'],
+    climbed:['спустился, забрался','двигался вверх или вниз, цепляясь руками','B1','глаг.','/klaɪmd/','He climbed down to the shore in the dark.','Он спустился к берегу в темноте.','От древнеанглийского climban — «карабкаться, цепляясь». Родня немецкому klimmen.','#0D9488'],
+    shore:['берег','полоса земли у воды','B1','сущ.','/ʃɔːr/','They pulled the boat onto the shore.','Они вытащили лодку на берег.','Средневерхненемецкое schore «обрыв, отрез» — то, где земля «отрезана» водой.','#475569'],
+    fire:['огонь, костёр','горение; здесь — сигнальный костёр','A1','сущ.','/ˈfaɪər/','He built a signal fire on the beach.','Он сложил сигнальный костёр на берегу.','Древнеанглийское fȳr, общеиндоевропейский корень *paewr- — тот же, что в греческом «пир» (πῦρ), откуда «пиротехника».','#B45309'],
+    warn:['предупредить','сообщить об опасности заранее','B1','глаг.','/wɔːn/','The fire was meant to warn the crew.','Костёр должен был предупредить команду.','Древнеанглийское warnian «остерегать». Родня немецкому warnen и слову aware.','#4F46E5'],
+    boat:['лодка, судно','небольшое судно','A1','сущ.','/bəʊt/','A fishing boat drifted toward the rocks.','Рыбацкая лодка дрейфовала к скалам.','Древнеанглийское bāt; от него же — bateau во французском, обратное заимствование.','#0D9488'],
+    rocks:['скалы, камни','каменные выступы, опасные для судов','A2','сущ.','/rɒks/','The current pushed her toward the rocks.','Течение несло её на скалы.','Старофранцузское roque, вульгарнолатинское rocca. Отсюда же «рокировка» и Rock.','#475569'],
+    fisherman:['рыбак','тот, кто ловит рыбу','A2','сущ.','/ˈfɪʃ.ə.mən/','In the morning the fisherman came to thank him.','Утром рыбак пришёл его поблагодарить.','fish + man; конструкция «занятие + man» дала postman, policeman, sportsman.','#0D9488'],
+    thank:['благодарить','выражать признательность','A1','глаг.','/θæŋk/','He came to thank the keeper in person.','Он пришёл поблагодарить смотрителя лично.','Древнеанглийское þancian, того же корня, что think: «благодарить» = «думать о ком-то».','#4F46E5'],
+    island:['остров','земля, окружённая водой','A2','сущ.','/ˈaɪ.lənd/','He lives alone on a small island.','Он живёт один на маленьком острове.','Древнеанглийское īegland. Буква s попала внутрь по ошибке — из французского isle, XVI век.','#0D9488'],
+    straight:['прямо','по прямой линии, без поворотов','A2','нареч.','/streɪt/','The boat was going straight to the rocks.','Лодка шла прямо на скалы.','Причастие от stretch «тянуть»: «вытянутый» → «прямой».','#B45309'],
+    morning:['утро','время после рассвета','A1','сущ.','/ˈmɔː.nɪŋ/','In the morning the storm was gone.','К утру шторм ушёл.','От morn + -ing по образцу evening. Родня немецкому Morgen.','#BE185D'],
+    seen:['видел (неверная форма)','причастие от see; в Past Simple нужно saw','B1','прич.','/siːn/','He had seen the boat before the light failed. → he saw','Он видел лодку до того, как погас свет.','Причастие see. Работает только с have/had: I have seen. Ваш случай — Past Simple: saw.','#B45309'],
+    beach:['пляж, берег','полоса песка или гальки у воды','A2','сущ.','/biːtʃ/','He made a big fire on the beach. → нужен артикль the','Он сложил большой костёр на берегу.','Появилось в XVI веке в диалектах Сассекса как «галька», потом — «берег из гальки».','#0D9488'],
+    tower:['башня','высокое узкое сооружение','A2','сущ.','/ˈtaʊər/','What had happened up in the tower?','Что случилось наверху, в башне?','Латинское turris через старофранцузское tor. Отсюда же «тура» в шахматах.','#475569'],
+    detail:['деталь, подробность','небольшая, но важная часть целого','B1','сущ.','/ˈdiː.teɪl/','One detail got away from your retelling.','Одна деталь из пересказа выпала.','Французское détail «резать на части»: de- + tailler «резать» (как в «портной» tailor).','#4F46E5'],
+    rely:['полагаться','рассчитывать на кого-то или что-то','B2','глаг.','/rɪˈlaɪ/','He could not rely on the lighthouse that night.','В ту ночь он не мог полагаться на маяк.','Старофранцузское relier «связывать заново»: «полагаться» = «быть связанным с чем-то».','#BE185D'],
+    happened:['произошло','случилось, имело место','A2','глаг.','/ˈhæp.ənd/','What had happened up in the tower?','Что произошло наверху, в башне?','От hap «случай, удача» (как в happy, perhaps) + -en.','#B45309']
+  }}
+  tokens(segs,kind){
+    const D=this.dict();
+    const out=[];
+    segs.forEach((seg,si)=>{
+      const words=seg.t.trim().split(/\s+/);
+      words.forEach((w,wi)=>{
+        const bare=w.toLowerCase().replace(/[^a-z']/g,'');
+        const e=D[bare];
+        const isLast=wi===words.length-1;
+        out.push({
+          key:kind+si+'_'+wi, w:w, bare:bare, entry:e||null,
+          err:seg.err||null, sup:seg.err||'', hasSup:!!(seg.err&&isLast)
+        });
+      });
+    });
+    return out;
+  }
+  showPop(t,e){
+    if(!t.entry)return;
+    clearTimeout(this._ht);
+    const r=e.currentTarget.getBoundingClientRect();
+    const H=356,vh=window.innerHeight;
+    const below=r.bottom+9+H<=vh;
+    let y=below?r.bottom+9:r.top-9;
+    if(below)y=Math.min(y,Math.max(8,vh-H-8));
+    else y=Math.max(H+8,Math.min(y,vh-8));
+    this.setState({hover:{k:t.key,bare:t.bare,entry:t.entry,x:r.left+r.width/2,y:y,below:below}});
+  }
+  hidePop(){clearTimeout(this._ht);this._ht=setTimeout(()=>this.setState({hover:null}),160)}
+  componentDidMount(){this._tk=setInterval(()=>this.setState(s=>({sec:s.sec+1})),1000)}
+  componentWillUnmount(){clearInterval(this._tk);clearInterval(this._pk);clearTimeout(this._tt);clearTimeout(this._ht);if(window.FluentaSpeak)FluentaSpeak.stop()}
+  toastMsg(t){clearTimeout(this._tt);this.setState({toast:t});this._tt=setTimeout(()=>this.setState({toast:null}),3000)}
+  eff(){const p=this.props.voiceState;return this.state.voice??(['speaking','listening','idle'].includes(p)?p:'speaking')}
+  doPeek(){
+    if(this.state.peeking)return;
+    clearInterval(this._pk);
+    this.setState(s=>({peeks:s.peeks+1,peeking:true,peekLeft:3}));
+    this._pk=setInterval(()=>{
+      const n=this.state.peekLeft-1;
+      if(n<=0){clearInterval(this._pk);this.setState({peeking:false,peekLeft:0})}
+      else this.setState({peekLeft:n});
+    },1000);
+  }
+  micClick(){
+    const v=this.eff();
+    if(v==='speaking'){this.setState({voice:'listening'});this.toastMsg('Люмен замолчал — говорите')}
+    else if(v==='listening'){this.setState({voice:'speaking'});this.toastMsg('Люмен отвечает…')}
+    else{this.setState({voice:'listening'});this.toastMsg('Слушаю…')}
+  }
+  deco(t){
+    const h=this.state.hover;
+    const active=h&&h.k===t.key;
+    const known=!!t.entry;
+    return Object.assign({},t,{
+      cur:known?'help':'default',
+      bg:t.err?'rgba(251,191,36,.26)':active?'rgba(79,70,229,.18)':'transparent',
+      sh:t.err?'0 1.5px 0 rgba(251,191,36,.9)':known?'0 1px 0 rgba(79,70,229,.28)':'none',
+      on:known?(e=>this.showPop(t,e)):(()=>{}),
+      off:known?(()=>this.hidePop()):(()=>{})
+    });
+  }
+  renderVals(){
+    const st=this.state,v=this.eff();
+    const h=st.hover;
+    const sy=st.saying;
+    const sayFast=!!(sy&&h&&sy.w===h.bare&&sy.rate>.8);
+    const saySlow=!!(sy&&h&&sy.w===h.bare&&sy.rate<=.8);
+    const retell=Math.max(0,Math.min(100,71-st.peeks*(this.props.peekPenalty??3)+3));
+    const isSpeak=v==='speaking',isListen=v==='listening',isIdle=v==='idle';
+    const strict=this.props.strictPeek??false;
+    const pen=this.props.peekPenalty??3;
+    const mem=Math.max(0,Math.min(100,74-st.peeks*pen));
+    const m=Math.floor(st.sec/60),s=('0'+st.sec%60).slice(-2);
+    const mk=(t,ok)=>({t,isOk:!!ok,isMiss:!ok,cl:ok?'#374151':'#6B7280'});
+    const memItems=[
+      mk('Tomás keeps the light alone — forty years',1),
+      mk('An October storm hits the island at night',1),
+      mk("The lamp's gear jams — the beam goes dark",0),
+      mk('A fishing boat drifts toward the rocks',1),
+      mk('The radio is dead — no way to call for help',1),
+      mk('He builds a signal fire on the beach',1),
+      mk("The skipper is the son of his old friend Marek",0)
+    ];
+    const vocab=[['keeper',1],['storm',1],['rocks',1],['radio',1],['fire',1],['warn',1],['beam',0],['gear',0],['tower',0],['skipper',0],['lantern',0]]
+      .map(p=>({w:p[0],used:!!p[1],bd:p[1]?'1px solid #A7F3D0':'1px dashed #D6D6D0',bg:p[1]?'#ECFDF5':'#FAFAF8',cl:p[1]?'#047857':'#6B7280'}));
+    const bars=(hs)=>hs.map((h,i)=>({h:h+'px',d:(i*.11).toFixed(2)+'s'}));
+    const sendTyped=()=>{
+      const el=document.getElementById('typeIn');
+      if(el&&el.value.trim()){el.value='';this.toastMsg('Отправлено — Люмен читает ваш ответ')}
+      else this.toastMsg('Напишите ответ — или просто скажите его вслух');
+    };
+    return {
+      timerStr:m+':'+s,
+      toastOn:!!st.toast,toast:st.toast||'',
+      isListen,
+      railBlur:st.peeking?'blur(0px)':'blur(6px)',
+      strictOn:strict,peekAllowed:!strict,
+      doPeek:()=>this.doPeek(),
+      peekBtnLabel:st.peeking?'Скроется через '+st.peekLeft+'…':'Подсмотреть · 3 с',
+      peeks:st.peeks,
+      peekNoteText:strict?'Строгий режим: подсказки отключены до конца сессии.':'Каждое подглядывание −'+pen+'% к оценке памяти. Сначала попробуйте вспомнить самостоятельно.',
+      peekPenaltyOn:st.peeks>0&&pen>0,
+      peekPenaltyLabel:'подглядывания: '+st.peeks+'× · −'+(st.peeks*pen)+'%',
+      memPct:mem,memItems,vocab,
+      aiBars:bars([9,15,21,12,18,8,14]),dockBars:bars([7,12,16,10,14]),
+      wavePlay:isSpeak?'running':'paused',
+      msgWaveOp:isSpeak?1:.35,
+      aiStatus:isSpeak?'говорит — можно перебить':isListen?'на паузе · слушает вас':'ждёт вашего ответа',
+      dockBarsOn:!isIdle,
+      dockT1:isSpeak?'Люмен говорит':isListen?'Слушаю вас…':'Микрофон выключен',
+      dockT2:isSpeak?'можно перебить — просто начните говорить':isListen?'нажмите ещё раз, когда закончите':'нажмите на микрофон и ответьте на вопрос',
+      micClick:()=>this.micClick(),
+      micTitle:isSpeak?'Перебить и ответить':isListen?'Готово':'Говорить',
+      micBg:isSpeak?'#ffffff':'#4F46E5',
+      micBd:isSpeak?'1.5px solid #C7D2FE':'1.5px solid transparent',
+      iconStop:isListen,iconMicW:isIdle,iconMicI:isSpeak,
+      typeOpen:st.typeOpen,
+      typeToggle:()=>this.setState(x=>({typeOpen:!x.typeOpen})),
+      kbBg:st.typeOpen?'#EEF2FF':'#ffffff',kbBd:st.typeOpen?'#C7D2FE':'#E5E7EB',kbCl:st.typeOpen?'#4F46E5':'#6B7280',
+      sendTyped,typeKey:e=>{if(e.key==='Enter')sendTyped()},
+      finish:()=>this.toastMsg('Готовим итоги сессии…'),
+      youTokens:this.tokens([
+        {t:"Okay, so it's a story about Tomás, an old lighthouse keeper who lives alone on a small island with his dog. One night there was a big storm, and he"},
+        {t:'seen',err:'1'},
+        {t:"a fishing boat going straight to the rocks. The radio was broken, so he couldn't call nobody… I mean — he couldn't call for help. So he climbed down to the shore and made a big fire"},
+        {t:'on beach',err:'2'},
+        {t:'to warn them. The boat turned away, and in the morning the fisherman came to thank him.'}
+      ],'y').map(t=>this.deco(t)),
+      aiTokens:this.tokens([
+        {t:"Now, about a detail that got away: the fire wasn't Tomás's first plan. Why couldn't he simply rely on the lighthouse itself that night — what had happened up in the tower?"}
+      ],'a').map(t=>this.deco(t)),
+      retellPct:retell+'%',
+      retellDash:Math.round(retell/100*106.8)+' 106.8',
+      retellVerdict:retell>=80?'сильный пересказ — линия событий целая':retell>=65?'уверенный пересказ · две детали выпали':'основа есть, деталей мало',
+      retellMetrics:[
+        ['5 / 7','ключевых событий','Сколько опорных событий текста вы назвали','#4338CA','#EEF2FF','#E0E7FF'],
+        ['2','поправки языка','Грамматика и артикли — разбор ниже','#92400E','#FFFBEB','#FDE68A'],
+        ['118','слов в минуту','Темп речи: комфортный диапазон 100–140','#374151','#FAFAF8','#EFEFEB'],
+        ['0:52','длина ответа','Столько вы говорили без остановки','#374151','#FAFAF8','#EFEFEB']
+      ].map(x=>({key:x[1],value:x[0],label:x[1],hint:x[2],cl:x[3],bg:x[4],bd:x[5]})),
+      popOn:!!h,
+      popX:h?Math.max(160,Math.min(window.innerWidth-160,h.x))+'px':'0px',
+      popY:h?h.y+'px':'0px',
+      popTr:h?(h.below?'translate(-50%,0)':'translate(-50%,-100%)'):'none',
+      popWord:h?h.bare:'', popPhon:h?h.entry[4]:'', popLvl:h?h.entry[2]:'', popPos:h?h.entry[3]:'',
+      popRu:h?h.entry[0]:'', popRuMore:h?h.entry[1]:'',
+      popExample:h?h.entry[5]:'', popExampleRu:h?h.entry[6]:'', popOrigin:h?h.entry[7]:'',
+      popImgBg:h?'linear-gradient(135deg,'+h.entry[8]+',#A5B4FC)':'#EEF2FF',
+      popGlyph:h?h.bare.charAt(0).toUpperCase():'',
+      popInDeck:h?!!st.deck[h.bare]:false,
+      popAddLabel:h&&st.deck[h.bare]?'Уже в колоде':'→ в колоду повторений',
+      popKeep:()=>clearTimeout(this._ht),
+      popHide:()=>this.hidePop(),
+      popAdd:()=>{const b=h&&h.bare;if(!b)return;if(st.deck[b]){this.toastMsg('«'+b+'» уже в колоде');return}this.setState(s=>({deck:Object.assign({},s.deck,{[b]:1})}));this.toastMsg('«'+b+'» → в колоду, первый показ завтра')},
+      popSay:()=>this.speak(h&&h.bare,.95),
+      popSlow:()=>this.speak(h&&h.bare,.55),
+      popSayBg:sayFast?'#4F46E5':'#fff', popSayBd:sayFast?'#4F46E5':'#E5E7EB', popSayFg:sayFast?'#fff':'#4F46E5',
+      popSlowBg:saySlow?'#4F46E5':'#fff', popSlowBd:saySlow?'#4F46E5':'#E5E7EB', popSlowFg:saySlow?'#fff':'#4F46E5'
+    };
+  }
+}
+</script>
+</body>
+</html>

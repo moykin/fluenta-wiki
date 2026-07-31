@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#F6F6F3;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.fm-board{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding:4px 0 18px}
+.fm-col{flex:0 0 234px;display:flex;flex-direction:column;gap:10px}
+.fm-arrow{flex:0 0 34px;display:flex;align-items:flex-start;justify-content:center;padding-top:78px}
+.fm-node{background:#fff;border:1px solid #E5E7EB;border-radius:13px;padding:12px;display:block;text-decoration:none;color:inherit;transition:box-shadow .15s,transform .15s,border-color .15s,opacity .2s}
+.fm-node:hover{box-shadow:0 10px 24px rgba(26,26,26,.1);transform:translateY(-2px);border-color:#C7D2FE;color:inherit}
+.fm-wire{height:36px;border-radius:6px;background:#FAFAF8;border:1px solid #F0F0EE;padding:5px 6px;display:flex;flex-direction:column;gap:3px;overflow:hidden}
+.fm-dim{opacity:.32;filter:saturate(.4)}
+</style>
+</helmet>
+<div data-screen-label="Flow Map" style="min-height:100vh;padding:26px clamp(14px,3vw,32px) 48px">
+<div style="max-width:1560px;margin:0 auto;animation:fadein .2s ease-out">
+
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:6px">fluenta.wiki · продуктовая карта</div>
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(24px,3vw,31px);font-weight:700;letter-spacing:-.015em;margin:0">Карта путей пользователя</h1>
+      <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:9px;padding:6px 11px;margin-top:8px;text-wrap:pretty">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      <div style="font-size:13px;color:#6B7280;margin-top:6px">Все экраны и их состояния в порядке прохождения. Цифра под экраном — сколько людей доходит до этого шага.</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
+      <a href="Fluenta Admin.dc.html" style="border:1px solid #E5E7EB;background:#fff;border-radius:9px;padding:9px 14px;font-size:12.5px;font-weight:600;color:#374151" style-hover="border-color:#C7D2FE;color:#4338CA">Админка</a>
+      <a href="Fluenta Library v2.dc.html" style="border:1px solid #E5E7EB;background:#fff;border-radius:9px;padding:9px 14px;font-size:12.5px;font-weight:600;color:#374151" style-hover="border-color:#C7D2FE;color:#4338CA">Приложение</a>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px">
+    <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Сценарий</span>
+    <sc-for list="{{ pathChips }}" as="p" hint-placeholder-count="4">
+      <button onClick="{{ p.on }}" style="border:1px solid {{ p.bd }};background:{{ p.bg }};color:{{ p.cl }};font-weight:{{ p.fw }};border-radius:999px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ p.label }}</button>
+    </sc-for>
+    <span style="margin-left:auto;display:flex;align-items:center;gap:14px;font-size:11.5px;color:#6B7280;flex-wrap:wrap">
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#4F46E5"></span>норма</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#F59E0B"></span>подозрительная просадка</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:#EF4444"></span>главная проблема</span>
+    </span>
+  </div>
+
+  <div class="fm-board">
+    <sc-for list="{{ cols }}" as="col" hint-placeholder-count="7">
+      <div class="fm-col {{ col.dim }}">
+        <div style="display:flex;align-items:center;gap:8px;padding:0 2px 2px">
+          <span style="width:22px;height:22px;border-radius:7px;background:{{ col.nBg }};color:{{ col.nCl }};display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;flex:none">{{ col.n }}</span>
+          <span style="font-size:13.5px;font-weight:600;letter-spacing:-.005em">{{ col.stage }}</span>
+          <span style="margin-left:auto;font-size:11.5px;font-weight:600;color:{{ col.reachCl }}">{{ col.reach }}</span>
+        </div>
+        <sc-for list="{{ col.nodes }}" as="n" hint-placeholder-count="2">
+          <a href="{{ n.href }}" class="fm-node" style="border-left:3px solid {{ n.accent }}">
+            <div class="fm-wire">
+              <sc-for list="{{ n.wire }}" as="w" hint-placeholder-count="3">
+                <span style="display:block;height:{{ w.h }};width:{{ w.w }};background:{{ w.color }};border-radius:2px"></span>
+              </sc-for>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:7px;margin-top:9px">
+              <span style="font-size:13.5px;font-weight:600;line-height:1.25;min-width:0">{{ n.name }}</span>
+              <sc-if value="{{ n.hasFlag }}" hint-placeholder-val="{{ false }}">
+                <span title="{{ n.flagTitle }}" style="margin-left:auto;flex:none;font-size:10.5px;font-weight:600;color:{{ n.flagCl }};background:{{ n.flagBg }};border:1px solid {{ n.flagBd }};border-radius:5px;padding:1.5px 6px">{{ n.flag }}</span>
+              </sc-if>
+            </div>
+            <div style="font-size:11.5px;color:#9CA3AF;margin-top:3px;line-height:1.4">{{ n.role }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:9px">
+              <sc-for list="{{ n.states }}" as="s" hint-placeholder-count="4">
+                <span title="{{ s.title }}" style="font-size:10.5px;font-weight:500;color:{{ s.cl }};background:{{ s.bg }};border:1px solid {{ s.bd }};border-radius:5px;padding:2px 6px;white-space:nowrap">{{ s.label }}</span>
+              </sc-for>
+            </div>
+            <sc-if value="{{ n.hasNote }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:7px;font-size:11px;line-height:1.45;color:{{ n.noteCl }};background:{{ n.noteBg }};border-radius:7px;padding:7px 8px;margin-top:9px">
+                <span style="flex:none;font-weight:700">!</span><span>{{ n.note }}</span>
+              </div>
+            </sc-if>
+          </a>
+        </sc-for>
+      </div>
+      <sc-if value="{{ col.hasArrow }}" hint-placeholder-val="{{ true }}">
+        <div class="fm-arrow {{ col.dim }}">
+          <svg width="30" height="16" viewBox="0 0 30 16" fill="none"><path d="M1 8h23" stroke="{{ col.arrowCl }}" stroke-width="1.5" stroke-dasharray="{{ col.arrowDash }}" stroke-linecap="round"></path><path d="M22 3l6 5-6 5" stroke="{{ col.arrowCl }}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+      </sc-if>
+    </sc-for>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px;margin-top:22px">
+    <sc-for list="{{ problems }}" as="p" hint-placeholder-count="4">
+      <div style="background:#fff;border:1px solid #E5E7EB;border-left:3px solid {{ p.accent }};border-radius:13px;padding:15px 16px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <span style="font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:{{ p.tagCl }};background:{{ p.tagBg }};border:1px solid {{ p.tagBd }};border-radius:5px;padding:2px 7px">{{ p.severity }}</span>
+          <span style="margin-left:auto;font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;color:{{ p.accent }}">{{ p.drop }}</span>
+        </div>
+        <div style="font-size:14px;font-weight:600;margin-bottom:6px">{{ p.where }}</div>
+        <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:9px">{{ p.why }}</div>
+        <div style="font-size:12.5px;line-height:1.5;color:#374151;border-top:1px solid #F5F5F3;padding-top:9px"><b style="font-weight:600">Гипотеза:</b> {{ p.fix }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:22px;padding:14px 16px;background:#fff;border:1px solid #E5E7EB;border-radius:13px;font-size:12px;color:#6B7280">
+    <span style="font-weight:600;color:#374151">Состояния экрана:</span>
+    <sc-for list="{{ legend }}" as="l" hint-placeholder-count="6">
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="font-size:10.5px;font-weight:500;color:{{ l.cl }};background:{{ l.bg }};border:1px solid {{ l.bd }};border-radius:5px;padding:2px 6px">{{ l.label }}</span>{{ l.hint }}</span>
+    </sc-for>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1560,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  state = { path: 'all' };
+  stateChip(kind) {
+    const K = {
+      ok: ['#047857', '#ECFDF5', '#D1FAE5', 'нормальный результат'],
+      empty: ['#4B5563', '#F6F6F3', '#E5E7EB', 'пусто — нечего показать'],
+      load: ['#4338CA', '#EEF2FF', '#E0E7FF', 'загрузка / ожидание'],
+      err: ['#B91C1C', '#FEF2F2', '#FECACA', 'ошибка'],
+      off: ['#92400E', '#FFFBEB', '#FDE68A', 'офлайн'],
+      lock: ['#7C2D12', '#FFF7ED', '#FED7AA', 'ограничение плана / пейволл']
+    };
+    const k = K[kind] || K.empty;
+    return { cl: k[0], bg: k[1], bd: k[2], hint: k[3] };
+  }
+  data() { return [
+    { stage: 'Вход', reach: '100%', tone: 'ok', paths: ['all', 'new', 'pay'], nodes: [
+      { name: 'Лендинг', href: 'Fluenta Landing.dc.html', role: 'обещание и первый текст без регистрации', wire: 'hero', states: [['ok', 'первый визит'], ['ok', 'вернулся'], ['load', 'медленная сеть']] },
+      { name: 'Регистрация', href: 'Fluenta Onboarding.dc.html', role: 'e-mail или Google, 1 шаг', wire: 'form', states: [['empty', 'пустая форма'], ['err', 'e-mail занят'], ['load', 'отправка'], ['ok', 'успех']] }
+    ] },
+    { stage: 'Онбординг', reach: '79%', tone: 'warn', paths: ['all', 'new'], nodes: [
+      { name: 'Языковая пара', href: 'Fluenta Onboarding.dc.html', role: 'что читаем → язык подсказок', wire: 'grid', states: [['empty', 'ничего не выбрано'], ['ok', 'выбрано']] },
+      { name: 'Тест уровня', href: 'Fluenta Onboarding.dc.html', role: '12 вопросов → CEFR', wire: 'form', states: [['load', 'вопрос'], ['ok', 'уровень B2'], ['err', 'бросил на 4-м'], ['empty', 'пропустил тест']],
+        flag: '−21%', flagKind: 'warn', note: 'Половина уходящих бросает на 4–6 вопросе: тест длинный и без прогресса.' },
+      { name: 'Цель на неделю', href: 'Fluenta Onboarding.dc.html', role: '3 / 5 / 7 текстов + напоминание', wire: 'grid', states: [['ok', 'цель задана'], ['empty', 'по умолчанию 5']] }
+    ] },
+    { stage: 'Каталог', reach: '59%', tone: 'ok', paths: ['all', 'new', 'return', 'pay', 'offline'], nodes: [
+      { name: 'Библиотека', href: 'Fluenta Library v2.dc.html', role: 'обложки, фильтры, «продолжить»', wire: 'cards', states: [['load', 'скелетоны'], ['ok', 'список'], ['empty', 'фильтры пусты'], ['off', 'офлайн-кэш']] },
+      { name: 'Дайджест недели', href: 'Fluenta Library v2.dc.html', role: '5 новостей под уровень', wire: 'cards', states: [['ok', 'новый выпуск'], ['empty', 'выпуск не собран'], ['ok', 'прочитан']] },
+      { name: 'Импорт своего', href: 'Fluenta Library v2.dc.html', role: 'PDF / EPUB / ссылка', wire: 'form', states: [['empty', 'зона пуста'], ['load', 'анализ'], ['ok', 'готов'], ['err', 'формат не понят'], ['lock', 'лимит Free']] }
+    ] },
+    { stage: 'Текст', reach: '40%', tone: 'warn', paths: ['all', 'new', 'return', 'pay', 'offline'], nodes: [
+      { name: 'Читалка', href: 'Fluenta Reader.dc.html', role: 'чтение, тап по слову, прогресс', wire: 'text', states: [['ok', 'чтение'], ['ok', 'слово сохранено'], ['off', 'офлайн'], ['empty', 'дочитано']],
+        flag: '−33%', flagKind: 'warn', note: 'Бросают в середине длинных текстов. Нет «вернуться к чтению» в пуше и оценки времени до конца.' },
+      { name: 'Словарь слова', href: 'Fluenta Reader.dc.html', role: 'перевод, пример, в колоду', wire: 'form', states: [['load', 'ищем'], ['ok', 'найдено'], ['err', 'нет перевода']] }
+    ] },
+    { stage: 'Разговор', reach: '17%', tone: 'bad', paths: ['all', 'new', 'return', 'pay'], nodes: [
+      { name: 'Тьютор голосом', href: 'Fluenta Tutor.dc.html', role: 'обсудить прочитанное вслух', wire: 'voice', states: [['empty', 'до старта'], ['err', 'нет доступа к микрофону'], ['load', 'слушаю'], ['ok', 'диалог'], ['lock', 'минуты закончились'], ['off', 'нет сети']],
+        flag: '−57%', flagKind: 'bad', note: 'Самая большая потеря. Разрешение микрофона + страх говорить. Нет текстового режима и «разогрева» одной фразой.' },
+      { name: 'Итог разговора', href: 'Fluenta Review.dc.html', role: 'что получилось, ошибки, слова', wire: 'cards', states: [['load', 'считаем'], ['ok', 'разбор'], ['empty', 'слишком короткий диалог']] }
+    ] },
+    { stage: 'Трекинг', reach: '15%', tone: 'ok', paths: ['all', 'return', 'pay', 'offline'], nodes: [
+      { name: 'Повторение', href: 'Fluenta Review.dc.html', role: 'карточки со словами, интервалы', wire: 'cards', states: [['empty', 'нечего повторять'], ['ok', 'сессия'], ['ok', 'серия завершена'], ['off', 'офлайн']] },
+      { name: 'Прогресс', href: 'Fluenta Progress.dc.html', role: 'графики, стрик, уровень', wire: 'chart', states: [['empty', 'мало данных'], ['ok', 'графики'], ['ok', 'уровень вырос']] }
+    ] },
+    { stage: 'Профиль и оплата', reach: '9%', tone: 'warn', paths: ['all', 'return', 'pay'], nodes: [
+      { name: 'Профиль', href: 'Fluenta Profile.dc.html', role: 'цели, подписка, бонусы, напоминания', wire: 'form', states: [['ok', 'активная подписка'], ['empty', 'Free'], ['ok', 'бонусные минуты'], ['err', 'промокод не найден']] },
+      { name: 'Тарифы и оплата', href: 'Fluenta Pricing.dc.html', role: 'Free / Pro / год, промокод', wire: 'grid', states: [['ok', 'выбор плана'], ['load', 'платёж'], ['err', 'карта отклонена'], ['ok', 'оплачено'], ['lock', 'пейволл из тьютора']],
+        flag: '−49%', flagKind: 'warn', note: 'Пейволл впервые показывается после разговора — ценность ещё не прожита. Стоит показать «сколько минут осталось» заранее.' }
+    ] }
+  ]; }
+  renderVals() {
+    const st = this.state;
+    const wires = {
+      hero: [['9px', '58%', '#DEDDF7'], ['5px', '84%', '#EFEFEB'], ['5px', '40%', '#EFEFEB']],
+      form: [['6px', '100%', '#EFEFEB'], ['6px', '100%', '#EFEFEB'], ['7px', '46%', '#DEDDF7']],
+      grid: [['13px', '100%', '#EFEFEB'], ['13px', '68%', '#DEDDF7']],
+      cards: [['12px', '46%', '#DEDDF7'], ['12px', '46%', '#EFEFEB'], ['4px', '78%', '#EFEFEB']],
+      text: [['4px', '100%', '#EFEFEB'], ['4px', '96%', '#EFEFEB'], ['4px', '88%', '#DEDDF7'], ['4px', '62%', '#EFEFEB']],
+      voice: [['14px', '34%', '#DEDDF7'], ['6px', '76%', '#EFEFEB'], ['4px', '52%', '#EFEFEB']],
+      chart: [['16px', '84%', '#DEDDF7'], ['5px', '58%', '#EFEFEB']]
+    };
+    const tones = { ok: ['#4F46E5', '#EEF2FF', '#4338CA'], warn: ['#F59E0B', '#FFFBEB', '#B45309'], bad: ['#EF4444', '#FEF2F2', '#B91C1C'] };
+    const raw = this.data();
+    const cols = raw.map((c, i) => {
+      const t = tones[c.tone] || tones.ok;
+      const active = st.path === 'all' || c.paths.indexOf(st.path) > -1;
+      return {
+        key: c.stage, stage: c.stage, n: String(i + 1), reach: c.reach,
+        reachCl: t[2], nBg: active ? t[1] : '#F0F0EE', nCl: active ? t[2] : '#9CA3AF',
+        dim: active ? '' : 'fm-dim',
+        hasArrow: i < raw.length - 1,
+        arrowCl: active ? '#C3C6CC' : '#E3E3DF',
+        arrowDash: c.tone === 'bad' ? '3 3' : '0',
+        nodes: c.nodes.map(n => {
+          const fk = tones[n.flagKind] || tones.warn;
+          return {
+            key: n.name, name: n.name, href: n.href, role: n.role,
+            accent: n.flagKind === 'bad' ? '#EF4444' : n.flagKind === 'warn' ? '#F59E0B' : '#DDDCF5',
+            wire: (wires[n.wire] || wires.form).map((w, k) => ({ key: k, h: w[0], w: w[1], color: w[2] })),
+            states: n.states.map(s => {
+              const ch = this.stateChip(s[0]);
+              return { key: s[1], label: s[1], cl: ch.cl, bg: ch.bg, bd: ch.bd, title: ch.hint };
+            }),
+            hasFlag: !!n.flag, flag: n.flag || '', flagTitle: 'Потеря на этом шаге',
+            flagCl: fk[2], flagBg: fk[1], flagBd: n.flagKind === 'bad' ? '#FECACA' : '#FDE68A',
+            hasNote: !!n.note, note: n.note || '',
+            noteCl: n.flagKind === 'bad' ? '#B91C1C' : '#92400E',
+            noteBg: n.flagKind === 'bad' ? '#FEF2F2' : '#FFFBEB'
+          };
+        })
+      };
+    });
+    const pathChips = [['all', 'Все пути'], ['new', 'Новый пользователь'], ['return', 'Возвращается'], ['pay', 'Путь к оплате'], ['offline', 'Офлайн']].map(p => ({
+      key: p[0], label: p[1],
+      bg: st.path === p[0] ? '#EEF2FF' : '#fff', bd: st.path === p[0] ? '#C7D2FE' : '#E5E7EB',
+      cl: st.path === p[0] ? '#4338CA' : '#4B5563', fw: st.path === p[0] ? 600 : 400,
+      on: () => this.setState({ path: p[0] })
+    }));
+    const problems = [
+      ['Главная проблема', 'bad', '−57%', 'Разговор с тьютором', 'До голосового разговора доходит 17% зарегистрировавшихся: запрос микрофона появляется сразу, без объяснения, и говорить страшно.', 'дать текстовый режим и «разогрев» — одна фраза по прочитанному, микрофон просить после первого ответа.'],
+      ['Просадка', 'warn', '−49%', 'Оплата', 'Пейволл впервые виден после разговора, когда минуты уже кончились — ценность не прожита, ощущается как стена.', 'показывать остаток минут с первого дня и предлагать Pro внутри итога разговора.'],
+      ['Просадка', 'warn', '−33%', 'Текст дочитан', 'Бросают в середине длинных текстов; в выдаче нет предупреждения о длине и нет возврата к незаконченному.', 'сортировать по времени чтения, добавить «осталось ~2 мин» и пуш «вернуться к тексту».'],
+      ['Просадка', 'warn', '−21%', 'Тест уровня', 'Тест из 12 вопросов без индикатора прогресса; половина уходящих бросает на 4–6 вопросе.', 'сократить до 6 адаптивных вопросов и разрешить «поставить уровень вручную».']
+    ].map(p => {
+      const t = tones[p[1]];
+      return {
+        key: p[3], severity: p[0], drop: p[2], where: p[3], why: p[4], fix: p[5],
+        accent: t[0], tagCl: t[2], tagBg: t[1], tagBd: p[1] === 'bad' ? '#FECACA' : '#FDE68A'
+      };
+    });
+    const legend = ['ok', 'empty', 'load', 'err', 'off', 'lock'].map(k => {
+      const ch = this.stateChip(k);
+      const labels = { ok: 'успех', empty: 'пусто', load: 'загрузка', err: 'ошибка', off: 'офлайн', lock: 'лимит' };
+      return { key: k, label: labels[k], cl: ch.cl, bg: ch.bg, bd: ch.bd, hint: '' };
+    });
+    return { cols, pathChips, problems, legend };
+  }
+}
+</script>
+</body>
+</html>

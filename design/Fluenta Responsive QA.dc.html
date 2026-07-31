@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #F0F0EE; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+</style>
+</helmet>
+<div data-screen-label="Responsive QA" style="min-height:100vh;padding:28px 32px 48px;box-sizing:border-box;">
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+    <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif;">f</span>
+    <span style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;">Responsive QA — 375 / 768 / 1280</span>
+    <span style="font-size:12.5px;color:#6B7280;">каждый кадр — живая страница в iframe нужной ширины; медиазапросы срабатывают по-настоящему</span>
+    <span style="flex:1;"></span>
+    <select value="{{ page }}" onChange="{{ onPage }}" style="font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1A1A1A;background:#fff;border:1px solid #E5E7EB;border-radius:9px;padding:8px 12px;cursor:pointer;">
+      <sc-for list="{{ pages }}" as="p" hint-placeholder-count="5"><option value="{{ p.file }}">{{ p.name }}</option></sc-for>
+    </select>
+  </div>
+  <div style="display:flex;gap:26px;align-items:flex-start;margin-top:22px;flex-wrap:wrap;">
+    <sc-for list="{{ frames }}" as="f" hint-placeholder-count="3">
+      <div style="flex:none;">
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:10px;">
+          <span style="font-size:13px;font-weight:600;">{{ f.label }}</span>
+          <span style="font-size:11.5px;color:#9CA3AF;">{{ f.note }}</span>
+        </div>
+        <div style="width:{{ f.outerW }}px;height:{{ f.outerH }}px;overflow:hidden;border-radius:14px;border:1px solid #D6D6D0;background:#fff;box-shadow:0 8px 26px rgba(26,26,26,.1);">
+          <iframe src="{{ src }}" title="{{ f.label }}" style="width:{{ f.w }}px;height:{{ f.h }}px;border:none;transform:scale({{ f.scale }});transform-origin:0 0;"></iframe>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="font-size:12px;color:#9CA3AF;margin-top:18px;max-width:70ch;line-height:1.6;">Внутри кадров всё интерактивно: в читалке на узком кадре панель перевода открывается снизу (выделите фразу мышью — на телефоне это долгое нажатие с протяжкой), нижний таб-бар появляется только на 375.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { page: 'Fluenta Reader.dc.html' };
+  PAGES = [
+    { file: 'Fluenta Reader.dc.html', name: 'Читалка' },
+    { file: 'Fluenta Library v2.dc.html', name: 'Библиотека' },
+    { file: 'Fluenta Tutor.dc.html', name: 'Тьютор' },
+    { file: 'Fluenta Review.dc.html', name: 'Повторение' },
+    { file: 'Fluenta Progress.dc.html', name: 'Прогресс' },
+    { file: 'Fluenta Landing.dc.html', name: 'Лендинг' },
+    { file: 'Fluenta Pricing.dc.html', name: 'Тарифы' },
+    { file: 'Fluenta About.dc.html', name: 'О проекте' },
+    { file: 'Fluenta Onboarding.dc.html', name: 'Онбординг' },
+    { file: 'Fluenta SEO Pillar.dc.html', name: 'SEO: метод' },
+    { file: 'Fluenta SEO Career.dc.html', name: 'SEO: для работы' },
+    { file: 'Fluenta Career.dc.html', name: 'Карьера' },
+    { file: 'Fluenta SEO Grammar.dc.html', name: 'SEO: грамматика' },
+    { file: 'Fluenta SEO Texts B1.dc.html', name: 'SEO: тексты B1' }
+  ];
+  renderVals() {
+    const mk = (label, note, w, h, scale) => ({
+      label, note, w, h, scale,
+      outerW: Math.round(w * scale), outerH: Math.round(h * scale)
+    });
+    return {
+      pages: this.PAGES,
+      page: this.state.page,
+      src: this.state.page,
+      onPage: (e) => this.setState({ page: e.target.value }),
+      frames: [
+        mk('375 — телефон', 'масштаб 100%', 375, 740, 1),
+        mk('768 — планшет', 'масштаб 72%', 768, 1000, 0.72),
+        mk('1280 — десктоп', 'масштаб 52%', 1280, 1180, 0.52)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

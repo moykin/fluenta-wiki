@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+input::placeholder,textarea::placeholder{color:#9CA3AF}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%,100%{opacity:.5}50%{opacity:1}}
+.tcard{background:#fff;border:1px solid #E5E7EB;border-radius:16px}
+.tinput{border:1px solid #E5E7EB;border-radius:10px;padding:11px 13px;font-family:Inter,sans-serif;font-size:13.5px;background:#fff;color:#1A1A1A;width:100%;box-sizing:border-box}
+.tbtn{border:none;border-radius:10px;padding:11px 18px;font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#4F46E5;color:#fff}
+.tbtn:hover{background:#4338CA}
+.tbtn2{border:1px solid #E5E7EB;border-radius:10px;padding:10px 15px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#374151}
+.tbtn2:hover{border-color:#C7D2FE;color:#4338CA}
+.tway{transition:border-color .14s,background .14s,transform .14s}
+.tway:hover{border-color:#C7D2FE;transform:translateY(-1px)}
+.cov{transition:transform .14s,box-shadow .14s}
+.cov:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(26,26,26,.12)}
+@media (max-width:960px){.tgrid{grid-template-columns:1fr !important}}
+</style>
+</helmet>
+<div data-screen-label="Admin · Add text" style="min-height:100vh">
+  <header style="height:56px;border-bottom:1px solid #ECECE8;display:flex;align-items:center;gap:12px;padding:0 clamp(16px,3vw,30px);background:#141518">
+    <span style="width:24px;height:24px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-weight:600;font-size:13px">f</span>
+    <span style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;color:#fff">fluenta admin</span>
+    <a href="Fluenta Admin.dc.html" style="margin-left:14px;font-size:12.5px;color:#9BA0A8" style-hover="color:#fff">← Тексты</a>
+    <span style="margin-left:auto;font-size:12px;color:#8B9099">Лиза Ткачёва · редактор</span>
+  </header>
+
+  <div style="max-width:1240px;margin:0 auto;padding:30px clamp(16px,4vw,36px) 64px;animation:fadein .22s ease-out">
+    <div style="margin-bottom:22px">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(25px,3.2vw,32px);font-weight:700;letter-spacing:-.015em;margin:0">Добавить текст</h1>
+      <div style="font-size:13.5px;color:#6B7280;margin-top:7px;max-width:760px">Один материал = один текст в каталоге. ИИ достаёт содержание, определяет уровень, пишет версии под B1 / B2 / C1 и предлагает обложку — вы проверяете и публикуете.</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:12px;margin-bottom:24px">
+      <sc-for list="{{ ways }}" as="w" hint-placeholder-count="4">
+        <button onClick="{{ w.on }}" class="tway" style="text-align:left;border:1.5px solid {{ w.bd }};background:{{ w.bg }};border-radius:14px;padding:15px 16px;cursor:pointer;font-family:Inter,sans-serif">
+          <span style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
+            <span style="width:26px;height:26px;border-radius:8px;background:{{ w.iBg }};color:{{ w.iCl }};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex:none">{{ w.glyph }}</span>
+            <span style="font-size:14px;font-weight:600;color:{{ w.cl }}">{{ w.label }}</span>
+          </span>
+          <span style="display:block;font-size:12px;line-height:1.5;color:#6B7280">{{ w.hint }}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div class="tgrid" style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:18px">
+
+        <sc-if value="{{ isLink }}" hint-placeholder-val="{{ true }}">
+          <div class="tcard" style="padding:20px">
+            <div style="font-size:15.5px;font-weight:600;margin-bottom:5px">Ссылка на статью или новость</div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:14px">Вставьте адрес — ИИ откроет страницу, уберёт рекламу и меню, оставит текст. Публикуем не копию, а свой пересказ со ссылкой на источник.</div>
+            <div style="display:flex;gap:9px;flex-wrap:wrap">
+              <input value="{{ url }}" onChange="{{ urlCh }}" placeholder="https://www.reuters.com/technology/…" class="tinput" style="flex:1 1 260px">
+              <button onClick="{{ parse }}" class="tbtn" style="flex:none">Разобрать</button>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:11px">
+              <span style="font-size:11.5px;color:#9CA3AF;padding-top:4px">Быстро:</span>
+              <sc-for list="{{ samples }}" as="s" hint-placeholder-count="3">
+                <button onClick="{{ s.on }}" class="tbtn2" style="padding:5px 11px;font-size:12px;font-weight:500">{{ s.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isFile }}" hint-placeholder-val="{{ false }}">
+          <div class="tcard" style="padding:20px">
+            <div style="font-size:15.5px;font-weight:600;margin-bottom:5px">Файл</div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:14px">PDF, EPUB, DOCX или FB2 до 40 МБ. Книгу разрежем на главы — каждая станет отдельным текстом.</div>
+            <div onClick="{{ parse }}" style="border:1.5px dashed #D6D6D0;background:#FAFAF8;border-radius:12px;padding:26px 16px;text-align:center;cursor:pointer">
+              <div style="width:34px;height:34px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:inline-flex;align-items:center;justify-content:center;margin-bottom:9px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+              </div>
+              <div style="font-size:14px;font-weight:600">Перетащите файл или нажмите</div>
+              <div style="font-size:12.5px;color:#6B7280;margin-top:4px">Права проверяете вы: для книг в общественном достоянии ограничений нет</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isPaste }}" hint-placeholder-val="{{ false }}">
+          <div class="tcard" style="padding:20px">
+            <div style="font-size:15.5px;font-weight:600;margin-bottom:5px">Вставить текст</div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:14px">Свой материал или уже готовый пересказ. Уровень и длину посчитаем сами.</div>
+            <textarea onChange="{{ pasteCh }}" placeholder="Вставьте текст на языке изучения…" class="tinput" style="min-height:150px;resize:vertical;line-height:1.6"></textarea>
+            <button onClick="{{ parse }}" class="tbtn" style="margin-top:12px">Обработать</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRss }}" hint-placeholder-val="{{ false }}">
+          <div class="tcard" style="padding:20px">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:5px">
+              <div style="font-size:15.5px;font-weight:600">Источники новостей</div>
+              <span style="margin-left:auto;font-size:12px;color:#9CA3AF">парсер приходит каждый день в 07:00</span>
+            </div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:16px">Из фидов ИИ каждое утро готовит кандидатов: пересказ под три уровня + обложку. Они попадают в «Новости» на проверку — сами ничего не публикуется.</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:14px">
+              <sc-for list="{{ feeds }}" as="f" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #F5F5F3">
+                  <span style="width:8px;height:8px;border-radius:50%;background:{{ f.dot }};flex:none"></span>
+                  <span style="min-width:0;flex:1">
+                    <span style="display:block;font-size:13.5px;font-weight:600">{{ f.name }}</span>
+                    <span style="display:block;font-size:11.5px;color:#9CA3AF;margin-top:2px">{{ f.url }}</span>
+                  </span>
+                  <span style="font-size:12px;color:#6B7280;flex:none;text-align:right">{{ f.stat }}</span>
+                  <button onClick="{{ f.on }}" class="tbtn2" style="padding:6px 10px;font-size:12px;flex:none">{{ f.action }}</button>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:9px;flex-wrap:wrap">
+              <input value="{{ feedUrl }}" onChange="{{ feedCh }}" placeholder="https://site.com/rss.xml" class="tinput" style="flex:1 1 240px">
+              <button onClick="{{ addFeed }}" class="tbtn" style="flex:none">Добавить фид</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isVideo }}" hint-placeholder-val="{{ false }}">
+          <div class="tcard" style="padding:20px">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:5px">
+              <div style="font-size:15.5px;font-weight:600">Видео или подкаст</div>
+              <span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:#374151;background:#F7F7FF;border:1px solid #E0E7FF;border-radius:999px;padding:3px 10px">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2l2.1 6.3L20.5 10l-6.4 1.7L12 18l-2.1-6.3L3.5 10l6.4-1.7z"></path></svg>
+                Google Gemini
+              </span>
+            </div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:14px">Ссылка на YouTube или Vimeo — либо файл MP4 / MOV / MP3 до 2 ГБ. Gemini смотрит и слушает: речь, надписи на экране, слайды. Видео мы не перезаливаем — в каталог идёт расшифровка, выжимка и ссылка на оригинал.</div>
+            <div style="display:flex;gap:9px;flex-wrap:wrap">
+              <input value="{{ url }}" onChange="{{ urlCh }}" placeholder="https://www.youtube.com/watch?v=…" class="tinput" style="flex:1 1 260px">
+              <button onClick="{{ parse }}" class="tbtn" style="flex:none">Расшифровать</button>
+            </div>
+            <div onClick="{{ parse }}" style="border:1.5px dashed #D6D6D0;background:#FAFAF8;border-radius:12px;padding:18px 16px;text-align:center;cursor:pointer;margin-top:11px">
+              <div style="font-size:13.5px;font-weight:600">…или перетащите файл записи</div>
+              <div style="font-size:12px;color:#6B7280;margin-top:4px">Один ролик = один материал. Длинные лекции разрежем по главам</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:11px">
+              <span style="font-size:11.5px;color:#9CA3AF;padding-top:4px">Быстро:</span>
+              <sc-for list="{{ vidSamples }}" as="s" hint-placeholder-count="3">
+                <button onClick="{{ s.on }}" class="tbtn2" style="padding:5px 11px;font-size:12px;font-weight:500">{{ s.label }}</button>
+              </sc-for>
+            </div>
+            <div style="font-size:11.5px;line-height:1.5;color:#9CA3AF;margin-top:12px">Готовый материал откроется в разделе <a href="Fluenta Video.dc.html">Видео</a>: плеер, транскрипт с таймкодами, выжимка B1 / B2 / C1 и план пересказа.</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ working }}" hint-placeholder-val="{{ false }}">
+          <div class="tcard" style="padding:20px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px">
+              <span style="width:16px;height:16px;border:2px solid #E0E7FF;border-top-color:#4F46E5;border-radius:50%;animation:spin .7s linear infinite;flex:none"></span>
+              <div style="font-size:15px;font-weight:600">Обрабатываем материал…</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="6">
+                <div style="display:flex;align-items:center;gap:11px">
+                  <span style="width:19px;height:19px;border-radius:50%;background:{{ p.bg }};color:{{ p.cl }};display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;flex:none">{{ p.mark }}</span>
+                  <span style="font-size:13px;color:{{ p.txtCl }};animation:{{ p.anim }}">{{ p.label }}</span>
+                  <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">{{ p.note }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+          <div class="tcard" style="padding:20px">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <div style="font-size:15.5px;font-weight:600">Готово — проверьте и опубликуйте</div>
+              <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">{{ srcLabel }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:13px">
+              <label style="display:block"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Заголовок</span><input value="{{ title }}" onChange="{{ titleCh }}" class="tinput" style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600"></label>
+              <div style="display:flex;gap:11px;flex-wrap:wrap">
+                <label style="display:block;flex:1 1 130px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Тема</span><input value="{{ topic }}" onChange="{{ topicCh }}" class="tinput"></label>
+                <label style="display:block;flex:1 1 110px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Время чтения</span><input value="{{ mins }}" onChange="{{ minsCh }}" class="tinput"></label>
+                <label style="display:block;flex:1 1 130px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Оригинал</span><input value="{{ srcHost }}" class="tinput" style="color:#6B7280"></label>
+              </div>
+              <div>
+                <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+                  <span style="font-size:12px;font-weight:600;color:#6B7280">Версия текста</span>
+                  <span style="font-size:11.5px;color:#9CA3AF">— один материал выходит сразу в трёх уровнях</span>
+                </div>
+                <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
+                  <sc-for list="{{ vers }}" as="v" hint-placeholder-count="3">
+                    <button onClick="{{ v.on }}" style="display:flex;align-items:center;gap:7px;border:1px solid {{ v.bd }};background:{{ v.bg }};color:{{ v.cl }};font-weight:{{ v.fw }};border-radius:999px;padding:7px 14px;font-family:Inter,sans-serif;font-size:13px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ v.label }}<span style="font-size:11px;color:#9CA3AF;font-weight:500">{{ v.words }}</span></button>
+                  </sc-for>
+                </div>
+                <div style="background:#FAFAF8;border:1px solid #F0F0EE;border-radius:12px;padding:15px 17px;font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.65;color:#1A1A1A">{{ sample }}</div>
+                <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:10px">
+                  <span style="font-size:11.5px;font-weight:600;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:6px;padding:2.5px 8px">{{ lvl }}</span>
+                  <span style="font-size:12px;color:#374151;background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:2.5px 8px">{{ words }} слов</span>
+                  <span style="font-size:12px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:2.5px 9px">знакомо {{ known }}% для {{ lvl }}</span>
+                  <button onClick="{{ regen }}" class="tbtn2" style="margin-left:auto;padding:6px 11px;font-size:12px">Перегенерировать</button>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px 14px">
+                <span style="flex:none;font-weight:700;color:#B45309">!</span>
+                <span style="font-size:12.5px;line-height:1.55;color:#78350F">Публикуется пересказ своими словами + ссылка «читать оригинал». Дословную копию новости выложить нельзя — это подсвечено, если совпадений больше 20%: сейчас <b>4%</b>.</span>
+              </div>
+              <div style="display:flex;gap:9px;flex-wrap:wrap;padding-top:4px">
+                <button onClick="{{ publish }}" class="tbtn">Опубликовать в каталог</button>
+                <button onClick="{{ draft }}" class="tbtn2" style="padding:11px 16px;font-size:13.5px">В черновики</button>
+                <button onClick="{{ toDigest }}" class="tbtn2" style="padding:11px 16px;font-size:13.5px">В дайджест недели</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="tcard" style="padding:20px">
+          <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:5px">
+            <div style="font-size:15.5px;font-weight:600">Обложка</div>
+            <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">3:2 · от 1200 px</span>
+          </div>
+          <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:14px">{{ coverHint }}</div>
+          <div style="display:flex;gap:6px;margin-bottom:14px">
+            <sc-for list="{{ coverTabs }}" as="t" hint-placeholder-count="3">
+              <button onClick="{{ t.on }}" style="flex:1;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.cl }};font-weight:{{ t.fw }};border-radius:9px;padding:8px 6px;font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ t.label }}</button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ covUpload }}" hint-placeholder-val="{{ true }}">
+            <div style="height:150px;border-radius:12px;overflow:hidden;border:1px solid #EFEFEB;background:#FAFAF8">
+              <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="admin-cover-upload" placeholder="Перетащите обложку · 3:2" shape="rect" hint-size="100%,150px"></x-import>
+            </div>
+            <div style="font-size:11.5px;line-height:1.5;color:#9CA3AF;margin-top:10px">Из медиатеки можно переиспользовать картинку — она подтянется во все три уровневые версии.</div>
+            <div style="display:flex;gap:7px;margin-top:11px;flex-wrap:wrap">
+              <sc-for list="{{ media }}" as="m" hint-placeholder-count="4">
+                <button onClick="{{ m.on }}" class="cov" style="width:62px;height:42px;border-radius:7px;border:1px solid #EFEFEB;background:{{ m.bg }};cursor:pointer;padding:0"></button>
+              </sc-for>
+              <button onClick="{{ openMedia }}" class="tbtn2" style="padding:6px 10px;font-size:12px">Медиатека →</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ covGen }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px;font-weight:600;color:#6B7280;margin-bottom:6px">Промпт (собран из текста)</div>
+            <textarea value="{{ prompt }}" onChange="{{ promptCh }}" class="tinput" style="min-height:74px;resize:vertical;font-size:12.5px;line-height:1.55"></textarea>
+            <div style="display:flex;gap:8px;align-items:center;margin:11px 0 13px;flex-wrap:wrap">
+              <sc-for list="{{ styles }}" as="s" hint-placeholder-count="3">
+                <button onClick="{{ s.on }}" style="border:1px solid {{ s.bd }};background:{{ s.bg }};color:{{ s.cl }};font-weight:{{ s.fw }};border-radius:999px;padding:6px 12px;font-family:Inter,sans-serif;font-size:12px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ s.label }}</button>
+              </sc-for>
+              <button onClick="{{ generate }}" class="tbtn" style="margin-left:auto;padding:9px 15px;font-size:13px">{{ genLabel }}</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+              <sc-for list="{{ variants }}" as="v" hint-placeholder-count="4">
+                <button onClick="{{ v.on }}" class="cov" style="height:82px;border-radius:10px;border:2px solid {{ v.bd }};background:{{ v.bg }};cursor:pointer;padding:0;position:relative;overflow:hidden">
+                  <span style="position:absolute;inset:0;background:{{ v.pattern }}"></span>
+                  <span style="position:absolute;left:7px;top:6px;font-size:9.5px;font-weight:600;color:#fff;background:rgba(0,0,0,.28);border-radius:4px;padding:1px 6px">{{ v.label }}</span>
+                  <sc-if value="{{ v.busy }}" hint-placeholder-val="{{ false }}">
+                    <span style="position:absolute;inset:0;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#4F46E5;animation:shimmer 1.1s infinite">рисуем…</span>
+                  </sc-if>
+                </button>
+              </sc-for>
+            </div>
+            <div style="font-size:11.5px;line-height:1.5;color:#9CA3AF;margin-top:10px">Генерация — без людей и узнаваемых лиц, чтобы не спорить о правах. Выбранный вариант можно заменить своим файлом.</div>
+          </sc-if>
+
+          <sc-if value="{{ covType }}" hint-placeholder-val="{{ false }}">
+            <div style="height:150px;border-radius:12px;position:relative;overflow:hidden;background:{{ typoBg }}">
+              <span style="position:absolute;inset:0;background:{{ typoPattern }}"></span>
+              <span style="position:absolute;right:12px;bottom:-10px;font-family:'Source Serif 4',serif;font-size:74px;font-weight:700;color:rgba(255,255,255,.32);line-height:.8">{{ typoGlyph }}</span>
+              <span style="position:absolute;left:14px;top:12px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:2px 7px">{{ topic }}</span>
+              <span style="position:absolute;left:14px;bottom:14px;right:80px;font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:#fff;line-height:1.2">{{ title }}</span>
+            </div>
+            <div style="font-size:11.5px;line-height:1.5;color:#9CA3AF;margin-top:10px">Бесплатный вариант по умолчанию: цвет берётся из темы, буква — из заголовка. Так выглядят карточки, у которых нет фото.</div>
+          </sc-if>
+        </div>
+
+        <div class="tcard" style="padding:20px">
+          <div style="font-size:15.5px;font-weight:600;margin-bottom:12px">Как это выглядит в каталоге</div>
+          <div style="border:1px solid #E5E7EB;border-radius:14px;overflow:hidden">
+            <div style="height:106px;position:relative;background:{{ typoBg }}">
+              <span style="position:absolute;inset:0;background:{{ typoPattern }}"></span>
+              <span style="position:absolute;right:9px;bottom:-6px;font-family:'Source Serif 4',serif;font-size:52px;font-weight:700;color:rgba(255,255,255,.3);line-height:.8">{{ typoGlyph }}</span>
+              <span style="position:absolute;left:10px;top:9px;font-size:10px;font-weight:600;color:#fff;background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.3);border-radius:5px;padding:1.5px 6px">{{ lvl }}</span>
+              <span style="position:absolute;left:10px;bottom:8px;font-size:10.5px;color:rgba(255,255,255,.9)">{{ topic }} · {{ mins }}</span>
+            </div>
+            <div style="padding:12px 14px;display:flex;flex-direction:column;gap:7px">
+              <div style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;line-height:1.28">{{ title }}</div>
+              <div style="font-size:12px;line-height:1.5;color:#6B7280;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">{{ sample }}</div>
+              <div style="display:flex;align-items:center;gap:7px;margin-top:2px">
+                <span style="font-size:11px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:2px 8px">Комфортно · {{ known }}%</span>
+                <span style="margin-left:auto;display:flex;gap:3px"><span style="width:14px;height:3px;border-radius:2px;background:#E5E7EB"></span><span style="width:14px;height:3px;border-radius:2px;background:#E5E7EB"></span><span style="width:14px;height:3px;border-radius:2px;background:#E5E7EB"></span></span>
+              </div>
+            </div>
+          </div>
+          <a href="Fluenta Library v2.dc.html" style="display:inline-block;font-size:12.5px;font-weight:600;margin-top:12px">Открыть каталог →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:90;background:#1A1A1A;color:#fff;font-size:13px;font-weight:500;padding:9px 15px;border-radius:10px;box-shadow:0 8px 20px rgba(26,26,26,.2)">{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:940}}">
+class Component extends DCLogic {
+  state = {
+    way: 'link', phase: 'idle', step: 0, url: '', feedUrl: '', toast: null,
+    ver: 'B2', cover: 'gen', style: 'Штрих', gen: 0, picked: 1,
+    title: 'Europe Rewrites Its AI Rulebook', topic: 'Новости', mins: '4 мин',
+    prompt: 'Абстрактная редакционная иллюстрация: карта Европы из тонких линий, свод правил, холодная сталь и бумага. Без текста, без людей.'
+  };
+  componentWillUnmount() { clearTimeout(this._tt); clearTimeout(this._pt); clearTimeout(this._gt); }
+  toastMsg(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: null }), 2000); }
+  run() {
+    clearTimeout(this._pt);
+    this.setState({ phase: 'work', step: 0 });
+    const tick = () => {
+      this.setState(s => {
+        const n = s.step + 1;
+        if (n >= 6) { this._pt = setTimeout(() => this.setState({ phase: 'ready' }), 500); return { step: 6 }; }
+        this._pt = setTimeout(tick, 620);
+        return { step: n };
+      });
+    };
+    this._pt = setTimeout(tick, 620);
+  }
+  renderVals() {
+    const st = this.state;
+    const pick = (a) => ({ bg: a ? '#F7F7FF' : '#fff', bd: a ? '#4F46E5' : '#E5E7EB', cl: a ? '#4338CA' : '#4B5563', fw: a ? 600 : 500 });
+    const ways = [
+      ['link', 'Ссылка', 'W', 'Новость или статья по URL — ИИ достанет текст и напишет пересказ'],
+      ['file', 'Файл', '¶', 'PDF, EPUB, DOCX. Книга разрежется на главы'],
+      ['paste', 'Вставить текст', '⌘', 'Свой материал или готовый пересказ'],
+      ['video', 'Видео', '▶', 'YouTube, Vimeo или файл — Gemini расшифрует речь и соберёт выжимку'],
+      ['rss', 'RSS-поток', '◈', 'Фиды изданий: кандидаты приходят каждое утро']
+    ].map(w => {
+      const a = st.way === w[0];
+      return {
+        key: w[0], label: w[1], glyph: w[2], hint: w[3],
+        bg: a ? '#F7F7FF' : '#fff', bd: a ? '#4F46E5' : '#E5E7EB', cl: a ? '#4338CA' : '#1A1A1A',
+        iBg: a ? '#4F46E5' : '#F2F2EF', iCl: a ? '#fff' : '#9CA3AF',
+        on: () => this.setState({ way: w[0], phase: 'idle' })
+      };
+    });
+    const PIPE = st.way === 'video' ? [
+      ['Забрали дорожку и кадры', '9:42'], ['Gemini распознал речь с таймкодами', '1 483 слова'],
+      ['Прочитал надписи на экране', 'слайды, графики'], ['Разбил на главы и собрал выжимку', '5 глав · 3 уровня'],
+      ['Посчитал знакомые слова', '89% для B2'], ['Подготовил план пересказа', '3 шага']
+    ] : [
+      ['Скачали страницу', '1,2 с'], ['Убрали рекламу и меню', '842 слова'],
+      ['Определили язык и уровень оригинала', 'EN · C1'], ['Написали версии B1 / B2 / C1', '3 текста'],
+      ['Посчитали знакомые слова по вашей базе', '93% для B2'], ['Собрали обложку', '4 варианта']
+    ];
+    const pipeline = PIPE.map((p, i) => {
+      const done = st.step > i, now = st.step === i;
+      return {
+        key: p[0], label: p[0], note: done ? p[1] : now ? '…' : '',
+        mark: done ? '✓' : String(i + 1),
+        bg: done ? '#ECFDF5' : now ? '#EEF2FF' : '#F2F2EF',
+        cl: done ? '#047857' : now ? '#4F46E5' : '#B4B9C0',
+        txtCl: done ? '#374151' : now ? '#1A1A1A' : '#B4B9C0',
+        anim: now ? 'shimmer 1.2s infinite' : 'none'
+      };
+    });
+    const VER = {
+      B1: ['B1', '210', 'Europe has new rules for AI. Companies must say when a computer, not a person, makes a decision. Lawyers argue about what counts as risk.', 96],
+      B2: ['B2', '340', 'Europe has rewritten its rulebook for artificial intelligence, and the argument now moves from principle to paperwork: who proves that a system is safe, and how often.', 93],
+      C1: ['C1', '520', 'The revised European framework shifts the burden of proof onto developers, obliging them to document risk assessments that regulators may never read — a bureaucratic gamble with real consequences.', 87]
+    };
+    const cur = VER[st.ver] || VER.B2;
+    const vers = ['B1', 'B2', 'C1'].map(v => {
+      const p = pick(st.ver === v);
+      return Object.assign({ key: v, label: v, words: VER[v][1] + ' сл.' }, p, { on: () => this.setState({ ver: v }) });
+    });
+    const coverTabs = [['upload', 'Загрузить'], ['gen', 'Сгенерировать'], ['type', 'Типографская']].map(t => {
+      const p = pick(st.cover === t[0]);
+      return Object.assign({ key: t[0], label: t[1] }, p, { on: () => this.setState({ cover: t[0] }) });
+    });
+    const styles = ['Штрих', 'Фотореализм', 'Плакат'].map(s => {
+      const p = pick(st.style === s);
+      return Object.assign({ key: s, label: s }, p, { on: () => this.setState({ style: s }) });
+    });
+    const pal = [['#4F46E5', '#818CF8'], ['#0D9488', '#5EEAD4'], ['#B45309', '#FCD34D'], ['#BE185D', '#FDA4AF']];
+    const pats = [
+      'repeating-linear-gradient(135deg,rgba(255,255,255,.13) 0 2px,transparent 2px 12px)',
+      'radial-gradient(circle at 74% 26%,rgba(255,255,255,.28),transparent 58%)',
+      'repeating-linear-gradient(0deg,rgba(255,255,255,.1) 0 1px,transparent 1px 10px)',
+      'radial-gradient(circle at 20% 80%,rgba(255,255,255,.22),transparent 55%)'
+    ];
+    const variants = [0, 1, 2, 3].map(i => ({
+      key: i, label: 'вариант ' + (i + 1),
+      bg: 'linear-gradient(135deg,' + pal[i][0] + ',' + pal[i][1] + ')',
+      pattern: pats[i], bd: st.picked === i ? '#4F46E5' : 'transparent',
+      busy: st.gen === 1,
+      on: () => { this.setState({ picked: i }); this.toastMsg('Обложка: вариант ' + (i + 1)); }
+    }));
+    const media = pal.map((p, i) => ({ key: i, bg: 'linear-gradient(135deg,' + p[0] + ',' + p[1] + ')', on: () => this.toastMsg('Взяли картинку из медиатеки') }));
+    const feeds = [
+      ['Reuters · Technology', 'reuters.com/technology/rss', '12 кандидатов за неделю', '#10B981', 'Пауза'],
+      ['The Guardian · Science', 'theguardian.com/science/rss', '9 кандидатов', '#10B981', 'Пауза'],
+      ['Nature Briefing', 'nature.com/nature.rss', 'сложный язык, C1+', '#F59E0B', 'Пауза'],
+      ['NYT · Culture', 'nytimes.com/culture/rss', 'на паузе с 12 июля', '#B4B9C0', 'Включить']
+    ].map(f => ({ key: f[0], name: f[0], url: f[1], stat: f[2], dot: f[3], action: f[4], on: () => this.toastMsg(f[0] + ': ' + f[4].toLowerCase()) }));
+    const samples = [
+      ['reuters.com · AI rulebook', 'https://www.reuters.com/technology/europe-ai-rules'],
+      ['gutenberg.org · The Machine Stops', 'https://www.gutenberg.org/ebooks/49733'],
+      ['paulgraham.com · Great Work', 'https://paulgraham.com/greatwork.html']
+    ].map(s => ({ key: s[0], label: s[0], on: () => { this.setState({ url: s[1] }); this.run(); } }));
+    const vidSamples = [
+      ['youtube.com · Iceland’s heat', 'https://www.youtube.com/watch?v=iceland-heat'],
+      ['vimeo.com · The Thames engineer', 'https://vimeo.com/thames-engineer'],
+      ['подкаст · 45 мин, mp3', 'https://cdn.example.com/ep-214.mp3']
+    ].map(s => ({ key: s[0], label: s[0], on: () => { this.setState({ url: s[1] }); this.run(); } }));
+    const topicPal = { 'Новости': ['#475569', '#94A3B8'], 'Наука': ['#0D9488', '#5EEAD4'], 'Бизнес': ['#B45309', '#FCD34D'], 'Классика': ['#BE185D', '#FDA4AF'], 'Рассказы': ['#4F46E5', '#818CF8'] };
+    const tp = topicPal[st.topic] || topicPal['Новости'];
+    return {
+      ways,
+      isLink: st.way === 'link', isFile: st.way === 'file', isPaste: st.way === 'paste', isRss: st.way === 'rss', isVideo: st.way === 'video',
+      url: st.url, urlCh: e => this.setState({ url: e.target.value }),
+      pasteCh: () => {}, samples, vidSamples,
+      parse: () => this.run(),
+      working: st.phase === 'work', ready: st.phase === 'ready', pipeline,
+      srcLabel: st.way === 'link' ? 'источник: reuters.com' : st.way === 'file' ? 'источник: файл' : st.way === 'paste' ? 'источник: ручной ввод' : st.way === 'video' ? 'источник: видео · расшифровка Gemini' : 'источник: RSS',
+      title: st.title, titleCh: e => this.setState({ title: e.target.value }),
+      topic: st.topic, topicCh: e => this.setState({ topic: e.target.value }),
+      mins: st.mins, minsCh: e => this.setState({ mins: e.target.value }),
+      srcHost: 'reuters.com/technology',
+      vers, lvl: cur[0], words: cur[1], sample: cur[2], known: String(cur[3]),
+      regen: () => this.toastMsg('Пересказ ' + st.ver + ' перегенерирован'),
+      publish: () => this.toastMsg('«' + st.title + '» опубликован в каталоге — 3 уровня'),
+      draft: () => this.toastMsg('Сохранено в черновики'),
+      toDigest: () => this.toastMsg('Добавлено в дайджест на 25 июля'),
+      coverTabs, covUpload: st.cover === 'upload', covGen: st.cover === 'gen', covType: st.cover === 'type',
+      coverHint: st.cover === 'upload' ? 'Свой файл или картинка из медиатеки — она уже привязана к другим текстам.'
+        : st.cover === 'gen' ? 'ИИ рисует 4 варианта по промпту, собранному из текста. Выберите один — остальные останутся в медиатеке.'
+        : 'Без картинки: цветное поле по теме, буква заголовка и уровень. Работает всегда и ничего не стоит.',
+      styles, variants, media, openMedia: () => this.toastMsg('Медиатека — 214 изображений'),
+      prompt: st.prompt, promptCh: e => this.setState({ prompt: e.target.value }),
+      genLabel: st.gen === 1 ? 'Рисуем…' : 'Сгенерировать 4',
+      generate: () => {
+        if (this.state.gen === 1) return;
+        this.setState({ gen: 1 });
+        this._gt = setTimeout(() => { this.setState({ gen: 0 }); this.toastMsg('4 варианта готовы'); }, 1800);
+      },
+      typoBg: 'linear-gradient(135deg,' + tp[0] + ',' + tp[1] + ')',
+      typoPattern: pats[0], typoGlyph: (st.title || 'A').trim().charAt(0),
+      feedUrl: st.feedUrl, feedCh: e => this.setState({ feedUrl: e.target.value }),
+      addFeed: () => { if (!(st.feedUrl || '').trim()) return this.toastMsg('Вставьте адрес фида'); this.toastMsg('Фид добавлен — первые кандидаты утром'); this.setState({ feedUrl: '' }); },
+      feeds,
+      toastOn: !!st.toast, toast: st.toast || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+@keyframes obFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes obRing{0%{transform:scale(1);opacity:.45}70%{transform:scale(1.55);opacity:0}100%{opacity:0}}
+</style>
+</helmet>
+<div data-screen-label="Onboarding · 3 minutes" style="min-height:100vh;background:#FAFAF8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:40px 24px;box-sizing:border-box;font-family:'Inter',sans-serif;color:#1A1A1A">
+
+  <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ devW }}" height="{{ devH }}" hint-size="390px,844px">
+    <div style="position:relative;height:100%;box-sizing:border-box;display:flex;flex-direction:column;background:#FAFAF8;padding:54px 0 0;overflow:hidden">
+
+      <div style="flex:none;display:flex;align-items:center;gap:10px;padding:8px 20px 10px">
+        <div style="flex:1;height:4px;border-radius:999px;background:#ECECE8;overflow:hidden">
+          <div style="height:100%;border-radius:999px;background:#4F46E5;width:{{ pct }};transition:width .3s ease"></div>
+        </div>
+        <span style="flex:none;font-size:11.5px;font-weight:500;color:#9CA3AF">{{ timeLeft }}</span>
+      </div>
+
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:0 20px 24px"><div style="max-width:{{ colMax }};margin:0 auto">
+
+        <sc-if value="{{ isAsk }}" hint-placeholder-val="{{ true }}">
+          <div style="padding-top:56px;animation:obFade .24s ease-out">
+            <div style="width:34px;height:34px;border-radius:10px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:18px;font-weight:600">f</div>
+            <div style="font-family:'Source Serif 4',serif;font-size:29px;line-height:1.22;font-weight:700;letter-spacing:-.01em;margin-top:22px;text-wrap:pretty">Какой язык вы хотите говорить свободнее?</div>
+            <div style="font-size:14px;line-height:1.6;color:#6B7280;margin-top:8px">Один вопрос. Без регистрации.</div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:22px">
+              <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+                <button onClick="{{ l.pick }}" style="display:flex;align-items:center;gap:12px;height:52px;padding:0 16px;border:1px solid #E5E7EB;background:#fff;border-radius:13px;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;color:#1A1A1A;cursor:pointer;text-align:left" style-hover="border-color:#C7D2FE;color:#4F46E5">
+                  <span style="flex:1">{{ l.name }}</span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C7CBD1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </sc-for>
+            </div>
+            <div style="font-size:12.5px;color:#9CA3AF;margin-top:18px">Дальше — сразу текст. Настройки потом.</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRead }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:obFade .24s ease-out">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF">Читайте · 40 секунд</span>
+              <span style="font-size:11px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:3px 9px">{{ pairLabel }}</span>
+            </div>
+            <div lang="en" style="font-family:'Source Serif 4',serif;font-size:22px;line-height:1.25;font-weight:700;letter-spacing:-.01em;margin-top:12px">The Last Train</div>
+            <div lang="en" style="font-family:'Source Serif 4',serif;font-size:17.5px;line-height:1.74;color:#1A1A1A;margin-top:12px">
+              <p style="margin:0">Yesterday Nina missed the last train home. She <span onClick="{{ tapPhrase }}" style="background:{{ phraseBg }};border-bottom:1px dashed rgba(79,70,229,.55);border-radius:3px;padding:0 2px;cursor:pointer">had been talking</span> to an old friend outside the station — one of those conversations that begin with “two minutes” and quietly eat an hour. When she finally looked up, the platform was empty and the departure board had gone dark.</p>
+              <p style="margin:14px 0 0">The next train was at six in the morning. Nina bought a coffee from the machine, sat down on the cold bench, and did the maths: seven hours, one bench, no book.</p>
+              <p style="margin:14px 0 0">Then the friend came back. He had missed his own bus while walking her to the station, and he was carrying two paper cups and an old pack of cards. They played on the bench until the cleaners arrived, and Nina decided that some missed trains are not accidents at all.</p>
+            </div>
+            <sc-if value="{{ showCard }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff;border:1px solid #C7D2FE;border-radius:14px;box-shadow:0 10px 28px rgba(79,70,229,.12);padding:16px;margin-top:16px;animation:obFade .2s ease-out">
+                <div lang="en" style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700">had been talking</div>
+                <div style="display:flex;gap:10px;margin-top:11px">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px"><path d="M12 4v14"></path><polyline points="6 12 12 18 18 12"></polyline></svg>
+                  <div style="font-size:13.5px;line-height:1.55;color:#374151">Действие длилось какое-то время до другого события — поезд уже ушёл.</div>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:9px">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:3px"><path d="M12 4v14"></path><polyline points="6 12 12 18 18 12"></polyline></svg>
+                  <div style="font-size:13.5px;line-height:1.55;color:#374151">Поэтому нельзя сказать просто <span lang="en" style="font-family:'Source Serif 4',serif">“talked”</span>.</div>
+                </div>
+                <div style="font-size:12px;color:#9CA3AF;margin-top:11px">Одно объяснение. 10 секунд. Фраза сохранена.</div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRetell }}" hint-placeholder-val="{{ false }}">
+          <div style="padding-top:8px;animation:obFade .24s ease-out">
+            <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF">Говорите · 30 секунд</span>
+            <div style="font-family:'Source Serif 4',serif;font-size:24px;line-height:1.25;font-weight:700;letter-spacing:-.01em;margin-top:10px">Теперь расскажите историю своими словами</div>
+            <div style="font-size:13.5px;line-height:1.6;color:#6B7280;margin-top:7px">Ошибки — это нормально: они и есть материал.</div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:26px">
+              <button onClick="{{ toggleRec }}" style="position:relative;width:96px;height:96px;border-radius:50%;border:none;background:{{ micBg }};color:{{ micCl }};cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <sc-if value="{{ recording }}" hint-placeholder-val="{{ false }}">
+                  <span style="position:absolute;inset:0;border-radius:50%;background:rgba(79,70,229,.28);animation:obRing 1.8s ease-out infinite"></span>
+                </sc-if>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>
+              </button>
+              <div style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;letter-spacing:.02em">{{ recClock }}</div>
+              <div style="font-size:13px;color:#6B7280;text-align:center;max-width:250px">{{ recHint }}</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:14px 16px;margin-top:22px">
+              <button onClick="{{ toggleSave }}" style="display:flex;align-items:center;gap:10px;width:100%;border:none;background:transparent;padding:0;cursor:pointer;font-family:'Inter',sans-serif;text-align:left">
+                <span style="flex:none;width:36px;height:21px;border-radius:999px;background:{{ svBg }};position:relative;transition:background .15s">
+                  <span style="position:absolute;top:2.5px;left:{{ svKnob }};width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(26,26,26,.2);transition:left .15s"></span>
+                </span>
+                <span style="flex:1;min-width:0;font-size:13.5px;font-weight:600;color:#1A1A1A">Сохранить эту запись</span>
+                <span style="flex:none;font-size:10.5px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:6px;padding:2px 7px;white-space:nowrap">Pro · Free 1 в месяц</span>
+              </button>
+              <div style="font-size:12.5px;line-height:1.55;color:{{ svNoteCl }};margin-top:9px">{{ svNote }}</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isFix }}" hint-placeholder-val="{{ false }}">
+          <div style="padding-top:8px;animation:obFade .24s ease-out">
+            <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF">Одна правка</span>
+            <div style="font-family:'Source Serif 4',serif;font-size:26px;line-height:1.22;font-weight:700;letter-spacing:-.01em;margin-top:10px">Почти идеально</div>
+            <div style="font-size:13.5px;line-height:1.6;color:#6B7280;margin-top:7px">Одно исправление, не десять. Остальное вы сказали понятно.</div>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:15px 16px;margin-top:16px">
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Вы сказали</div>
+              <div lang="en" style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.6;margin-top:6px">“Yesterday the girl <span style="background:rgba(239,68,68,.14);border-radius:3px;padding:0 3px">go</span> to the station.”</div>
+              <div style="height:1px;background:#F3F4F6;margin:14px 0"></div>
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#047857">Лучше сказать</div>
+              <div lang="en" style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.6;margin-top:6px">“Yesterday the girl <b style="background:rgba(16,185,129,.14);border-radius:3px;padding:0 3px">went</b> to the station.”</div>
+              <div style="font-size:13px;line-height:1.6;color:#374151;background:#FAFAF8;border:1px solid #ECECE8;border-radius:10px;padding:11px 12px;margin-top:13px">Потому что действие уже произошло — нужна прошедшая форма.</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isMem }}" hint-placeholder-val="{{ false }}">
+          <div style="padding-top:8px;animation:obFade .24s ease-out">
+            <span style="font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:#9CA3AF">Память</span>
+            <div style="font-family:'Source Serif 4',serif;font-size:26px;line-height:1.22;font-weight:700;letter-spacing:-.01em;margin-top:10px">Эта ошибка вернётся завтра</div>
+            <div style="font-size:13.5px;line-height:1.65;color:#6B7280;margin-top:8px">Через двадцать секунд вы её почти забудете. Мы напомним ровно тогда, когда повтор даст максимальный эффект.</div>
+            <div style="background:#fff;border:1px solid #C7D2FE;border-radius:14px;padding:16px;margin-top:18px">
+              <svg viewBox="0 0 300 104" style="display:block;width:100%;height:auto">
+                <line x1="12" y1="88" x2="292" y2="88" stroke="#ECECE8" stroke-width="1"></line>
+                <path d="M14 14 C 60 66, 100 76, 150 81 S 250 86, 290 87" fill="none" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="4 4"></path>
+                <path d="M14 14 C 50 60, 74 68, 96 72 C 120 40, 170 60, 290 70" fill="none" stroke="#4F46E5" stroke-width="2"></path>
+                <line x1="96" y1="24" x2="96" y2="88" stroke="#C7D2FE" stroke-width="1" stroke-dasharray="3 3"></line>
+                <circle cx="96" cy="72" r="4.5" fill="#4F46E5"></circle>
+                <text x="96" y="16" text-anchor="middle" font-family="Inter,sans-serif" font-size="10.5" font-weight="600" fill="#4338CA">завтра, 09:00</text>
+                <text x="14" y="101" font-family="Inter,sans-serif" font-size="9.5" fill="#9CA3AF">сейчас</text>
+                <text x="292" y="101" text-anchor="end" font-family="Inter,sans-serif" font-size="9.5" fill="#9CA3AF">без повтора — забыто</text>
+              </svg>
+              <div style="display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:12px;border-top:1px solid #F3F4F6">
+                <span lang="en" style="font-family:'Source Serif 4',serif;font-size:14.5px;font-weight:600;color:#B91C1C;text-decoration:line-through;text-decoration-thickness:1px">go</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <span lang="en" style="font-family:'Source Serif 4',serif;font-size:14.5px;font-weight:700;color:#047857">went</span>
+                <span style="flex:1"></span>
+                <span style="font-size:11.5px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:3px 9px">в очереди на завтра</span>
+              </div>
+            </div>
+            <div style="font-size:12.5px;line-height:1.6;color:#9CA3AF;margin-top:14px">Fluenta следит, что вы начинаете забывать, — и возвращает это вовремя. Не просто отвечает.</div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isSave }}" hint-placeholder-val="{{ false }}">
+          <div style="padding-top:26px;animation:obFade .24s ease-out">
+            <div style="display:flex;align-items:center;gap:9px">
+              <span style="width:26px;height:26px;border-radius:50%;background:#ECFDF5;border:1px solid #A7F3D0;color:#047857;display:flex;align-items:center;justify-content:center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+              </span>
+              <span style="font-size:12.5px;font-weight:600;color:#047857">Цикл замкнулся за 2 минуты 40 секунд</span>
+            </div>
+            <div style="font-family:'Source Serif 4',serif;font-size:27px;line-height:1.24;font-weight:700;letter-spacing:-.01em;margin-top:16px">Сохранить прогресс?</div>
+            <div style="font-size:13.5px;line-height:1.6;color:#6B7280;margin-top:8px">Фраза, правка и карточка на завтра уже ваши. Аккаунт нужен только чтобы они не потерялись.</div>
+            <sc-if value="{{ saveRecOn }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:9px;align-items:flex-start;background:#ECFDF5;border:1px solid #A7F3D0;border-radius:12px;padding:11px 13px;margin-top:14px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>
+                <div style="font-size:12.5px;line-height:1.55;color:#047857">Ваша первая запись пересказа ждёт аккаунта — без него она исчезнет. На Free хранится 1 запись в месяц, в Pro — все.</div>
+              </div>
+            </sc-if>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-top:20px">
+              <button style="height:48px;border:none;border-radius:12px;background:#1A1A1A;color:#fff;font-family:'Inter',sans-serif;font-size:14.5px;font-weight:500;cursor:pointer">Продолжить с Apple</button>
+              <button style="height:48px;border:1px solid #E5E7EB;border-radius:12px;background:#fff;color:#1A1A1A;font-family:'Inter',sans-serif;font-size:14.5px;font-weight:500;cursor:pointer" style-hover="background:#FAFAF8">Продолжить с Google</button>
+              <button style="height:48px;border:1px solid #E5E7EB;border-radius:12px;background:#fff;color:#374151;font-family:'Inter',sans-serif;font-size:14.5px;font-weight:500;cursor:pointer" style-hover="background:#FAFAF8">Почтой</button>
+            </div>
+            <a href="Fluenta Library v2.dc.html" style="display:block;text-align:center;font-size:13px;font-weight:500;color:#6B7280;margin-top:16px" style-hover="color:#1A1A1A">Пока без аккаунта — прогресс останется на этом устройстве</a>
+            <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:14px 16px;margin-top:20px">
+              <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Зачем вам язык?</div>
+              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:10px">
+                <sc-for list="{{ goals }}" as="g" hint-placeholder-count="5">
+                  <button onClick="{{ g.pick }}" style="height:32px;padding:0 12px;border:1px solid {{ g.bd }};background:{{ g.bg }};color:{{ g.cl }};border-radius:999px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer">{{ g.name }}</button>
+                </sc-for>
+              </div>
+              <div style="font-size:12px;line-height:1.55;color:#9CA3AF;margin-top:9px">{{ goalNote }}</div>
+            </div>
+          </div>
+        </sc-if>
+
+      </div></div>
+
+      <div style="flex:none;padding:12px 20px 30px;background:linear-gradient(to top,#FAFAF8 60%,rgba(250,250,248,0))"><div style="max-width:{{ colMax }};margin:0 auto">
+        <sc-if value="{{ showPrimary }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ next }}" style="width:100%;height:52px;border:none;border-radius:14px;background:{{ ctaBg }};color:#fff;font-family:'Inter',sans-serif;font-size:15px;font-weight:500;cursor:pointer">{{ ctaLabel }}</button>
+        </sc-if>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px">
+          <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ back }}" style="border:none;background:transparent;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:#9CA3AF;cursor:pointer;padding:6px 8px">Назад</button>
+          </sc-if>
+          <span style="font-size:12px;color:#9CA3AF">{{ footNote }}</span>
+        </div>
+        <div style="text-align:center;font-size:11.5px;line-height:1.5;color:#9CA3AF;margin-top:9px;text-wrap:pretty">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      </div></div>
+
+    </div>
+  </x-import>
+
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center">
+    <div style="display:inline-flex;background:#F0F0EE;border-radius:999px;padding:3px">
+      <button onClick="{{ setAsk }}" style="height:30px;padding:0 13px;border:none;border-radius:999px;background:{{ vaBg }};color:{{ vaCl }};box-shadow:{{ vaSh }};font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer">A · Один вопрос сначала</button>
+      <button onClick="{{ setInstant }}" style="height:30px;padding:0 13px;border:none;border-radius:999px;background:{{ vbBg }};color:{{ vbCl }};box-shadow:{{ vbSh }};font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer">B · Сразу в текст</button>
+    </div>
+    <span style="font-size:12px;color:#9CA3AF">{{ variantNote }}</span>
+  </div>
+  <div style="display:inline-flex;align-items:center;background:#F0F0EE;border-radius:999px;padding:3px">
+    <button onClick="{{ setPhone }}" style="height:30px;padding:0 13px;border:none;border-radius:999px;background:{{ dpBg }};color:{{ dpCl }};box-shadow:{{ dpSh }};font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer">Телефон</button>
+    <button onClick="{{ setTablet }}" style="height:30px;padding:0 13px;border:none;border-radius:999px;background:{{ dtBg }};color:{{ dtCl }};box-shadow:{{ dtSh }};font-family:'Inter',sans-serif;font-size:12px;font-weight:500;cursor:pointer">Планшет</button>
+    <a href="Fluenta Onboarding Desktop.dc.html" style="display:inline-flex;align-items:center;height:30px;padding:0 13px;border-radius:999px;font-size:12px;font-weight:500;color:#6B7280" style-hover="color:#4F46E5">ПК →</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:1010},&quot;flowVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;one-question&quot;,&quot;instant&quot;],&quot;default&quot;:&quot;one-question&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Поток&quot;},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;phone&quot;,&quot;tablet&quot;],&quot;default&quot;:&quot;phone&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Устройство&quot;}}">
+class Component extends DCLogic {
+  state = { v: null, i: null, tapped: false, rec: 'idle', sec: 0, dev: null, save: false, goal: null };
+
+  componentWillUnmount() { if (this._t) clearInterval(this._t); }
+
+  steps(v) { return v === 'instant' ? ['read', 'retell', 'fix', 'mem', 'save'] : ['ask', 'read', 'retell', 'fix', 'mem', 'save']; }
+
+  renderVals() {
+    const v = this.state.v || (this.props.flowVariant === 'instant' ? 'instant' : 'ask');
+    const st = this.steps(v);
+    const i = Math.min(this.state.i == null ? 0 : this.state.i, st.length - 1);
+    const step = st[i];
+    const rec = this.state.rec;
+    const sec = this.state.sec;
+    const tapped = this.state.tapped;
+
+    const go = (n) => this.setState({ i: Math.max(0, Math.min(st.length - 1, n)) });
+    const startRec = () => {
+      if (this._t) clearInterval(this._t);
+      this.setState({ rec: 'run', sec: 0 });
+      this._t = setInterval(() => this.setState((s) => {
+        if (s.sec >= 30) { clearInterval(this._t); return { rec: 'done', sec: 30 }; }
+        return { sec: s.sec + 1 };
+      }), 1000);
+    };
+
+    const primary = {
+      ask: ['', false],
+      read: [tapped ? 'Рассказать своими словами' : 'Нажмите выделенную фразу', tapped],
+      retell: [rec === 'done' ? 'Показать правку' : (rec === 'run' ? 'Остановить запись' : 'Записать 30 секунд'), true],
+      fix: ['Дальше', true],
+      mem: ['Сохранить прогресс', true],
+      save: ['', false]
+    }[step];
+
+    const foot = {
+      ask: 'Никаких регистраций',
+      read: tapped ? 'Одно объяснение — и дальше' : '≈40 секунд чтения',
+      retell: rec === 'run' ? 'Говорю с вами · слушаю' : (rec === 'done' ? 'Записано 30 секунд' : 'Микрофон только на пересказ'),
+      fix: 'Одна правка, не десять',
+      mem: 'Это и есть отличие от чата',
+      save: 'Без карты · регистрация в один тап'
+    }[step];
+
+    const pctMap = { ask: '6%', read: tapped ? '40%' : '22%', retell: rec === 'done' ? '62%' : '50%', fix: '78%', mem: '92%', save: '100%' };
+    const timeMap = { ask: '~3 мин', read: 'осталось ~2 мин', retell: 'осталось ~1 мин', fix: 'почти готово', mem: '10 секунд', save: 'готово' };
+
+    const dev = this.state.dev || this.props.device || 'phone';
+    const save = this.state.save;
+    return {
+      pct: pctMap[step], timeLeft: timeMap[step],
+      devW: dev === 'tablet' ? 834 : 390, devH: dev === 'tablet' ? 1112 : 844,
+      colMax: dev === 'tablet' ? '560px' : '100%',
+      setPhone: () => this.setState({ dev: 'phone' }), setTablet: () => this.setState({ dev: 'tablet' }),
+      dpBg: dev === 'phone' ? '#FFFFFF' : 'transparent', dpCl: dev === 'phone' ? '#1A1A1A' : '#6B7280', dpSh: dev === 'phone' ? '0 1px 2px rgba(26,26,26,.08)' : 'none',
+      dtBg: dev === 'tablet' ? '#FFFFFF' : 'transparent', dtCl: dev === 'tablet' ? '#1A1A1A' : '#6B7280', dtSh: dev === 'tablet' ? '0 1px 2px rgba(26,26,26,.08)' : 'none',
+      toggleSave: () => this.setState((s) => ({ save: !s.save })),
+      svBg: save ? '#4F46E5' : '#E0E0DA', svKnob: save ? '17.5px' : '2.5px',
+      svNote: save ? 'Сохраним запись в вашем аккаунте — создадим его на последнем шаге.' : 'По умолчанию запись не сохраняется — из неё остаются только ваши ошибки.',
+      svNoteCl: save ? '#047857' : '#6B7280',
+      saveRecOn: save,
+      goals: [['work', 'Работа и собеседование'], ['travel', 'Путешествия'], ['move', 'Переезд'], ['family', 'Семья и друзья'], ['study', 'Учёба']].map((g) => {
+        const on = this.state.goal === g[0];
+        return { key: g[0], name: g[1], bd: on ? '#C7D2FE' : '#E5E7EB', bg: on ? '#EEF2FF' : '#fff', cl: on ? '#4338CA' : '#374151', pick: () => this.setState({ goal: on ? null : g[0] }) };
+      }),
+      goalNote: this.state.goal ? ({ work: 'Соберём тексты профессии и включим карьерный трек.', travel: 'Тексты про дорогу, жильё и разговоры в пути.', move: 'Документы, быт и разговоры первых месяцев.', family: 'Живая разговорная речь и переписка.', study: 'Академические тексты и пересказ лекций.' })[this.state.goal] : 'Одно касание — тексты подстроятся под цель. Можно пропустить.',
+      isAsk: step === 'ask', isRead: step === 'read', isRetell: step === 'retell',
+      isFix: step === 'fix', isMem: step === 'mem', isSave: step === 'save',
+      pairLabel: 'EN → RU',
+      langs: ['English', 'Deutsch', 'Español', 'Français', 'Italiano', 'Другой'].map((l) => ({
+        key: l, name: l, pick: () => this.setState({ i: 1 })
+      })),
+      tapPhrase: () => this.setState({ tapped: true }),
+      phraseBg: tapped ? 'rgba(251,191,36,.34)' : 'rgba(79,70,229,.08)',
+      showCard: tapped,
+      recording: rec === 'run',
+      recClock: rec === 'run' ? '0:' + String(Math.max(0, 30 - sec)).padStart(2, '0') : '0:30',
+      recHint: rec === 'run' ? 'Слушаю. Три-четыре предложения — этого хватит.' : (rec === 'done' ? 'Готово. Разбираю ответ и выбираю одну правку.' : 'Нажмите и говорите. Остановлю сам через 30 секунд.'),
+      micBg: rec === 'run' ? '#4F46E5' : (rec === 'done' ? '#ECFDF5' : '#EEF2FF'),
+      micCl: rec === 'run' ? '#FFFFFF' : (rec === 'done' ? '#047857' : '#4F46E5'),
+      toggleRec: () => { if (rec === 'idle') startRec(); else if (rec === 'run') { if (this._t) clearInterval(this._t); this.setState({ rec: 'done', sec: 30 }); } else go(i + 1); },
+      showPrimary: !!primary[0], ctaLabel: primary[0],
+      ctaBg: primary[1] ? '#4F46E5' : '#C7CBD1',
+      next: () => {
+        if (step === 'read' && !tapped) { this.setState({ tapped: true }); return; }
+        if (step === 'retell') { if (rec === 'idle') { startRec(); return; } if (rec === 'run') { if (this._t) clearInterval(this._t); this.setState({ rec: 'done', sec: 30 }); return; } }
+        go(i + 1);
+      },
+      canBack: i > 0, back: () => go(i - 1),
+      footNote: foot,
+      setAsk: () => this.setState({ v: 'ask', i: 0, tapped: false, rec: 'idle', sec: 0 }),
+      setInstant: () => this.setState({ v: 'instant', i: 0, tapped: false, rec: 'idle', sec: 0 }),
+      vaBg: v === 'ask' ? '#FFFFFF' : 'transparent', vaCl: v === 'ask' ? '#1A1A1A' : '#6B7280', vaSh: v === 'ask' ? '0 1px 2px rgba(26,26,26,.08)' : 'none',
+      vbBg: v === 'instant' ? '#FFFFFF' : 'transparent', vbCl: v === 'instant' ? '#1A1A1A' : '#6B7280', vbSh: v === 'instant' ? '0 1px 2px rgba(26,26,26,.08)' : 'none',
+      variantNote: v === 'ask' ? 'Экран 1 — один вопрос, затем сразу текст' : 'Текст сразу, язык определяем по системному'
+    };
+  }
+}
+</script>
+</body>
+</html>

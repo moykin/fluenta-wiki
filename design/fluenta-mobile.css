@@ -1,0 +1,96 @@
+/* Fluenta — shared responsive layer. Breakpoints: 640 / 1024 / 1440. Visual style unchanged. */
+
+/* Touch targets ≥44px on coarse pointers */
+@media (pointer: coarse) {
+  .fl-tap { min-width: 44px; min-height: 44px; }
+}
+
+/* Prevent iOS focus auto-zoom on small-font fields */
+@media (pointer: coarse) and (max-width: 639px) {
+  input, select, textarea { font-size: 16px !important; }
+}
+
+/* Visibility helpers */
+@media (max-width: 639px) { .fl-hide-m { display: none !important; } }
+@media (min-width: 640px) { .fl-only-m { display: none !important; } }
+
+/* Toasts: full-width bottom banners on mobile (above the tab bar) */
+@media (max-width: 639px) {
+  .fl-toast { left: 12px !important; right: 12px !important; top: auto !important; bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important; transform: none !important; text-align: center; }
+}
+
+/* Page containers that must clear the bottom tab bar */
+@media (max-width: 639px) {
+  .fl-page { padding-bottom: 136px !important; }
+}
+
+/* ---- Bottom tab bar (app screens, <640px) ---- */
+.fl-tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 85;
+  display: none;
+  background: rgba(250, 250, 248, .96);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-top: 1px solid #E5E7EB;
+  padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px));
+}
+.fl-tabbar-in { display: grid; grid-template-columns: repeat(5, 1fr); max-width: 520px; margin: 0 auto; }
+.fl-tab {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  min-height: 52px; border-radius: 10px;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 10px; font-weight: 500; letter-spacing: .01em;
+  color: #6B7280; text-decoration: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+.fl-tab:hover { color: #4F46E5; }
+.fl-tab:active { background: #F0F0EE; }
+.fl-tab.on { color: #4F46E5; font-weight: 600; }
+@media (max-width: 639px) { .fl-tabbar { display: block; } }
+
+/* ---- Bottom sheet: side panels become draggable sheets on mobile ---- */
+.fl-sheet-backdrop {
+  position: fixed; inset: 0; z-index: 88;
+  background: rgba(26, 26, 26, .35);
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+}
+.fl-sheet-backdrop.on { opacity: 1; pointer-events: auto; }
+.fl-grip { display: none; }
+@media (max-width: 639px) {
+  .fl-sheet {
+    position: fixed !important;
+    left: 0 !important; right: 0 !important; top: auto !important; bottom: 0 !important;
+    width: auto !important; max-width: none !important;
+    height: calc(100dvh - 36px);
+    border-radius: 18px 18px 0 0 !important;
+    border-left: none !important; border-right: none !important;
+    border-top: 1px solid #E5E7EB !important;
+    box-shadow: 0 -14px 44px rgba(26, 26, 26, .18) !important;
+    transform: translateY(102%);
+    z-index: 89 !important;
+  }
+  .fl-grip {
+    display: flex; align-items: center; justify-content: center;
+    flex: none; padding: 10px 0 4px;
+    touch-action: none; cursor: grab;
+  }
+  .fl-grip::before { content: ""; width: 42px; height: 4.5px; border-radius: 999px; background: #D1D5DB; }
+}
+
+/* ---- App shell (unified top bar) ---- */
+.fsh-item {
+  display: flex; align-items: center; padding: 0 11px;
+  font-family: 'Inter', system-ui, sans-serif; font-size: 13.5px; font-weight: 500;
+  color: #6B7280; text-decoration: none !important;
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+  -webkit-tap-highlight-color: transparent;
+}
+.fsh-item:hover { color: #1A1A1A; }
+.fsh-item.on { color: #1A1A1A; font-weight: 600; border-bottom-color: #4F46E5; }
+@media (max-width: 639px) {
+  .fsh-nav { display: none !important; }
+  .fsh-wordmark { display: none !important; }
+  .fsh-title { max-width: 38vw !important; }
+}
+@media (min-width: 640px) and (max-width: 1179px) { .fsh-title { display: none !important; } }
+@media (min-width: 640px) and (max-width: 1023px) { .fsh-item { padding: 0 8px; font-size: 13px; } }
+@media (max-width: 1279px) { .fsh-sync-label { display: none !important; } }

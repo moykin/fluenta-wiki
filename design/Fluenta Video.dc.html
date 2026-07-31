@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<script src="fluenta-speak.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+input::placeholder{color:#9CA3AF}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.78)}}
+.vcard{background:#fff;border:1px solid #E5E7EB;border-radius:16px}
+.vinput{border:1px solid #E5E7EB;border-radius:10px;padding:11px 13px;font-family:Inter,sans-serif;font-size:13.5px;background:#fff;color:#1A1A1A;width:100%;box-sizing:border-box}
+.vbtn{border:none;border-radius:10px;padding:11px 18px;font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer;background:#4F46E5;color:#fff}
+.vbtn:hover{background:#4338CA}
+.vbtn2{border:1px solid #E5E7EB;border-radius:10px;padding:10px 15px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#374151}
+.vbtn2:hover{border-color:#C7D2FE;color:#4338CA}
+.vseg{transition:background .12s}
+.vseg:hover{background:#FAFAFF}
+.vseg .vadd{opacity:0;transition:opacity .12s}
+.vseg:hover .vadd{opacity:1}
+@media (max-width:900px){.vgrid{grid-template-columns:1fr !important}}
+@media (max-width:639px){.vcaption{display:none !important}}
+</style>
+</helmet>
+<div data-screen-label="Video" style="min-height:100vh">
+<dc-import name="FluentaLumen" pose="listen" message="Сначала посмотрите выжимку, потом видео целиком — так вы поймёте суть, даже если речь быстрая." size="88" bottom="18" hint-size="0px,0px" style="position:fixed;left:0;top:0;width:0;height:0"></dc-import>
+<dc-import name="FluentaShell2" active="video" title="Видео" badge="C1" due="14" hint-size="100%,0px"></dc-import>
+
+<div class="fl-page" style="max-width:1240px;margin:0 auto;padding:92px clamp(16px,4vw,40px) 64px;animation:fadein .22s ease-out">
+
+  <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:18px">
+    <div>
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(25px,3.2vw,32px);font-weight:700;letter-spacing:-.015em;margin:0">Видео</h1>
+      <div style="font-size:13.5px;line-height:1.55;color:#6B7280;margin-top:7px;max-width:640px">Добавьте ролик — Gemini расшифрует речь с таймкодами и соберёт выжимку. Дальше вы смотрите оригинал и пересказываете его своими словами.</div>
+    </div>
+    <span style="margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E5E7EB;border-radius:999px;padding:6px 13px;font-size:12px;color:#374151">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2l2.1 6.3L20.5 10l-6.4 1.7L12 18l-2.1-6.3L3.5 10l6.4-1.7z"></path></svg>
+      расшифровка — Google Gemini
+    </span>
+  </div>
+
+  <div class="vcard" style="padding:17px 20px;margin-bottom:18px">
+    <div style="display:flex;gap:9px;flex-wrap:wrap;align-items:center">
+      <input value="{{ url }}" onChange="{{ urlCh }}" placeholder="Ссылка на YouTube, Vimeo или подкаст" class="vinput" style="flex:1 1 300px">
+      <button onClick="{{ transcribe }}" class="vbtn" style="flex:none">Расшифровать</button>
+      <button onClick="{{ upload }}" class="vbtn2" style="flex:none;padding:11px 15px">Загрузить файл</button>
+    </div>
+    <div style="font-size:12px;line-height:1.55;color:#9CA3AF;margin-top:10px">MP4, MOV, MP3 до 2 ГБ. Gemini смотрит и слушает: речь, надписи на экране, слайды. Видео мы не перезаливаем — остаётся ссылка на оригинал, расшифровка и ваша выжимка.</div>
+  </div>
+
+  <sc-if value="{{ working }}" hint-placeholder-val="{{ false }}">
+    <div class="vcard" style="padding:20px;margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px">
+        <span style="width:16px;height:16px;border:2px solid #E0E7FF;border-top-color:#4F46E5;border-radius:50%;animation:spin .7s linear infinite;flex:none"></span>
+        <div style="font-size:15px;font-weight:600">Gemini смотрит видео…</div>
+        <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">обычно 30–90 секунд на 10 минут записи</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ pipeline }}" as="p" hint-placeholder-count="6">
+          <div style="display:flex;align-items:center;gap:11px">
+            <span style="width:19px;height:19px;border-radius:50%;background:{{ p.bg }};color:{{ p.cl }};display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;flex:none">{{ p.mark }}</span>
+            <span style="font-size:13px;color:{{ p.txtCl }};animation:{{ p.anim }}">{{ p.label }}</span>
+            <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">{{ p.note }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <div class="vgrid" style="display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start">
+    <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+
+      <div>
+        <div style="position:relative;aspect-ratio:16/9;background:#101114;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB">
+          <div style="position:absolute;inset:0;opacity:.85">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="fluenta-video-poster" placeholder="Кадр из видео · 16:9" shape="rect" hint-size="100%,100%"></x-import>
+          </div>
+          <button onClick="{{ toggle }}" aria-label="{{ playLabel }}" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;border:none;background:rgba(255,255,255,.93);color:#1A1A1A;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.28)" style-hover="background:#fff">
+            <sc-if value="{{ playing }}" hint-placeholder-val="{{ false }}">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect></svg>
+            </sc-if>
+            <sc-if value="{{ paused }}" hint-placeholder-val="{{ true }}">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" style="margin-left:3px"><path d="M7 4.5l13 7.5-13 7.5z"></path></svg>
+            </sc-if>
+          </button>
+          <div class="vcaption" style="position:absolute;left:0;right:0;bottom:58px;display:flex;justify-content:center;padding:0 34px;pointer-events:none">
+            <span style="max-width:78%;text-align:center;background:rgba(16,17,20,.78);border-radius:9px;padding:7px 12px">
+              <span lang="en" style="display:block;font-size:14px;line-height:1.45;color:#fff">{{ capEn }}</span>
+              <sc-if value="{{ ru }}" hint-placeholder-val="{{ true }}">
+                <span style="display:block;font-size:12px;line-height:1.45;color:rgba(255,255,255,.66);margin-top:3px">{{ capRu }}</span>
+              </sc-if>
+            </span>
+          </div>
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 16px 12px;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,0))">
+            <div onClick="{{ seek }}" style="position:relative;height:14px;display:flex;align-items:center;cursor:pointer">
+              <span style="position:absolute;left:0;right:0;height:4px;border-radius:3px;background:rgba(255,255,255,.24)"></span>
+              <span style="position:absolute;left:0;height:4px;border-radius:3px;background:#818CF8;width:{{ pct }}"></span>
+              <sc-for list="{{ marks }}" as="m" hint-placeholder-count="5">
+                <span title="{{ m.label }}" style="position:absolute;left:{{ m.pct }};width:2px;height:9px;border-radius:1px;background:rgba(255,255,255,.55)"></span>
+              </sc-for>
+              <span style="position:absolute;left:{{ pct }};width:11px;height:11px;border-radius:50%;background:#fff;transform:translateX(-5px);box-shadow:0 1px 4px rgba(0,0,0,.4)"></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+              <span style="font-size:12px;color:#fff;font-variant-numeric:tabular-nums">{{ now }} / {{ total }}</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.62);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ chapterNow }}</span>
+              <button onClick="{{ toggleRu }}" style="margin-left:auto;flex:none;border:1px solid rgba(255,255,255,.3);background:{{ ruBg }};color:#fff;border-radius:8px;padding:5px 10px;font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer" style-hover="border-color:rgba(255,255,255,.6)">{{ ruLabel }}</button>
+              <button onClick="{{ slower }}" style="flex:none;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:8px;padding:5px 10px;font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer" style-hover="border-color:rgba(255,255,255,.6)">{{ speed }}</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:13px">
+          <h2 lang="en" style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:700;letter-spacing:-.01em;margin:0">{{ vTitle }}</h2>
+          <a href="{{ vHref }}" style="font-size:12.5px;font-weight:600">смотреть оригинал →</a>
+        </div>
+        <div style="font-size:12.5px;color:#6B7280;margin-top:5px">{{ vMeta }}</div>
+      </div>
+
+      <div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px">
+          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+            <button onClick="{{ t.on }}" style="border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.cl }};font-weight:{{ t.fw }};border-radius:999px;padding:8px 15px;font-family:Inter,sans-serif;font-size:13px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ t.label }}</button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ isGist }}" hint-placeholder-val="{{ true }}">
+          <div class="vcard" style="padding:20px">
+            <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px">
+              <div style="font-size:15.5px;font-weight:600">Выжимка</div>
+              <span style="font-size:11.5px;color:#9CA3AF">— то же содержание на трёх уровнях</span>
+              <span style="margin-left:auto;display:flex;gap:5px">
+                <sc-for list="{{ levels }}" as="l" hint-placeholder-count="3">
+                  <button onClick="{{ l.on }}" style="border:1px solid {{ l.bd }};background:{{ l.bg }};color:{{ l.cl }};font-weight:{{ l.fw }};border-radius:8px;padding:5px 11px;font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ l.label }}</button>
+                </sc-for>
+              </span>
+            </div>
+            <div style="background:#F7F7FF;border:1px solid #E0E7FF;border-radius:12px;padding:15px 17px">
+              <div style="font-size:11px;font-weight:600;letter-spacing:.1em;color:#4F46E5;margin-bottom:7px">СУТЬ В ОДНОМ ПРЕДЛОЖЕНИИ</div>
+              <div lang="en" style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.55;color:#1A1A1A">{{ gistEn }}</div>
+              <sc-if value="{{ ru }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:13px;line-height:1.55;color:#6B7280;margin-top:8px">{{ gistRu }}</div>
+              </sc-if>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:6px">
+              <sc-for list="{{ points }}" as="p" hint-placeholder-count="5">
+                <div class="vseg" style="display:flex;gap:12px;padding:13px 8px;border-bottom:1px solid #F3F4F6;border-radius:8px">
+                  <button onClick="{{ p.go }}" title="Перейти к этому месту" style="flex:none;align-self:flex-start;border:1px solid #E5E7EB;background:#fff;color:#4F46E5;border-radius:7px;padding:3px 8px;font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums" style-hover="border-color:#C7D2FE;background:#F7F7FF">{{ p.time }}</button>
+                  <span style="min-width:0">
+                    <span lang="en" style="display:block;font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.6">{{ p.en }}</span>
+                    <sc-if value="{{ ru }}" hint-placeholder-val="{{ true }}">
+                      <span style="display:block;font-size:12.5px;line-height:1.5;color:#6B7280;margin-top:4px">{{ p.ru }}</span>
+                    </sc-if>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px 14px;margin-top:14px">
+              <span style="flex:none;font-weight:700;color:#B45309">!</span>
+              <span style="font-size:12.5px;line-height:1.55;color:#78350F">О чём автор молчит: стоимость сети в ролике не называют ни разу — а это главный аргумент против того, чтобы повторить схему в другой стране.</span>
+            </div>
+            <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px">
+              <button onClick="{{ toRetell }}" class="vbtn" style="padding:10px 16px;font-size:13.5px">Перейти к пересказу</button>
+              <button onClick="{{ copyGist }}" class="vbtn2">Скопировать</button>
+              <button onClick="{{ toNotes }}" class="vbtn2">В заметки</button>
+              <button onClick="{{ regen }}" class="vbtn2">Пересобрать</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isScript }}" hint-placeholder-val="{{ false }}">
+          <div class="vcard" style="padding:20px">
+            <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:6px">
+              <div style="font-size:15.5px;font-weight:600">Транскрипт</div>
+              <span style="font-size:11.5px;color:#9CA3AF">1 483 слова · таймкоды кликабельны</span>
+              <button onClick="{{ toggleRu }}" class="vbtn2" style="margin-left:auto;padding:6px 11px;font-size:12px">{{ ruLabel }}</button>
+            </div>
+            <div style="font-size:12px;line-height:1.5;color:#9CA3AF;margin-bottom:10px">Расшифровка сделана Gemini по звуку и надписям на экране, поэтому имена и цифры стоит перепроверить по оригиналу.</div>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ script }}" as="s" hint-placeholder-count="9">
+                <div class="vseg" style="display:flex;gap:12px;padding:11px 8px;border-left:2px solid {{ s.mark }};background:{{ s.bg }};border-radius:0 8px 8px 0">
+                  <button onClick="{{ s.go }}" style="flex:none;align-self:flex-start;border:none;background:transparent;color:{{ s.tc }};font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;padding:2px 0;font-variant-numeric:tabular-nums" style-hover="color:#4338CA">{{ s.time }}</button>
+                  <span style="min-width:0;flex:1">
+                    <span lang="en" style="display:block;font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.65;color:{{ s.fg }}">{{ s.en }}</span>
+                    <sc-if value="{{ ru }}" hint-placeholder-val="{{ true }}">
+                      <span style="display:block;font-size:12.5px;line-height:1.5;color:#6B7280;margin-top:3px">{{ s.ru }}</span>
+                    </sc-if>
+                  </span>
+                  <button onClick="{{ s.save }}" class="vadd" title="Сохранить фразу в карточки" style="flex:none;align-self:flex-start;border:1px solid #E5E7EB;background:#fff;color:#6B7280;border-radius:7px;padding:3px 8px;font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4338CA">+ карточка</button>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isRetell }}" hint-placeholder-val="{{ false }}">
+          <div class="vcard" style="padding:20px">
+            <div style="font-size:15.5px;font-weight:600;margin-bottom:5px">Пересказ</div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:15px">Говорите минуту-полторы своими словами. Тьютор сверит пересказ с выжимкой и покажет, что вы упустили.</div>
+
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:15px">
+              <sc-for list="{{ plan }}" as="s" hint-placeholder-count="3">
+                <div style="display:flex;gap:11px;align-items:flex-start;background:#FAFAF8;border:1px solid #F0F0EE;border-radius:11px;padding:12px 14px">
+                  <span style="flex:none;width:20px;height:20px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">{{ s.n }}</span>
+                  <span style="min-width:0">
+                    <span style="display:block;font-size:13.5px;font-weight:600">{{ s.title }}</span>
+                    <span style="display:block;font-size:12.5px;line-height:1.5;color:#6B7280;margin-top:3px">{{ s.hint }}</span>
+                  </span>
+                  <span style="margin-left:auto;flex:none;font-size:11.5px;color:#9CA3AF;font-variant-numeric:tabular-nums">{{ s.span }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="font-size:12px;font-weight:600;color:#6B7280;margin-bottom:7px">Связки, которых вам обычно не хватает</div>
+            <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px">
+              <sc-for list="{{ phrases }}" as="f" hint-placeholder-count="4">
+                <button onClick="{{ f.on }}" lang="en" style="border:1px solid #E5E7EB;background:#fff;border-radius:999px;padding:6px 12px;font-family:'Source Serif 4',serif;font-size:13px;color:#374151;cursor:pointer" style-hover="border-color:#C7D2FE;color:#4338CA">{{ f.label }}</button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ recIdle }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;gap:14px;border:1px solid #E5E7EB;border-radius:12px;padding:15px 17px">
+                <span style="flex:none;width:42px;height:42px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>
+                </span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-size:14.5px;font-weight:600">Перескажите ролик вслух</span>
+                  <span style="display:block;font-size:12.5px;color:#6B7280;margin-top:3px">Можно подглядывать в план, но не в транскрипт — так честнее.</span>
+                </span>
+                <button onClick="{{ startRec }}" class="vbtn" style="flex:none;padding:10px 16px;font-size:13.5px">Начать</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ recLive }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:14px;border:1px solid #C7D2FE;background:#F7F7FF;border-radius:12px;padding:15px 17px">
+                <span style="flex:none;width:42px;height:42px;border-radius:50%;background:#EEF2FF;display:flex;align-items:center;justify-content:center">
+                  <span style="width:12px;height:12px;border-radius:50%;background:#4F46E5;animation:pulse 1.4s ease-in-out infinite"></span>
+                </span>
+                <span style="flex:1;min-width:0">
+                  <span style="display:block;font-size:14.5px;font-weight:600">Слушаю…</span>
+                  <span style="display:block;font-size:12.5px;color:#6B7280;margin-top:3px">Идёт запись · <span style="color:#4F46E5;font-variant-numeric:tabular-nums">{{ recTime }}</span></span>
+                </span>
+                <button onClick="{{ stopRec }}" class="vbtn2" style="flex:none;padding:10px 16px;font-size:13.5px">Стоп</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ recDone }}" hint-placeholder-val="{{ false }}">
+              <div style="border:1px solid #E5E7EB;border-radius:12px;padding:16px 17px">
+                <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span style="font-size:14.5px;font-weight:600">Вы передали 3 тезиса из 5</span>
+                  <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">запись 1:12 · 148 слов</span>
+                </div>
+                <div style="height:6px;border-radius:3px;background:#F0F0EE;margin:12px 0 15px;overflow:hidden"><span style="display:block;height:100%;width:60%;background:#4F46E5;border-radius:3px"></span></div>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <sc-for list="{{ checks }}" as="c" hint-placeholder-count="5">
+                    <div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #F3F4F6">
+                      <span style="flex:none;width:18px;height:18px;border-radius:50%;background:{{ c.bg }};color:{{ c.cl }};display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700">{{ c.mark }}</span>
+                      <span style="font-size:13px;line-height:1.5;color:{{ c.fg }};min-width:0">{{ c.label }}</span>
+                      <button onClick="{{ c.go }}" style="margin-left:auto;flex:none;border:none;background:transparent;color:#4F46E5;font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums" style-hover="color:#4338CA">{{ c.time }}</button>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="font-size:12px;font-weight:600;color:#6B7280;margin:14px 0 8px">Язык</div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ notes }}" as="n" hint-placeholder-count="2">
+                    <div style="background:#FAFAF8;border:1px solid #F0F0EE;border-radius:11px;padding:11px 13px">
+                      <div style="font-size:13px;line-height:1.5"><span style="color:#9CA3AF;text-decoration:line-through">{{ n.was }}</span> <span style="color:#9CA3AF">→</span> <span lang="en" style="font-weight:600">{{ n.fix }}</span></div>
+                      <div style="font-size:12px;line-height:1.5;color:#6B7280;margin-top:4px">{{ n.why }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:15px">
+                  <button onClick="{{ toCards }}" class="vbtn" style="padding:10px 16px;font-size:13.5px">3 выражения в карточки</button>
+                  <button onClick="{{ startRec }}" class="vbtn2">Записать ещё раз</button>
+                  <a href="Fluenta Tutor.dc.html" class="vbtn2" style="display:inline-flex;align-items:center;text-decoration:none">Разобрать с тьютором</a>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isWords }}" hint-placeholder-val="{{ false }}">
+          <div class="vcard" style="padding:20px">
+            <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:5px">
+              <div style="font-size:15.5px;font-weight:600">Слова из ролика</div>
+              <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">знакомо 89% · новых 6</span>
+            </div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-bottom:14px">Отобраны те, без которых не пересказать: они держат смысл, а не просто редкие.</div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <sc-for list="{{ words }}" as="w" hint-placeholder-count="6">
+                <div class="vseg" style="display:flex;gap:12px;align-items:center;padding:12px 8px;border-bottom:1px solid #F3F4F6;border-radius:8px">
+                  <span style="min-width:0;flex:1">
+                    <span lang="en" style="display:block;font-family:'Source Serif 4',serif;font-size:16px;font-weight:600">{{ w.en }}</span>
+                    <span style="display:block;font-size:12.5px;color:#6B7280;margin-top:2px">{{ w.ru }}</span>
+                  </span>
+                  <button onClick="{{ w.say }}" aria-label="Прослушать произношение" title="Прослушать" style="flex:none;width:32px;height:32px;border:1px solid {{ w.sayBd }};background:{{ w.sayBg }};color:{{ w.sayFg }};border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer" style-hover="border-color:#C7D2FE">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.6 8.6a5 5 0 0 1 0 6.8"></path><path d="M18.9 5.3a10 10 0 0 1 0 13.4"></path></svg>
+                  </button>
+                  <button onClick="{{ w.go }}" style="flex:none;border:none;background:transparent;color:#9CA3AF;font-family:Inter,sans-serif;font-size:11.5px;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums" style-hover="color:#4F46E5">{{ w.time }}</button>
+                  <button onClick="{{ w.add }}" style="flex:none;border:1px solid {{ w.bd }};background:{{ w.bg }};color:{{ w.cl }};border-radius:8px;padding:6px 12px;font-family:Inter,sans-serif;font-size:12px;font-weight:600;cursor:pointer" style-hover="border-color:#C7D2FE">{{ w.label }}</button>
+                </div>
+              </sc-for>
+            </div>
+            <a href="Fluenta Review.dc.html" style="display:inline-block;font-size:12.5px;font-weight:600;margin-top:13px">Все карточки на повторение →</a>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+      <div class="vcard" style="padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:12px">О ролике</div>
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <sc-for list="{{ facts }}" as="f" hint-placeholder-count="6">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #F5F5F3">
+              <span style="font-size:12.5px;color:#6B7280">{{ f.k }}</span>
+              <span style="margin-left:auto;font-size:12.5px;font-weight:600;color:{{ f.cl }};text-align:right">{{ f.v }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div class="vcard" style="padding:18px 20px">
+        <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:11px">
+          <div style="font-size:15px;font-weight:600">Главы</div>
+          <span style="margin-left:auto;font-size:11.5px;color:#9CA3AF">размечены Gemini</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ chapters }}" as="c" hint-placeholder-count="5">
+            <button onClick="{{ c.go }}" style="display:flex;gap:11px;align-items:flex-start;text-align:left;border:none;background:{{ c.bg }};border-radius:9px;padding:9px 10px;cursor:pointer;font-family:Inter,sans-serif" style-hover="background:#FAFAFF">
+              <span style="flex:none;font-size:11.5px;font-weight:600;color:{{ c.tc }};font-variant-numeric:tabular-nums;padding-top:1px">{{ c.time }}</span>
+              <span style="font-size:13px;line-height:1.45;color:{{ c.fg }};font-weight:{{ c.fw }};min-width:0">{{ c.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+
+      <div class="vcard" style="padding:18px 20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#4F46E5"><path d="M12 2l2.1 6.3L20.5 10l-6.4 1.7L12 18l-2.1-6.3L3.5 10l6.4-1.7z"></path></svg>
+          <div style="font-size:15px;font-weight:600">Что сделал Gemini</div>
+        </div>
+        <div style="font-size:12.5px;line-height:1.6;color:#6B7280">Распознал речь с таймкодами, прочитал надписи на экране, разбил ролик на главы и написал выжимку в трёх уровнях. Оценки и выводы — авторские; наша выжимка их пересказывает, а не заменяет.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:13px">
+          <button onClick="{{ regen }}" class="vbtn2" style="padding:8px 12px;font-size:12.5px">Пересобрать выжимку</button>
+          <button onClick="{{ report }}" class="vbtn2" style="padding:8px 12px;font-size:12.5px">Ошибка в расшифровке</button>
+        </div>
+      </div>
+
+      <div class="vcard" style="padding:18px 20px">
+        <div style="font-size:15px;font-weight:600;margin-bottom:11px">Похожие ролики</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <sc-for list="{{ more }}" as="m" hint-placeholder-count="3">
+            <button onClick="{{ m.on }}" style="display:flex;gap:11px;align-items:center;text-align:left;border:1px solid #F0F0EE;background:#fff;border-radius:11px;padding:9px 10px;cursor:pointer;font-family:Inter,sans-serif" style-hover="border-color:#C7D2FE">
+              <span style="flex:none;width:62px;height:38px;border-radius:7px;background:{{ m.bg }}"></span>
+              <span style="min-width:0">
+                <span lang="en" style="display:block;font-size:13px;font-weight:600;line-height:1.35">{{ m.title }}</span>
+                <span style="display:block;font-size:11.5px;color:#9CA3AF;margin-top:3px">{{ m.meta }}</span>
+              </span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div class="fl-toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:90;background:#1A1A1A;color:#fff;font-size:13px;font-weight:500;padding:9px 15px;border-radius:10px;box-shadow:0 8px 20px rgba(26,26,26,.2)">{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1500}}">
+class Component extends DCLogic {
+  state = {
+    t: 78, playing: false, tab: 'gist', lvl: 'B2', ru: true, rate: 1,
+    phase: 'ready', step: 0, url: '', rec: 'idle', recSec: 0, added: [], toast: null, saying: null
+  };
+  speak(w, rate) {
+    const F = window.FluentaSpeak, on = this.state.saying;
+    if (!w) return;
+    if (!F) { this.say('Озвучиваю «' + w + '»'); return; }
+    if (on === w) { F.stop(); return; }
+    F.say(w, { lang: 'en-GB', rate: rate == null ? 0.95 : rate,
+      onStart: () => this.setState({ saying: w }),
+      onEnd: () => this.setState(s => (s.saying === w ? { saying: null } : {})) });
+  }
+  componentWillUnmount() { [this._pl, this._rt, this._pt, this._tt].forEach(clearInterval); [this._pl, this._rt, this._pt, this._tt].forEach(clearTimeout); if (window.FluentaSpeak) FluentaSpeak.stop(); }
+  say(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: null }), 2200); }
+  fmt(s) { const m = Math.floor(s / 60); const r = Math.max(0, Math.round(s % 60)); return m + ':' + (r < 10 ? '0' : '') + r; }
+  play(on) {
+    clearInterval(this._pl);
+    if (on) this._pl = setInterval(() => this.setState(s => (s.t >= 582 ? (clearInterval(this._pl), { t: 582, playing: false }) : { t: s.t + 3 })), 300);
+    this.setState({ playing: on });
+  }
+  run() {
+    clearTimeout(this._pt);
+    this.setState({ phase: 'work', step: 0 });
+    const tick = () => this.setState(s => {
+      const n = s.step + 1;
+      if (n >= 6) { this._pt = setTimeout(() => { this.setState({ phase: 'ready', tab: 'gist' }); this.say('Готово — выжимка и транскрипт собраны'); }, 600); return { step: 6 }; }
+      this._pt = setTimeout(tick, 640);
+      return { step: n };
+    });
+    this._pt = setTimeout(tick, 640);
+  }
+  renderVals() {
+    const st = this.state;
+    const pick = a => ({ bg: a ? '#F7F7FF' : '#fff', bd: a ? '#4F46E5' : '#E5E7EB', cl: a ? '#4338CA' : '#4B5563', fw: a ? 600 : 500 });
+    const DUR = 582;
+    const go = s => { this.setState({ t: s }); if (!this.state.playing) this.say('Перемотали на ' + this.fmt(s)); };
+
+    const SCRIPT = [
+      [0, 'In Reykjavík, heating a flat through the winter costs about a third of what it costs in London.', 'В Рейкьявике отопить квартиру за зиму стоит примерно втрое дешевле, чем в Лондоне.'],
+      [18, 'And almost none of that heat comes from burning anything. The water reaches the radiator at ninety degrees, straight from a well outside town.', 'И почти всё это тепло получено без сжигания: вода приходит в батарею с температурой 90 градусов прямо из скважины за городом.'],
+      [72, 'Here is the loop. Hot water goes into the city, cooled water comes back, and on the way out it runs under the pavements to melt the snow.', 'Вот контур: горячая вода идёт в город, остывшая возвращается, а по пути успевает растопить снег под тротуарами.'],
+      [124, 'It looks like pure luck. Iceland sits on a ridge where two plates are pulling apart.', 'Похоже на чистое везение: Исландия лежит на хребте, где расходятся две плиты.'],
+      [185, 'But in 1973, half of Icelandic homes still burned imported oil — and then the price of that oil tripled in a single year.', 'Но в 1973 году половина домов ещё топилась привозной нефтью — и цена на неё за год выросла втрое.'],
+      [250, 'What followed was not a green programme. It was thirty years of borrowing, drilling and digging up streets.', 'Дальше была не «зелёная программа», а тридцать лет кредитов, бурения и перекопанных улиц.'],
+      [320, 'The catch is that a geothermal field is not a bottomless cup.', 'Загвоздка в том, что геотермальное поле — не бездонная чашка.'],
+      [388, 'Some of the oldest fields near the capital have cooled by several degrees since the eighties.', 'Самые старые поля у столицы с восьмидесятых остыли на несколько градусов.'],
+      [454, 'So the honest lesson is not "find a volcano". It is "find a way to pay for thirty years of pipes".', 'Честный вывод не «найдите вулкан», а «найдите, чем оплатить тридцать лет труб».']
+    ];
+    let cur = 0;
+    SCRIPT.forEach((s, i) => { if (st.t >= s[0]) cur = i; });
+
+    const CH = [[0, 'Счёт за отопление в Рейкьявике'], [72, 'Как устроен контур'], [185, 'Нефтяной шок 1973-го'], [320, 'Где у модели предел'], [454, 'Кому это можно повторить']];
+    let chi = 0; CH.forEach((c, i) => { if (st.t >= c[0]) chi = i; });
+
+    const GIST = {
+      B1: ['Iceland heats almost every home with hot water from the ground. It began when oil became expensive in 1973.', [
+        ['The water comes out of the ground at 90°C. Nobody has to heat it.', 18],
+        ['One pipe brings hot water to the houses, another takes the cool water back.', 72],
+        ['In 1973 oil became very expensive, so the country changed in ten years.', 185],
+        ['Some wells are getting colder, because people take more heat than the rock makes.', 320],
+        ['You do not need a volcano. You need cheap loans and a city that will dig.', 454]
+      ]],
+      B2: ['Nine in ten Icelandic homes are heated by water straight from the ground — a choice the country made when the 1973 oil shock made imported fuel unaffordable.', [
+        ['The water leaves the well at about 90°C, so the city pays to move heat, not to make it.', 18],
+        ['A single loop carries hot water in and cooled water out — the same water melts snow on the pavements before it returns.', 72],
+        ['The 1973 oil shock, not the climate, drove the switch: fuel oil fell from half of all heating to about five per cent in a decade.', 185],
+        ['It is not free forever: several fields are being drawn down faster than the rock can reheat them.', 320],
+        ['Copying it takes less geology than patience — thirty-year loans and a city willing to dig up every street.', 454]
+      ]],
+      C1: ['Iceland\u2019s near-total reliance on geothermal district heating was less a geological windfall than an infrastructure decision forced by the 1973 oil shock and financed over thirty years.', [
+        ['Water surfaces at roughly 90°C, reducing the utility\u2019s cost to distribution rather than generation.', 18],
+        ['A closed district loop returns the same water, with residual heat routed beneath pavements to keep them clear of snow.', 72],
+        ['Price, not climate policy, drove the transition: fuel oil\u2019s share of heating collapsed from half to five per cent within a decade.', 185],
+        ['The model has a ceiling — several fields are being drawn down faster than the reservoir recharges.', 320],
+        ['Replication depends less on geology than on capital: thirty-year public loans and the appetite to excavate an entire city.', 454]
+      ]]
+    };
+    const PRU = [
+      'Вода выходит из скважины уже горячей — платят только за доставку тепла.',
+      'Один контур: горячая вода в город, остывшая обратно, по пути топит снег на тротуарах.',
+      'Переключились из-за цены нефти, а не ради климата: за десять лет мазут упал с половины до 5%.',
+      'Ресурс не бесконечен: часть полей качают быстрее, чем они восстанавливаются.',
+      'Мешает не геология, а деньги: тридцатилетние кредиты и готовность перекопать город.'
+    ];
+    const g = GIST[st.lvl] || GIST.B2;
+
+    const PIPE = [
+      ['Забрали дорожку и кадры', '9:42'], ['Gemini распознал речь с таймкодами', '1 483 слова'],
+      ['Разбили на главы по смыслу', '5 глав'], ['Собрали выжимку в трёх уровнях', 'B1 / B2 / C1'],
+      ['Сверили слова с вашей базой', 'знакомо 89%'], ['Подготовили план пересказа', '3 шага']
+    ];
+
+    const WORDS = [
+      ['district heating', 'центральное отопление от одного источника', 158],
+      ['well', 'скважина', 18], ['oil shock', 'нефтяной кризис', 185],
+      ['to draw down', 'вырабатывать, истощать', 320], ['bottomless', 'бездонный', 320],
+      ['to dig up', 'перекапывать, вскрывать', 250]
+    ];
+
+    return {
+      url: st.url, urlCh: e => this.setState({ url: e.target.value }),
+      transcribe: () => { if (!(st.url || '').trim()) return this.say('Вставьте ссылку на видео'); this.run(); },
+      upload: () => this.run(),
+      working: st.phase === 'work',
+      pipeline: PIPE.map((p, i) => {
+        const done = st.step > i, now = st.step === i;
+        return {
+          key: p[0], label: p[0], note: done ? p[1] : now ? '…' : '', mark: done ? '✓' : String(i + 1),
+          bg: done ? '#ECFDF5' : now ? '#EEF2FF' : '#F2F2EF', cl: done ? '#047857' : now ? '#4F46E5' : '#B4B9C0',
+          txtCl: done ? '#374151' : now ? '#1A1A1A' : '#B4B9C0', anim: now ? 'shimmer 1.2s infinite' : 'none'
+        };
+      }),
+
+      vTitle: 'Why Iceland heats its homes with volcanoes',
+      vHref: 'https://www.youtube.com/watch?v=fluenta-demo',
+      vMeta: 'Terra Explains · YouTube · 9:42 · английский, речь C1 · 152 слова в минуту',
+      now: this.fmt(st.t), total: '9:42', pct: (st.t / DUR * 100).toFixed(2) + '%',
+      playing: st.playing, paused: !st.playing, playLabel: st.playing ? 'Пауза' : 'Смотреть',
+      toggle: () => this.play(!st.playing),
+      seek: e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        this.setState({ t: Math.max(0, Math.min(DUR, Math.round((e.clientX - r.left) / r.width * DUR))) });
+      },
+      marks: CH.map(c => ({ key: c[0], label: c[1], pct: (c[0] / DUR * 100).toFixed(2) + '%' })),
+      chapterNow: CH[chi][1],
+      capEn: SCRIPT[cur][1], capRu: SCRIPT[cur][2],
+      ru: st.ru, ruLabel: st.ru ? 'перевод вкл' : 'перевод выкл', ruBg: st.ru ? 'rgba(79,70,229,.85)' : 'transparent',
+      toggleRu: () => this.setState(s => ({ ru: !s.ru })),
+      speed: '× ' + st.rate.toFixed(2).replace(/0$/, '').replace(/\.$/, ''),
+      slower: () => this.setState(s => ({ rate: s.rate === 1 ? 0.75 : s.rate === 0.75 ? 0.5 : 1 })),
+
+      tabs: [['gist', 'Выжимка'], ['script', 'Транскрипт'], ['retell', 'Пересказ'], ['words', 'Слова · 6']].map(t => {
+        const p = pick(st.tab === t[0]);
+        return Object.assign({ key: t[0], label: t[1] }, p, { on: () => this.setState({ tab: t[0] }) });
+      }),
+      isGist: st.tab === 'gist', isScript: st.tab === 'script', isRetell: st.tab === 'retell', isWords: st.tab === 'words',
+
+      levels: ['B1', 'B2', 'C1'].map(l => {
+        const p = pick(st.lvl === l);
+        return Object.assign({ key: l, label: l }, p, { on: () => this.setState({ lvl: l }) });
+      }),
+      gistEn: g[0], gistRu: 'Исландия отапливает почти все дома горячей водой из-под земли. Это не подарок природы, а решение после нефтяного кризиса 1973 года, оплаченное тридцатью годами кредитов.',
+      points: g[1].map((p, i) => ({ key: i, en: p[0], ru: PRU[i], time: this.fmt(p[1]), go: () => go(p[1]) })),
+      copyGist: () => this.say('Выжимка скопирована'),
+      toNotes: () => this.say('Сохранили в заметки к ролику'),
+      regen: () => this.say('Gemini пересобирает выжимку…'),
+      report: () => this.say('Спасибо — проверим этот фрагмент'),
+      toRetell: () => this.setState({ tab: 'retell' }),
+
+      script: SCRIPT.map((s, i) => ({
+        key: i, time: this.fmt(s[0]), en: s[1], ru: s[2],
+        bg: i === cur ? '#F7F7FF' : 'transparent', mark: i === cur ? '#4F46E5' : 'transparent',
+        fg: i === cur ? '#1A1A1A' : '#374151', tc: i === cur ? '#4F46E5' : '#9CA3AF',
+        go: () => go(s[0]), save: () => this.say('Фраза сохранена в карточки')
+      })),
+
+      plan: [
+        { key: 1, n: '1', title: 'Назовите факт, который удивил', hint: 'Одно предложение: сколько стоит тепло и откуда оно берётся.', span: '0:00–1:12' },
+        { key: 2, n: '2', title: 'Объясните механизм своими словами', hint: 'Контур, температура, что происходит с остывшей водой.', span: '1:12–5:20' },
+        { key: 3, n: '3', title: 'Скажите, что автор не доказал', hint: 'Здесь начинается ваш английский, а не его: оценка, а не пересказ.', span: '5:20–9:42' }
+      ],
+      phrases: ['The point is that…', 'What actually changed it was…', 'It only works if…', 'The video never says how much…'].map(f => ({ key: f, label: f, on: () => this.say('Связка скопирована: ' + f) })),
+
+      recIdle: st.rec === 'idle', recLive: st.rec === 'rec', recDone: st.rec === 'done',
+      recTime: this.fmt(st.recSec),
+      startRec: () => {
+        clearInterval(this._rt);
+        this.setState({ rec: 'rec', recSec: 0 });
+        this._rt = setInterval(() => this.setState(s => (s.recSec >= 72 ? (clearInterval(this._rt), { rec: 'done' }) : { recSec: s.recSec + 1 })), 260);
+      },
+      stopRec: () => { clearInterval(this._rt); this.setState({ rec: 'done' }); },
+      checks: [
+        ['Цена тепла и откуда оно берётся', true, 18], ['Как работает контур', true, 72],
+        ['Нефтяной шок как настоящая причина', true, 185], ['Поля остывают — у модели есть предел', false, 320],
+        ['Дело в деньгах, а не в геологии', false, 454]
+      ].map((c, i) => ({
+        key: i, label: c[0], mark: c[1] ? '✓' : '—', time: this.fmt(c[2]),
+        bg: c[1] ? '#ECFDF5' : '#FFFBEB', cl: c[1] ? '#047857' : '#B45309', fg: c[1] ? '#374151' : '#1A1A1A',
+        go: () => { go(c[2]); this.setState({ tab: 'script' }); }
+      })),
+      notes: [
+        { key: 1, was: 'they make the water hot', fix: 'the water comes up already hot', why: 'Ключевая мысль ролика: воду не греют, а только доставляют. С «make hot» смысл теряется.' },
+        { key: 2, was: 'it was because of ecology', fix: 'it was the price of oil that forced it', why: 'Конструкция с it was … that подчёркивает причину — ровно то, что вы хотели сказать.' }
+      ],
+      toCards: () => this.say('3 выражения добавлены в повторение'),
+
+      words: WORDS.map((w, i) => {
+        const on = st.added.indexOf(i) > -1;
+        const sOn = st.saying === w[0];
+        return {
+          say: () => this.speak(w[0], 0.95),
+          sayBg: sOn ? '#4F46E5' : '#fff', sayBd: sOn ? '#4F46E5' : '#E5E7EB', sayFg: sOn ? '#fff' : '#4F46E5',
+          key: i, en: w[0], ru: w[1], time: this.fmt(w[2]), go: () => { go(w[2]); this.setState({ tab: 'script' }); },
+          label: on ? 'в карточках' : '+ в карточки',
+          bg: on ? '#ECFDF5' : '#fff', bd: on ? '#D1FAE5' : '#E5E7EB', cl: on ? '#047857' : '#374151',
+          add: () => { if (on) return; this.setState(s => ({ added: s.added.concat(i) })); this.say('«' + w[0] + '» — в карточки'); }
+        };
+      }),
+
+      facts: [
+        { key: 1, k: 'Источник', v: 'YouTube · Terra Explains', cl: '#1A1A1A' },
+        { key: 2, k: 'Длительность', v: '9:42', cl: '#1A1A1A' },
+        { key: 3, k: 'Уровень речи', v: 'C1 · быстро', cl: '#1A1A1A' },
+        { key: 4, k: 'Темп', v: '152 сл./мин', cl: '#1A1A1A' },
+        { key: 5, k: 'Знакомых слов', v: 'знакомо 89%', cl: '#047857' },
+        { key: 6, k: 'Расшифровка', v: 'Gemini, не авторская', cl: '#6B7280' }
+      ],
+      chapters: CH.map((c, i) => ({
+        key: c[0], time: this.fmt(c[0]), label: c[1], go: () => go(c[0]),
+        bg: i === chi ? '#F7F7FF' : 'transparent', fg: i === chi ? '#1A1A1A' : '#374151',
+        tc: i === chi ? '#4F46E5' : '#9CA3AF', fw: i === chi ? 600 : 500
+      })),
+      more: [
+        ['How Vienna keeps rent low', '11:20 · B2 · знакомо 92%', 'linear-gradient(135deg,#475569,#94A3B8)'],
+        ['The engineer who saved the Thames', '7:05 · B1 · знакомо 95%', 'linear-gradient(135deg,#0D9488,#5EEAD4)'],
+        ['Why bridges hum in the wind', '14:38 · C1 · знакомо 84%', 'linear-gradient(135deg,#B45309,#FCD34D)']
+      ].map(m => ({ key: m[0], title: m[0], meta: m[1], bg: m[2], on: () => this.say('«' + m[0] + '» — в очереди на расшифровку') })),
+
+      toastOn: !!st.toast, toast: st.toast || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

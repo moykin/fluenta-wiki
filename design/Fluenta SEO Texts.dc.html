@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8}
+body{font-family:'Inter',system-ui,sans-serif;color:#1A1A1A;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.14)}
+html{scroll-behavior:smooth}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+summary{list-style:none}summary::-webkit-details-marker{display:none}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.st-h2{font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0;scroll-margin-top:80px}
+.st-p{font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty}
+.st-card{background:#fff;border:1px solid #E5E7EB;border-radius:16px}
+.st-chip{display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:500;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 12px}
+.st-chip:hover{background:#E0E7FF;color:#4338CA}
+#stSticky{display:none}
+@media (max-width:639px){#stSticky{display:flex !important}#stNav{display:none !important}}
+@media (max-width:760px){.st-two{grid-template-columns:1fr !important}.st-goal{grid-template-columns:1fr !important}.st-scroll{overflow-x:auto}}
+</style>
+</helmet>
+<div data-screen-label="SEO · Тексты" style="min-height:100vh;background:#FAFAF8">
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8">
+    <div style="display:flex;align-items:center;gap:16px;height:58px;padding:0 clamp(16px,4vw,40px);max-width:1220px;margin:0 auto">
+      <a href="Fluenta Landing.dc.html" style="display:flex;align-items:center;gap:9px;flex:none;color:#1A1A1A">
+        <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif">f</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:-.01em">fluenta.wiki</span>
+      </a>
+      <div id="stNav" style="display:flex;align-items:center;gap:14px;font-size:13.5px;color:#6B7280">
+        <a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Метод</a>
+        <a href="Fluenta SEO Video.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Видео</a>
+        <a href="Fluenta SEO Grammar.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Грамматика</a>
+        <a href="Fluenta SEO Career.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Для работы</a>
+      </div>
+      <div style="flex:1"></div>
+      <a href="Fluenta Library v2.dc.html" style="font-size:13.5px;font-weight:500;color:#6B7280;flex:none" style-hover="color:#1A1A1A">Войти</a>
+      <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:flex;align-items:center;justify-content:center;height:34px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:13px;font-weight:500;flex:none" style-hover="background:#4338CA;color:#fff">Начать бесплатно</a>
+    </div>
+  </div>
+
+  <main style="max-width:1060px;margin:0 auto;padding:88px clamp(16px,4vw,40px) 0;box-sizing:border-box">
+    <nav aria-label="Хлебные крошки" style="max-width:68ch;margin:0 auto">
+      <ol style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;list-style:none;margin:0;padding:0;font-size:12.5px;color:#9CA3AF">
+        <li><a href="Fluenta Landing.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Главная</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Метод</a></li>
+        <li aria-hidden="true">›</li>
+        <li style="color:#9CA3AF">Как работать с текстами</li>
+      </ol>
+    </nav>
+
+    <article style="max-width:68ch;margin:0 auto">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(30px,4.6vw,44px);font-weight:700;letter-spacing:-.015em;line-height:1.2;margin:18px 0 0;text-wrap:pretty">Как работать с текстами: словарный запас, грамматика, память и&nbsp;пересказ</h1>
+      <p style="font-family:'Source Serif 4',serif;font-size:18px;line-height:1.7;color:#374151;margin:18px 0 0;text-wrap:pretty">Чтение «вообще» почти ничего не даёт: словарь растёт медленно, грамматика остаётся в учебнике, а сказать вслух вы всё равно не можете. Разница — в том, какой текст вы взяли под какую цель и что сделали после чтения. Ниже: как выбирать тексты, пять шагов работы с одним текстом и подбор материала под каждый из четырёх навыков.</p>
+      <div style="display:flex;align-items:center;gap:11px;margin-top:22px;padding-top:18px;border-top:1px solid #ECECE8;flex-wrap:wrap">
+        <span style="width:34px;height:34px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">ЕМ</span>
+        <div style="font-size:12.5px;line-height:1.45">
+          <div style="font-weight:600">Fluenta — независимый проект <a href="Fluenta About.dc.html">Евгения Мойкина</a></div>
+          <div style="color:#9CA3AF">Обновлено 28 июля 2026 · 9 мин чтения</div>
+        </div>
+      </div>
+      <nav aria-label="Содержание" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px">
+        <a href="#choose" class="st-chip fl-tap">Правило 95%</a>
+        <a href="#goal" class="st-chip fl-tap">Текст под цель</a>
+        <a href="#steps" class="st-chip fl-tap">Пять шагов</a>
+        <a href="#levels" class="st-chip fl-tap">Что читать по уровням</a>
+        <a href="#faq" class="st-chip fl-tap">Вопросы</a>
+      </nav>
+
+      <h2 id="choose" class="st-h2" style="margin-top:52px">Правило 95%: как понять, что текст ваш</h2>
+      <p class="st-p">Полезный текст — тот, где вы знаете 95–98% слов. Одно незнакомое слово на двадцать: контекст сам подсказывает значение, и чтение не превращается в расшифровку. Если незнакомых больше — вы не учитесь, а ковыряетесь в словаре; если незнакомых нет вовсе — приятно, но бесполезно.</p>
+      <p class="st-p">В Fluenta эта доля посчитана заранее по вашей личной базе слов: у каждого текста в каталоге стоит «знакомо 94%» — не средняя оценка уровня, а честная величина именно для вас.</p>
+      <div class="st-card" style="padding:18px 20px;margin-top:20px">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <sc-for list="{{ bands }}" as="b" hint-placeholder-count="3">
+            <div style="flex:1 1 180px;min-width:0">
+              <div style="font-size:13px;font-weight:700;color:{{ b.cl }}">{{ b.range }}</div>
+              <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-top:5px">{{ b.what }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </article>
+
+    <div style="max-width:820px;margin:36px auto 0">
+      <div style="height:clamp(200px,36vw,340px);border-radius:16px;overflow:hidden;border:1px solid #E5E7EB">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="seo-texts-hero" shape="rect" placeholder="Скриншот каталога или читалки с пометкой «знакомо 94%» — перетащите сюда" hint-size="100%,100%"></x-import>
+      </div>
+      <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px">Каталог Fluenta: доля знакомых слов считается по вашей истории, а не по среднему уровню</div>
+    </div>
+
+    <section id="goal" style="max-width:900px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="st-h2">Текст под цель: что читать ради словаря, грамматики, памяти и пересказа</h2>
+        <p class="st-p">Один и тот же рассказ по-разному полезен в зависимости от того, что вы с ним делаете. Выберите цель — увидите, какой материал брать и что делать после чтения.</p>
+      </div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:22px">
+        <sc-for list="{{ goals }}" as="g" hint-placeholder-count="4">
+          <button onClick="{{ g.on }}" style="display:flex;align-items:center;gap:9px;border:1px solid {{ g.bd }};background:{{ g.bg }};border-radius:12px;padding:10px 15px;cursor:pointer;font-family:Inter,sans-serif" style-hover="border-color:#C7D2FE">
+            <span style="width:24px;height:24px;border-radius:8px;background:{{ g.ibg }};color:{{ g.icl }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none">{{ g.glyph }}</span>
+            <span style="font-size:13.5px;font-weight:{{ g.fw }};color:{{ g.cl }}">{{ g.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div class="st-card" style="padding:24px clamp(16px,3.5vw,30px);margin-top:14px;box-shadow:0 12px 34px rgba(26,26,26,.07)">
+        <h3 style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;margin:0">{{ gTitle }}</h3>
+        <p class="st-p" style="font-size:16px">{{ gWhy }}</p>
+        <div class="st-goal" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px">
+          <div style="background:#FAFAF8;border:1px solid #F0F0EE;border-radius:12px;padding:15px 17px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.09em;color:#9CA3AF;margin-bottom:9px">КАКИЕ ТЕКСТЫ БРАТЬ</div>
+            <sc-for list="{{ gTexts }}" as="t" hint-placeholder-count="4">
+              <div style="display:flex;gap:9px;align-items:flex-start;padding:5px 0">
+                <span style="flex:none;width:5px;height:5px;border-radius:50%;background:#4F46E5;margin-top:8px"></span>
+                <span style="font-size:13.5px;line-height:1.6;color:#374151">{{ t.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="background:#FAFAF8;border:1px solid #F0F0EE;border-radius:12px;padding:15px 17px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.09em;color:#9CA3AF;margin-bottom:9px">ЧТО ДЕЛАТЬ ПОСЛЕ ЧТЕНИЯ</div>
+            <sc-for list="{{ gDo }}" as="d" hint-placeholder-count="3">
+              <div style="display:flex;gap:9px;align-items:flex-start;padding:5px 0">
+                <span style="flex:none;font-size:11.5px;font-weight:700;color:#4F46E5;min-width:16px;padding-top:2px">{{ d.n }}</span>
+                <span style="font-size:13.5px;line-height:1.6;color:#374151">{{ d.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:16px">
+          <span style="font-size:12.5px;color:#6B7280"><b style="color:#1A1A1A">Длина:</b> {{ gLen }}</span>
+          <span style="font-size:12.5px;color:#6B7280"><b style="color:#1A1A1A">Частота:</b> {{ gFreq }}</span>
+          <span style="margin-left:auto;font-size:11.5px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:3px 10px">{{ gCheck }}</span>
+        </div>
+        <div style="display:flex;gap:10px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:12px;padding:12px 14px;margin-top:14px">
+          <span style="flex:none;font-weight:700;color:#B45309">!</span>
+          <span style="font-size:12.5px;line-height:1.55;color:#78350F">{{ gWarn }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="steps" style="max-width:820px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="st-h2">Пять шагов работы с одним текстом</h2>
+        <p class="st-p">Порядок важен: перевод до первого прохода убивает догадку, а пересказ без разбора закрепляет ошибки.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div class="st-card" style="display:flex;gap:14px;padding:16px 18px">
+            <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">{{ s.n }}</span>
+            <span style="min-width:0">
+              <span style="display:block;font-size:15.5px;font-weight:600">{{ s.title }}</span>
+              <span style="display:block;font-size:13.5px;line-height:1.65;color:#374151;margin-top:5px">{{ s.body }}</span>
+            </span>
+            <span style="margin-left:auto;flex:none;font-size:11.5px;color:#9CA3AF;white-space:nowrap">{{ s.mins }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="levels" style="max-width:900px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="st-h2">Что читать на каждом уровне</h2>
+        <p class="st-p">Ориентир по длине и жанру. Уровень определяется не сложностью темы, а тем, сколько незнакомых слов приходится на абзац.</p>
+      </div>
+      <div class="st-scroll" style="margin-top:20px">
+        <div class="st-card" style="overflow:hidden;min-width:600px">
+          <div style="display:grid;grid-template-columns:70px 1.5fr 1fr 92px;background:#FAFAF8;border-bottom:1px solid #E5E7EB;padding:11px 16px;font-size:11.5px;font-weight:600;letter-spacing:.05em;color:#6B7280">
+            <span>Уровень</span><span>Что читать</span><span>Что это даёт</span><span style="text-align:right">Длина</span>
+          </div>
+          <sc-for list="{{ rows }}" as="r" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:70px 1.5fr 1fr 92px;padding:13px 16px;border-bottom:1px solid #F3F4F6;align-items:start">
+              <span style="font-size:12.5px;font-weight:700;color:#4F46E5">{{ r.lvl }}</span>
+              <span style="font-size:13px;line-height:1.55;color:#1A1A1A;padding-right:12px">{{ r.what }}</span>
+              <span style="font-size:13px;line-height:1.55;color:#6B7280;padding-right:12px">{{ r.gain }}</span>
+              <span style="font-size:12.5px;color:#374151;text-align:right">{{ r.len }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="font-size:12.5px;color:#6B7280;margin-top:12px">Готовые подборки: <a href="Fluenta SEO Texts B1.dc.html">тексты на английском с переводом для B1</a> · <a href="Fluenta Library v2.dc.html">весь каталог</a></div>
+    </section>
+
+    <section style="max-width:820px;margin:64px auto 0">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="st-h2">Тематические серии: почему пять текстов об одном лучше пяти разных</h2>
+        <p class="st-p">Слово переходит в активный запас не с первой встречи, а когда вы видите его в третьем-четвёртом разном контексте. Если пять дней подряд читать про одну область — климат, медицину, финансы, — её лексика повторяется сама собой, без карточек. Разные темы каждый день дают ощущение разнообразия и почти нулевое удержание.</p>
+        <p class="st-p">Практический вывод: держите одну тему неделю, потом меняйте. Ту же логику используют серии в каталоге — тексты внутри серии написаны так, чтобы ключевые слова возвращались.</p>
+      </div>
+      <div class="st-two" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px">
+        <div class="st-card" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:9px">Частые ошибки</div>
+          <div style="font-size:13px;line-height:1.75;color:#374151">Переводить каждое незнакомое слово · выписывать слова столбиком без предложения · читать только то, что легко · бросать текст на середине и брать новый · читать молча и никогда не проговаривать · держать очередь из 60 карточек «на потом».</div>
+        </div>
+        <div class="st-card" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:9px">Что делать вместо</div>
+          <div style="font-size:13px;line-height:1.75;color:#374151">Нажимать только на слова, которые мешают понять фразу · сохранять предложение целиком · брать текст, где знакомо 94–96% · дочитывать короткое, а не начинать длинное · пересказывать вслух в конце · 5–7 новых карточек в день, не больше.</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="st-h2">Неделя с текстами</h2>
+        <p class="st-p">Двадцать минут в день. Пересказ — через сутки после чтения, а не сразу: так работает память, а не кратковременный буфер.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:20px">
+        <sc-for list="{{ week }}" as="d" hint-placeholder-count="5">
+          <div class="st-card" style="padding:14px 15px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;color:#9CA3AF">{{ d.day }}</div>
+            <div style="font-size:13.5px;font-weight:600;margin-top:6px">{{ d.what }}</div>
+            <div style="font-size:12px;line-height:1.55;color:#6B7280;margin-top:5px">{{ d.note }}</div>
+            <div style="font-size:11.5px;color:#4F46E5;font-weight:600;margin-top:8px">{{ d.mins }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0">
+      <div class="st-card" style="padding:26px clamp(18px,3.5vw,30px);background:#141518;border-color:#141518">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+          <div style="flex:1 1 320px;min-width:0">
+            <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#C7D2FE;background:rgba(79,70,229,.2);border:1px solid rgba(199,210,254,.3);border-radius:9px;padding:6px 11px;margin-bottom:10px;text-wrap:pretty">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+            <h2 style="font-family:'Source Serif 4',serif;font-size:24px;font-weight:700;color:#fff;margin:0">Свой текст или наш каталог — цикл один</h2>
+            <p style="font-size:13.5px;line-height:1.65;color:#9BA0A8;margin:10px 0 0">Вставьте ссылку на статью или загрузите книгу: Fluenta посчитает долю знакомых слов, объяснит, почему фраза устроена так, примет пересказ вслух и поставит фразы в очередь повторений.</p>
+          </div>
+          <div style="display:flex;gap:9px;flex-wrap:wrap">
+            <a href="Fluenta Library v2.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 18px;background:#4F46E5;color:#fff;border-radius:10px;font-size:14px;font-weight:600" style-hover="background:#4338CA;color:#fff">Открыть каталог</a>
+            <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:10px;font-size:14px;font-weight:600" style-hover="border-color:rgba(255,255,255,.5);color:#fff">Начать бесплатно</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="max-width:820px;margin:64px auto 0;scroll-margin-top:80px">
+      <div style="max-width:68ch;margin:0 auto">
+        <h2 class="st-h2">Частые вопросы</h2>
+      </div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px">
+        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+          <details style="border-bottom:1px solid #ECECE8">
+            <summary style="display:flex;align-items:center;gap:12px;cursor:pointer;padding:16px 2px;font-size:15.5px;font-weight:600">
+              <span style="min-width:0">{{ f.q }}</span>
+              <span style="margin-left:auto;flex:none;color:#9CA3AF;font-size:18px">+</span>
+            </summary>
+            <div style="font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.7;color:#374151;padding:0 2px 18px;max-width:66ch">{{ f.a }}</div>
+          </details>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.09em;color:#9CA3AF;margin-bottom:12px">ЧИТАТЬ ДАЛЬШЕ</div>
+      <div class="st-two" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="4">
+          <a href="{{ r.href }}" class="st-card" style="display:block;padding:16px 18px;color:#1A1A1A" style-hover="border-color:#C7D2FE">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;color:#9CA3AF">{{ r.kind }}</div>
+            <div style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;line-height:1.35;margin-top:6px">{{ r.t }}</div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <footer style="max-width:820px;margin:64px auto 0;padding:28px 0 44px;border-top:1px solid #ECECE8">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:#6B7280">
+        <a href="Fluenta Landing.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Главная</a>
+        <a href="Fluenta SEO Video.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Работа с видео</a>
+        <a href="Fluenta Pricing.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">Тарифы</a>
+        <a href="Fluenta About.dc.html" style="color:#6B7280" style-hover="color:#1A1A1A">О проекте</a>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:20px">© 2026 Fluenta · fluenta.wiki</div>
+    </footer>
+  </main>
+
+  <sc-if value="{{ stickyShow }}" hint-placeholder-val="{{ false }}">
+    <div id="stSticky" style="position:fixed;left:10px;right:10px;bottom:10px;z-index:70;display:none;align-items:center;gap:10px;background:rgba(255,255,255,.98);border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 10px 30px rgba(26,26,26,.14);padding:10px 12px;animation:rise .3s ease">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12.5px;font-weight:600">Найти текст под свой уровень</div>
+        <div style="font-size:11px;color:#9CA3AF">Каталог с пометкой «знакомо %»</div>
+      </div>
+      <a href="Fluenta Library v2.dc.html" style="display:inline-flex;align-items:center;height:36px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:12.5px;font-weight:500;flex:none" style-hover="background:#4338CA;color:#fff">Открыть</a>
+      <button onClick="{{ hideSticky }}" aria-label="Скрыть" style="width:28px;height:28px;border:none;background:none;color:#9CA3AF;font-size:16px;cursor:pointer;flex:none;padding:0" style-hover="color:#1A1A1A">×</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:2400},&quot;stickyCta&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Поведение&quot;}}">
+class Component extends DCLogic {
+  state = { goal: 0, scrolled: false, dismissed: false };
+  componentDidMount() {
+    this._sc = () => { const s = window.scrollY > 600; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
+    window.addEventListener('scroll', this._sc, { passive: true });
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._sc); }
+  renderVals() {
+    const GOALS = [
+      {
+        glyph: 'А', label: 'Словарный запас',
+        title: 'Словарный запас: одна тема неделю подряд',
+        why: 'Слова запоминаются не количеством, а повторными встречами в разных контекстах. Поэтому для словаря важнее не «читать много», а читать плотно по одной области: её лексика возвращается сама, без усилий.',
+        texts: [
+          'Научпоп и новости внутри одной темы: пять текстов подряд про климат, медицину или деньги.',
+          'Тексты с фактами и числами — там термины стоят в устойчивых сочетаниях.',
+          'Обзоры и объяснялки, а не художественная проза: в прозе лексика редкая и почти не повторяется.'
+        ],
+        dos: [
+          'Сохраняйте не слово, а предложение с ним — карточка должна звучать как речь.',
+          '5–7 новых фраз с текста, остальное отпустите: они вернутся в следующем.',
+          'На третий день серии читайте без сохранений — проверьте, что слова уже узнаются.'
+        ],
+        len: '300–600 слов', freq: 'каждый день', check: 'к пятому тексту серии знакомо +3–4%',
+        warn: 'Не выписывайте слова столбиком с переводом: изолированное слово вы узнаете глазами, но не вспомните в разговоре.'
+      },
+      {
+        glyph: '§', label: 'Грамматика',
+        title: 'Грамматика: жанр диктует конструкцию',
+        why: 'Каждый жанр держится на своём наборе форм. Если нужна конкретная тема — берите текст, в котором она встречается естественно, десятки раз подряд. Правило, увиденное в работе, запоминается вместе с примером.',
+        texts: [
+          'Рассказы и мемуары — прошедшие времена и согласование: Past Simple против Past Perfect.',
+          'Новости и отчёты — пассив и Present Perfect: «has been announced», «since 2019».',
+          'Инструкции и рецепты — императив, порядок действий, условные предложения.',
+          'Отзывы и мнения — модальные глаголы и оценка: should, might, would rather.'
+        ],
+        dos: [
+          'Разберите 1–2 конструкции за текст, не больше: остальное пройдёт мимо.',
+          'Найдите в этом же тексте ещё три примера той же формы — так правило станет системой.',
+          'Перескажите фрагмент, намеренно употребив разобранную конструкцию.'
+        ],
+        len: '200–400 слов', freq: '3–4 раза в неделю', check: 'конструкция появляется в вашей речи сама',
+        warn: 'Не берите текст ради грамматической темы, если он вам скучен: интерес — единственное, что держит регулярность.'
+      },
+      {
+        glyph: '◇', label: 'Память',
+        title: 'Память: короткий сюжет и возврат через сутки',
+        why: 'Память тренирует не чтение, а извлечение. Текст с сюжетом легче удержать целиком — есть причинно-следственная нить, за которую цепляются детали. Главное — вернуться к нему на следующий день, когда часть уже начала стираться.',
+        texts: [
+          'Короткие рассказы с завязкой и развязкой — 150–300 слов.',
+          'Биографические заметки и истории компаний: даты и события выстраиваются в линию.',
+          'Тексты с 3–5 конкретными фактами, которые можно перечислить.'
+        ],
+        dos: [
+          'Сразу после чтения — три предложения по памяти, не подглядывая.',
+          'Через сутки — пересказ целиком; вот здесь и происходит запоминание.',
+          'Через три дня — только опорные слова: если история восстанавливается, текст ваш.'
+        ],
+        len: '150–300 слов', freq: 'один текст живёт 3 дня', check: 'через сутки вспоминаете 4 факта из 5',
+        warn: 'Не пересказывайте сразу по горячим следам и не считайте это проверкой памяти: вы воспроизводите буфер, а не знание.'
+      },
+      {
+        glyph: '◎', label: 'Пересказ',
+        title: 'Пересказ: текст с позицией, а не с описанием',
+        why: 'Пересказывать легче то, у чего есть структура: тезис, аргументы, вывод. Описательный текст рассыпается на детали, и речь превращается в перечисление. Для пересказа берите материал, где автор что-то утверждает.',
+        texts: [
+          'Колонки и эссе: один тезис и три аргумента — готовый каркас речи.',
+          'Интервью: позиция собеседника и вопросы, на которые он не ответил.',
+          'Разборы событий: что случилось, почему и что будет дальше.'
+        ],
+        dos: [
+          'Схема на три шага: факт → механизм → ваша оценка. Оценка обязательна: там начинается ваш язык.',
+          'Говорите 60–90 секунд вслух, тьютор сверит с исходными тезисами.',
+          'Из разбора возьмите две связки в карточки — они переносятся в любой следующий пересказ.'
+        ],
+        len: '400–800 слов', freq: '2–3 раза в неделю', check: 'полторы минуты без пауз и без перехода на русский',
+        warn: 'Пересказ с открытым текстом — это чтение вслух. Закройте текст, оставьте только план.'
+      }
+    ];
+    const g = GOALS[this.state.goal] || GOALS[0];
+    return {
+      bands: [
+        { key: 1, range: 'меньше 90%', what: 'Слишком трудно: чтение превращается в перевод, смысл теряется. Возьмите уровень ниже.', cl: '#B45309' },
+        { key: 2, range: '94–98%', what: 'Рабочая зона: догадка работает, новые слова прилипают из контекста.', cl: '#047857' },
+        { key: 3, range: 'больше 99%', what: 'Комфортно и приятно, но нового почти нет. Годится для скорости и уверенности.', cl: '#6B7280' }
+      ],
+      goals: GOALS.map((x, i) => {
+        const a = this.state.goal === i;
+        return {
+          key: x.label, label: x.label, glyph: x.glyph,
+          bg: a ? '#F7F7FF' : '#fff', bd: a ? '#4F46E5' : '#E5E7EB', cl: a ? '#4338CA' : '#374151', fw: a ? 600 : 500,
+          ibg: a ? '#4F46E5' : '#F2F2EF', icl: a ? '#fff' : '#9CA3AF',
+          on: () => this.setState({ goal: i })
+        };
+      }),
+      gTitle: g.title, gWhy: g.why, gLen: g.len, gFreq: g.freq, gCheck: g.check, gWarn: g.warn,
+      gTexts: g.texts.map((t, i) => ({ key: i, text: t })),
+      gDo: g.dos.map((t, i) => ({ key: i, n: String(i + 1), text: t })),
+
+      steps: [
+        { key: 1, n: '1', title: 'Первый проход без словаря', body: 'Прочитайте до конца, ничего не нажимая. Задача — поймать смысл целиком и отметить места, где потеряли нить. Догадка по контексту и есть тот механизм, который вы развиваете.', mins: '3 мин' },
+        { key: 2, n: '2', title: 'Второй проход — только мешающие слова', body: 'Нажимайте на слово, если без него разваливается фраза. Незнакомое, но необязательное слово оставьте: в следующем тексте той же темы оно встретится снова.', mins: '5 мин' },
+        { key: 3, n: '3', title: 'Разбор одной-двух конструкций', body: 'Не «почему тут артикль», а почему выбрана эта форма и что она добавляет. В Fluenta объяснение появляется на выделенной фразе — с примерами из того же текста.', mins: '4 мин' },
+        { key: 4, n: '4', title: 'Пересказ вслух с закрытым текстом', body: 'Полторы минуты своими словами. Тьютор сравнит с оригиналом и покажет пропуски и неточности — это и есть карта того, что вы поняли не до конца.', mins: '5 мин' },
+        { key: 5, n: '5', title: 'Карточки предложениями', body: '5–7 фраз, а не слов. Первое повторение — назавтра, дальше интервал растёт сам, если вспоминается легко.', mins: '3 мин' }
+      ],
+      rows: [
+        { key: 'A2', lvl: 'A2', what: 'Адаптированные рассказы, диалоги, простые описания дня.', gain: 'Базовая лексика и Past Simple без объяснений.', len: '100–200 слов' },
+        { key: 'B1', lvl: 'B1', what: 'Короткие рассказы, тревел-заметки, лёгкий научпоп.', gain: 'Все прошедшие времена, первые устойчивые сочетания.', len: '150–400 слов' },
+        { key: 'B2', lvl: 'B2', what: 'Неадаптированные статьи, колонки, разборы событий.', gain: 'Пассив, перфект, аргументация и связки речи.', len: '400–800 слов' },
+        { key: 'C1', lvl: 'C1', what: 'Лонгриды, эссе, современная проза без адаптации.', gain: 'Идиоматика, ирония, авторская интонация.', len: '800–1500 слов' },
+        { key: 'C2', lvl: 'C2', what: 'Классика, поэзия, профессиональные тексты.', gain: 'Стилистические нюансы и регистр.', len: 'любая' }
+      ],
+      week: [
+        { key: 1, day: 'ПН', what: 'Текст № 1', note: 'Все пять шагов. Тема недели — одна.', mins: '20 мин' },
+        { key: 2, day: 'ВТ', what: 'Пересказ № 1', note: 'По памяти, через сутки. Плюс короткий текст той же темы.', mins: '15 мин' },
+        { key: 3, day: 'СР', what: 'Текст № 2', note: 'Та же тема — знакомая лексика возвращается сама.', mins: '20 мин' },
+        { key: 4, day: 'ЧТ', what: 'Только повторение', note: 'Карточки и один пересказ. Новых текстов нет.', mins: '10 мин' },
+        { key: 5, day: 'ПТ', what: 'Текст № 3', note: 'Возьмите сложнее: тема уже своя, можно потянуться вверх.', mins: '20 мин' }
+      ],
+      faq: [
+        { key: 1, q: 'Сколько нужно читать в день, чтобы был результат?', a: 'Пятнадцать-двадцать минут ежедневно дают больше, чем два часа по выходным: повторение растянуто во времени, а память работает именно так. Важнее не объём, а то, что после чтения вы пересказываете и возвращаетесь к фразам через день.' },
+        { key: 2, q: 'Нужно ли переводить весь текст?', a: 'Нет. Полный перевод превращает чтение в упражнение по переводу и отключает догадку. Нажимайте только на те слова, без которых фраза не складывается, а остальное оставляйте контексту — в следующем тексте той же темы они встретятся снова.' },
+        { key: 3, q: 'Что читать, чтобы быстро расширить словарный запас?', a: 'Серию из четырёх-пяти текстов на одну тему: научпоп, новости или обзоры по 300–600 слов. Внутри одной области лексика повторяется естественно, и слова закрепляются без карточек. Художественная проза для этой цели хуже — там редкие слова почти не повторяются.' },
+        { key: 4, q: 'Можно ли подтянуть грамматику только чтением?', a: 'Да, если разбирать конструкции в контексте и сразу использовать их в пересказе. Жанр помогает: рассказы дают прошедшие времена, новости — пассив и Present Perfect, инструкции — условные предложения. Одна-две конструкции за текст, не больше.' },
+        { key: 5, q: 'Как запоминать слова надолго?', a: 'Сохранять не слово, а предложение с ним и повторять по интервалам: первый возврат назавтра, дальше интервал растёт, если вспомнилось легко. Fluenta ставит фразы в очередь FSRS и показывает их прямо перед тем, как вы начнёте забывать.' },
+        { key: 6, q: 'Можно ли работать со своими текстами?', a: 'Да: вставьте ссылку на статью или загрузите книгу — сервис посчитает долю знакомых слов, разметит уровень и подготовит тот же цикл. Книга при этом разрежется на главы, и каждая станет отдельным материалом.' }
+      ],
+      related: [
+        { key: 1, kind: 'Метод', t: 'Как выучить английский по текстам: чтение с пересказом', href: 'Fluenta SEO Pillar.dc.html' },
+        { key: 2, kind: 'Видео', t: 'Как учить язык по видео: слух, память, пересказ', href: 'Fluenta SEO Video.dc.html' },
+        { key: 3, kind: 'Тексты', t: 'Тексты на английском с переводом — B1', href: 'Fluenta SEO Texts B1.dc.html' },
+        { key: 4, kind: 'Грамматика', t: 'Past Perfect и Past Simple: в чём разница', href: 'Fluenta SEO Grammar.dc.html' }
+      ],
+      stickyShow: (this.props.stickyCta ?? true) && this.state.scrolled && !this.state.dismissed,
+      hideSticky: () => this.setState({ dismissed: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

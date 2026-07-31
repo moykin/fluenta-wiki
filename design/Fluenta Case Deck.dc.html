@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0E0E10; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+  ::selection { background: rgba(79,70,229,.18); }
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+  <section data-label="Обложка" data-screen-label="01 Cover" data-speaker-notes="Fluenta.wiki — учебный продукт для взрослых, которые читают, но не говорят. Я вёл проект от идеи до результата: исследование, архитектура, интерфейс, дизайн-система, материалы для сторов." style="background:#4F46E5;color:#FFFFFF;padding:88px 104px 76px;display:flex;gap:88px;align-items:center;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:36px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66);">Product design case · 2026</div>
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <h1 style="font-family:'Source Serif 4',Georgia,serif;font-size:128px;line-height:.98;font-weight:700;letter-spacing:-.02em;margin:0;">Fluenta.wiki</h1>
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:52px;line-height:1.2;font-weight:400;color:rgba(255,255,255,.9);">Превращает то, что вы читаете,<br>в то, что вы можете сказать.</div>
+      </div>
+      <p style="font-size:32px;line-height:1.5;color:rgba(255,255,255,.82);margin:0;max-width:32ch;text-wrap:pretty;">чтение → пересказ → повторение: язык учат на настоящих текстах, перевод не выводит из страницы, ИИ-тьютор слушает пересказ, карточки собираются сами.</p>
+      <div style="display:flex;gap:14px;margin-top:8px;">
+        <span style="font-size:24px;font-weight:500;color:#FFFFFF;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 20px;">Роль: продуктовый дизайн, от идеи до результата</span>
+        <span style="font-size:24px;font-weight:500;color:#FFFFFF;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 20px;">RU · EN</span>
+      </div>
+    </div>
+    <div style="flex:none;width:720px;display:flex;flex-direction:column;gap:22px;align-items:flex-end;">
+      <img src="shots/deck/word-card.png" alt="Карточка слова с переводом, транскрипцией и озвучкой" style="width:560px;display:block;border-radius:20px;box-shadow:0 40px 90px rgba(12,10,40,.42);">
+      <div style="font-size:24px;line-height:1.45;color:rgba(255,255,255,.72);max-width:560px;">Ядро продукта — карточка слова внутри текста: перевод, форма, произношение и сохранение в колоду одним нажатием.</div>
+    </div>
+  </section>
+
+  <section data-label="Контекст и роль" data-screen-label="02 Overview" data-speaker-indent="" data-speaker-notes="Контекст: взрослые B1–B2, которые читают статьи, но не говорят. Продукт делался как сквозной цикл, а не набор упражнений. Я закрывал весь дизайн: от карты экранов до материалов для сторов." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:52px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">01 · Overview</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Контекст и роль</h2>
+    </div>
+    <div style="display:flex;gap:72px;align-items:flex-start;">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:30px;">
+        <p style="font-size:32px;line-height:1.55;color:#374151;margin:0;text-wrap:pretty;">Аудитория — взрослые уровня B1–B2, которые уже читают статьи и книги, но не могут говорить. Классические тренажёры дают правила и упражнения; чтения с переводом — понимание без речи.</p>
+        <p style="font-size:32px;line-height:1.55;color:#374151;margin:0;text-wrap:pretty;">Fluenta собирает три привычки в один цикл: чтение с мгновенным переводом, пересказ вслух ИИ-тьютору и повторение слов, которые уже встречались в собственных текстах.</p>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;border-top:1px solid #E5E7EB;padding-top:24px;">Моя роль: исследование и модель воронки, информационная архитектура, интерфейс всех платформ, дизайн-система, страницы роста и материалы для сторов.</div>
+      </div>
+      <div style="flex:none;width:700px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:28px 30px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#4F46E5;">25+</div>
+          <div style="font-size:26px;line-height:1.4;color:#374151;margin-top:12px;">экранов и состояний в прототипе</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:28px 30px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#4F46E5;">7</div>
+          <div style="font-size:26px;line-height:1.4;color:#374151;margin-top:12px;">этапов воронки с точками потерь</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:28px 30px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#4F46E5;">3</div>
+          <div style="font-size:26px;line-height:1.4;color:#374151;margin-top:12px;">формата в сторе: iPhone, iPad, Mac</div>
+        </div>
+        <div style="background:#1A1A1A;border:1px solid #1A1A1A;border-radius:18px;padding:28px 30px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#FBBF24;">1</div>
+          <div style="font-size:26px;line-height:1.4;color:rgba(255,255,255,.86);margin-top:12px;">дизайнер — от идеи до результата</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Проблема" data-screen-label="03 Problem" data-speaker-notes="Проблема не в мотивации. Взрослый ученик застревает там, где перевод, речь и повторение живут в разных приложениях: контекст теряется на каждом переходе." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:48px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">02 · Problem</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Перевод есть, языка нет</h2>
+    </div>
+    <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:44px 48px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+      <div style="font-family:'Source Serif 4',Georgia,serif;font-size:52px;line-height:1.3;font-weight:400;font-style:italic;color:#1A1A1A;">«Понимаю, когда читаю. Сказать — не могу»</div>
+      <div style="font-size:26px;color:#6B7280;margin-top:18px;">Самая частая формулировка взрослого ученика B1–B2 — с неё начинался проект</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;">
+      <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:34px 34px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Разрыв 1</div>
+        <div style="font-size:36px;line-height:1.25;font-weight:600;color:#1A1A1A;">Перевод живёт отдельно от текста</div>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;">Переключение во вкладку словаря стоит внимания и выбивает из чтения.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:34px 34px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Разрыв 2</div>
+        <div style="font-size:36px;line-height:1.25;font-weight:600;color:#1A1A1A;">Слова не возвращаются</div>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;">Выписанное вручную повторяют один раз. Колода не связана с прочитанным.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:34px 34px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Разрыв 3</div>
+        <div style="font-size:36px;line-height:1.25;font-weight:600;color:#1A1A1A;">Говорить негде</div>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;">Речь требует собеседника и смелости — обычно её отложат «на потом».</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Воронка" data-screen-label="04 Funnel" data-speaker-notes="Модель воронки собиралась на карте экранов: каждый процент привязан к конкретному состоянию. Четыре провала дали приоритеты дизайна — индикатор конца теста, оценка «осталось 2 минуты», объяснение микрофона и альтернатива оплаты." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:52px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">03 · Research</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Где теряются люди</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:34ch;text-align:right;">Каждый процент привязан к состоянию на карте экранов, а не к «низкой мотивации»</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px;">
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Вход</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:100%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">100%</div>
+        <div style="flex:none;width:560px;font-size:24px;color:#9CA3AF;">Лендинг и демо-текст без регистрации</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Онбординг</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:79%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">79%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−21%</span><span style="font-size:24px;color:#6B7280;">12 вопросов теста без индикатора конца</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Каталог</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:59%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">59%</div>
+        <div style="flex:none;width:560px;font-size:24px;color:#9CA3AF;">Выбор текста по уровню и теме</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Текст</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:40%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">40%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−33%</span><span style="font-size:24px;color:#6B7280;">бросают на середине: нет «осталось 2 мин»</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Разговор</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:17%;height:100%;background:#B91C1C;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#B91C1C;font-variant-numeric:tabular-nums;">17%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−57%</span><span style="font-size:24px;color:#6B7280;">микрофон просят сразу, без объяснения</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Повторение</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:15%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">15%</div>
+        <div style="flex:none;width:560px;font-size:24px;color:#9CA3AF;">Сессия карточек, в том числе офлайн</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Оплата</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:9%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">9%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−49%</span><span style="font-size:24px;color:#6B7280;">карта отклонена — нет второго способа</span></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:30px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+      <span style="flex:none;font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Вывод</span>
+      <div style="font-size:30px;line-height:1.45;color:#374151;">Четыре провала — четыре конкретные задачи дизайна: индикатор конца теста, оценка «осталось 2 мин», объяснение микрофона до системного запроса и второй способ оплаты.</div>
+    </div>
+  </section>
+
+  <section data-label="Инсайт" data-screen-label="05 Insight" data-speaker-notes="Решение — не третий тренажёр, а замкнутый цикл. Прочитанное становится материалом для пересказа, ошибки пересказа — карточками. Пользователь не выбирает, что повторять: продукт знает это сам." style="background:#1A1A1A;color:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;gap:56px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);">04 · Insight</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#FFFFFF;">Один цикл вместо трёх продуктов</h2>
+      <div style="font-size:32px;line-height:1.35;color:rgba(255,255,255,.74);max-width:52ch;">Цель одна: Fluenta превращает то, что вы читаете, в то, что вы можете сказать.</div>
+    </div>
+    <div style="display:flex;align-items:stretch;gap:28px;">
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:38px 36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1;font-weight:700;color:#A5B4FC;">01</div>
+        <div style="font-size:40px;line-height:1.2;font-weight:600;">Чтение</div>
+        <div style="font-size:28px;line-height:1.5;color:rgba(255,255,255,.76);">Перевод слова и разбор фразы приходят к тексту, а не наоборот. Сохранённое подсвечивается прямо в абзаце.</div>
+      </div>
+      <div style="flex:none;width:64px;display:flex;align-items:center;justify-content:center;font-size:44px;color:rgba(255,255,255,.4);">→</div>
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:38px 36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1;font-weight:700;color:#A5B4FC;">02</div>
+        <div style="font-size:40px;line-height:1.2;font-weight:600;">Пересказ</div>
+        <div style="font-size:28px;line-height:1.5;color:rgba(255,255,255,.76);">Говорить о том, что только что прочитал: тема знакома, слова свежие, тьютор слушает и правит формулировки.</div>
+      </div>
+      <div style="flex:none;width:64px;display:flex;align-items:center;justify-content:center;font-size:44px;color:rgba(255,255,255,.4);">→</div>
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:38px 36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1;font-weight:700;color:#A5B4FC;">03</div>
+        <div style="font-size:40px;line-height:1.2;font-weight:600;">Повторение</div>
+        <div style="font-size:28px;line-height:1.5;color:rgba(255,255,255,.76);">Колода собирается сама: сохранённые слова и ошибки пересказа возвращаются по интервалам.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);border-radius:16px;padding:26px 32px;">
+      <span style="flex:none;width:14px;height:14px;border-radius:50%;background:#FBBF24;"></span>
+      <div style="font-size:30px;line-height:1.45;color:#FDE68A;">Ошибки пересказа становятся завтрашними карточками — цикл замыкается без ручной работы пользователя.</div>
+    </div>
+  </section>
+
+  <section data-label="Архитектура" data-screen-label="06 IA" data-speaker-notes="Карта экранов — рабочий инструмент, а не украшение кейса. На ней собраны все состояния: пустые, загрузка, ошибки, лимиты Free, и на ней же помечены провалы воронки." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:40px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">05 · Information architecture</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Карта экранов и состояний</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:30ch;text-align:right;">Семь этапов по горизонтали, состояния каждого экрана — по вертикали</div>
+    </div>
+    <div style="display:flex;gap:44px;align-items:stretch;">
+      <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,26,26,.04);height:600px;">
+        <img src="shots/deck/screenmap.png" alt="Карта экранов Fluenta: этапы воронки и состояния экранов" style="width:1240px;display:block;">
+      </div>
+      <div style="flex:none;width:520px;display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">40+ состояний</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Пустые, загрузка, ошибки, офлайн и лимиты бесплатного плана — нарисованы, а не описаны словами.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Пути пользователей</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Новый, вернувшийся, платящий и офлайн — карта фильтруется по каждому сценарию.</div>
+        </div>
+        <div style="background:#1A1A1A;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FBBF24;">Провалы помечены на карте</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:8px;">Каждый минус воронки лежит рядом с экраном, который его вызывает, — так приоритеты не спорят.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Раздел · Решения" data-screen-label="07 Divider" data-speaker-notes="Дальше — четыре ключевых решения интерфейса: читалка, карточка слова, тьютор и повторение." style="background:#3730A3;color:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;justify-content:center;gap:28px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);">06 · Key decisions</div>
+    <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:104px;line-height:1.05;font-weight:700;letter-spacing:-.02em;margin:0;max-width:24ch;">Ключевые решения интерфейса</h2>
+    <div style="font-size:32px;line-height:1.5;color:rgba(255,255,255,.82);max-width:44ch;">Читалка, карточка слова, тьютор и повторение — четыре места, где цикл становится ощутимым.</div>
+  </section>
+
+  <section data-label="Читалка" data-screen-label="08 Reader" data-speaker-notes="Читалка держит внимание в тексте: наведение даёт карточку слова, клик сохраняет его в колоду с жёлтой подсветкой, выделение фразы открывает разбор «почему так переводится» в боковой панели." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:64px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:none;width:820px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Читалка</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Слово → перевод, не выходя из текста</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">1</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Наведение — карточка слова</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Перевод, часть речи и произношение появляются рядом со словом. Клавиатурный путь — Tab и S.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#FEF3C7;border:1px solid #FDE68A;color:#B45309;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">2</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Клик — слово в колоде</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Жёлтая подсветка остаётся в тексте: видно, что уже учишь, без отдельного списка.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">3</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Выделение фразы — разбор</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Панель объясняет, почему фраза переводится именно так: время, вид, идиома, порядок слов.</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:24px;line-height:1.45;color:#9CA3AF;border-top:1px solid #E5E7EB;padding-top:20px;">Прогресс чтения, размер шрифта и закладка живут в одной тонкой панели — чтобы текст оставался главным объектом на экране.</div>
+    </div>
+    <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 20px 50px rgba(26,26,26,.09);">
+      <img src="shots/deck/reader.png" alt="Экран читалки с открытой карточкой слова" style="width:100%;display:block;">
+    </div>
+  </section>
+
+  <section data-label="Карточка слова" data-screen-label="09 Word card" data-speaker-notes="Карточка слова — самый частый интерфейс продукта. Последняя итерация добавила произношение: обычная скорость и 0,5×, поповер стал наводимым, чтобы кнопку можно было нажать, не теряя карточку." style="background:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;gap:44px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Карточка слова</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Перевод, форма и произношение в одном окне</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:28ch;text-align:right;">272 px ширины — всё, что нужно, и ничего, что отвлекает</div>
+    </div>
+    <div style="display:flex;gap:72px;align-items:center;">
+      <div style="flex:none;width:700px;background:#FAFAF8;border:1px solid #E5E7EB;border-radius:24px;padding:44px;display:flex;align-items:center;justify-content:center;">
+        <img src="shots/deck/word-card.png" alt="Карточка слова: перевод, часть речи, транскрипция, кнопки озвучки" style="width:100%;display:block;border-radius:14px;box-shadow:0 24px 60px rgba(26,26,26,.14);">
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">01</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Озвучка и транскрипция.</span> Обычная скорость и 0,5× для сложных слов; акцент — британский или американский.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">02</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Часть речи и начальная форма.</span> «climbed → climb, Past Simple» — грамматика объясняется в момент вопроса.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">03</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Картинка-мнемоника.</span> Тонкая иллюстрация вместо второго определения — быстрее для узнавания.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">04</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Одно действие — сохранить.</span> Никаких форм: клик по слову добавляет его в колоду, повторный — убирает.</div>
+        </div>
+        <div style="font-size:24px;line-height:1.45;color:#6B7280;background:#FAFAF8;border:1px solid #E5E7EB;border-radius:14px;padding:18px 22px;">Итерация после ревью: чтобы кнопку произношения можно было нажать, поповер стал «наводимым» — он не исчезает, пока курсор идёт от слова к кнопке.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Тьютор" data-screen-label="10 Tutor" data-speaker-notes="Тьютор слушает пересказ и правит формулировки. Подсказка стоит баллов — это удерживает от чтения по бумажке. Разбор в конце превращается в карточки." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:64px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 20px 50px rgba(26,26,26,.09);">
+      <img src="shots/deck/tutor.png" alt="Экран ИИ-тьютора: пересказ вслух, разбор ошибок и карточка слова" style="width:100%;display:block;">
+    </div>
+    <div style="flex:none;width:800px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">ИИ-тьютор</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Пересказ вслух и разбор ошибок</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Речь видно на экране</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Расшифровка идёт вживую, ошибки подсвечиваются мягко — жёлтым, а не красным.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Подсказка стоит баллов</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">«Подсмотреть текст» доступно, но снижает балл пересказа — честная цена вместо запрета.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Микрофон объясняется заранее</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Провал −57% лечится текстом до системного запроса: зачем нужен доступ и что происходит с записью.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Повторение" data-screen-label="11 Review" data-speaker-notes="Повторение — единственный экран, спроектированный сразу как мобильный: сессия в дороге, офлайн, оценка одним касанием. Карточки трёх типов, все — из своих текстов и пересказов." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:80px;align-items:center;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:none;width:520px;display:flex;justify-content:center;">
+      <img src="shots/deck/review.png" alt="Мобильная сессия повторения: карточка с пропуском и четыре оценки" style="width:420px;display:block;border-radius:38px;border:1px solid #E5E7EB;box-shadow:0 30px 70px rgba(26,26,26,.16);">
+    </div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:36px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Повторение</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Карточки из своих же текстов</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#1A1A1A;">Пропуск в контексте</div>
+          <div style="font-size:24px;line-height:1.45;color:#6B7280;margin-top:6px;">Фраза из текста, который читали, — с пропущенной формой.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#1A1A1A;">Перевод на английский</div>
+          <div style="font-size:24px;line-height:1.45;color:#6B7280;margin-top:6px;">Русская фраза → английская, с проверкой ключевой конструкции.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#1A1A1A;">Ошибка из пересказа</div>
+          <div style="font-size:24px;line-height:1.45;color:#6B7280;margin-top:6px;">«he go → he went» — то, что сказали вслух вчера.</div>
+        </div>
+        <div style="background:#1A1A1A;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#FBBF24;">Офлайн-сессия</div>
+          <div style="font-size:24px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:6px;">Прогресс держится на устройстве и синхронизируется, когда появится сеть.</div>
+        </div>
+      </div>
+      <div style="font-size:26px;line-height:1.5;color:#6B7280;border-top:1px solid #E5E7EB;padding-top:22px;">Четыре оценки — «Снова / Трудно / Хорошо / Легко» — задают интервал; на десктопе это клавиши 1–4, на телефоне — крупные зоны нажатия.</div>
+    </div>
+  </section>
+
+  <section data-label="Видео" data-screen-label="12 Video" data-speaker-notes="Видео — второй источник материала. Ролик превращается в расшифровку с таймкодами, выжимку и список слов с озвучкой, которые уходят в ту же колоду." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:64px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:none;width:780px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Видео</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Слова и смысл из ролика</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">1</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Расшифровка с таймкодами</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Строку можно перевести, сохранить как фразу или вернуться к ней в плеере.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">2</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Выжимка вместо конспекта</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Смысл ролика в пяти пунктах — материал для пересказа, а не для чтения.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">3</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Слова — с озвучкой и в колоду</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Отобраны те, без которых не пересказать; у каждого — произношение и один клик до карточки.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 20px 50px rgba(26,26,26,.09);">
+      <img src="shots/deck/video.png" alt="Экран разбора видео: плеер, транскрипт и список слов" style="width:100%;display:block;">
+    </div>
+  </section>
+
+  <section data-label="Библиотека" data-screen-label="13 Library" data-speaker-notes="Каталог отвечает на один вопрос: что мне читать сегодня. Уровень, время чтения и доля знакомых слов важнее жанра." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:40px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Библиотека</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Выбор текста по уровню, а не по жанру</h2>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <span style="font-size:24px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:10px 20px;">A2 — C1</span>
+        <span style="font-size:24px;font-weight:600;color:#B45309;background:#FEF3C7;border:1px solid #FDE68A;border-radius:999px;padding:10px 20px;">знакомо 89%</span>
+        <span style="font-size:24px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:10px 20px;">3 мин чтения</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:44px;align-items:stretch;">
+      <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,26,26,.04);height:620px;">
+        <img src="shots/deck/library.png" alt="Каталог текстов с обложками, уровнями и оценкой знакомых слов" style="width:100%;display:block;">
+      </div>
+      <div style="flex:none;width:560px;display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Три подписи на карточке</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Уровень, время чтения и доля знакомых слов — решение принимается за секунду.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Свой текст</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Ссылка или вставка — материалом становится то, что человек и так читает.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Лимит Free — честно</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Ограничение показано на карточке заранее, а не в момент нажатия.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Мобайл и офлайн" data-screen-label="14 Mobile" data-speaker-notes="Мобильные раскладки — не уменьшенный десктоп: панель перевода становится шторкой, фраза выделяется долгим нажатием, повторение работает офлайн." style="background:#1A1A1A;color:#FFFFFF;padding:88px 104px 76px;display:flex;gap:72px;align-items:center;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:36px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);">Адаптив</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#FFFFFF;">Мобайл, адаптив и офлайн</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FFFFFF;">375 / 768 / 1280</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.74);margin-top:8px;">Три ширины проверялись живыми страницами, а не макетами: боковая панель превращается в шторку, тулбар — в одну строку.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FFFFFF;">Жесты вместо наведения</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.74);margin-top:8px;">Касание открывает слово, долгое нажатие с протяжкой выделяет фразу — то же действие, другой ввод.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FFFFFF;">Офлайн по умолчанию</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.74);margin-top:8px;">Повторение не требует сети: статус честно показан, синхронизация — когда сеть вернётся.</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;width:820px;display:flex;gap:36px;justify-content:flex-end;align-items:flex-end;">
+      <img src="shots/deck/onboarding.png" alt="Мобильный онбординг: выбор языковой пары" style="width:340px;display:block;border-radius:34px;box-shadow:0 30px 70px rgba(0,0,0,.5);">
+      <img src="shots/deck/review.png" alt="Мобильная сессия повторения" style="width:380px;display:block;border-radius:38px;box-shadow:0 30px 70px rgba(0,0,0,.5);">
+    </div>
+  </section>
+
+  <section data-label="Дизайн-система" data-screen-label="15 Design system" data-speaker-notes="Система собрана вокруг чтения: бумажный фон, серифная гарнитура для текста и Inter для интерфейса, индиго для действий, жёлтый — только для выученного. Компоненты повторяются во всех платформах и в стор-материалах." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:40px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">07 · Design system</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Дизайн-система вокруг чтения</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:32ch;text-align:right;">Один цвет действия, один цвет выученного, бумажный фон и максимум воздуха</div>
+    </div>
+    <div style="display:flex;gap:28px;align-items:stretch;">
+      <div style="flex:1;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:22px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Палитра</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#4F46E5;"></span><span style="font-size:26px;color:#374151;">#4F46E5 — действие</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#FBBF24;"></span><span style="font-size:26px;color:#374151;">#FBBF24 — выученное</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#10B981;"></span><span style="font-size:26px;color:#374151;">#10B981 — успех</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#FAFAF8;border:1px solid #E5E7EB;"></span><span style="font-size:26px;color:#374151;">#FAFAF8 — бумага</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#1A1A1A;"></span><span style="font-size:26px;color:#374151;">#1A1A1A — текст</span></div>
+        </div>
+      </div>
+      <div style="flex:1;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:22px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Типографика</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1.1;font-weight:600;color:#1A1A1A;">Source Serif 4</div>
+          <div style="font-size:26px;color:#6B7280;">Тексты, заголовки, слово в карточке — всё, что читают</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #F3F4F6;padding-top:20px;">
+          <div style="font-size:44px;line-height:1.1;font-weight:600;color:#1A1A1A;">Inter</div>
+          <div style="font-size:26px;color:#6B7280;">Интерфейс: подписи, кнопки, цифры прогресса</div>
+        </div>
+        <div style="font-size:24px;line-height:1.45;color:#9CA3AF;border-top:1px solid #F3F4F6;padding-top:20px;">Размер текста в читалке — 17–22 px, настраивается пользователем.</div>
+      </div>
+      <div style="flex:1;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:22px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Компоненты</div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
+          <span style="font-size:26px;font-weight:500;color:#FFFFFF;background:#4F46E5;border-radius:12px;padding:14px 24px;">Начать пересказ</span>
+          <span style="font-size:26px;font-weight:500;color:#1A1A1A;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:12px;padding:14px 24px;">Стоп</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+          <span style="font-size:24px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:8px 18px;">B1</span>
+          <span style="font-size:24px;font-weight:600;color:#B45309;background:#FEF3C7;border:1px solid #FDE68A;border-radius:999px;padding:8px 18px;">в колоде</span>
+          <span style="font-size:24px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:8px 18px;">офлайн</span>
+        </div>
+        <div style="font-size:26px;font-weight:500;color:#FFFFFF;background:#1A1A1A;border-radius:12px;padding:16px 22px;width:fit-content;">«lighthouse» — в колоде</div>
+        <div style="font-size:24px;line-height:1.45;color:#9CA3AF;border-top:1px solid #F3F4F6;padding-top:20px;">Одна библиотека кнопок, чипов, панелей и тостов — для веба, телефона и стор-макетов.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Рост" data-screen-label="16 Growth" data-speaker-notes="Рост встроен в дизайн: сотни SEO-страниц под конкретные запросы собираются из тех же компонентов, а стор-скриншоты для iPhone, iPad и Mac — из живых экранов, а не из отдельных макетов." style="background:#FAFAF8;padding:88px 104px 0;display:flex;flex-direction:column;gap:36px;box-sizing:border-box;font-family:'Inter',sans-serif;overflow:hidden;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">08 · Growth</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">SEO-страницы и материалы для сторов</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:34ch;text-align:right;">Каналы привлечения собираются из тех же компонентов, что и продукт</div>
+    </div>
+    <div style="display:flex;gap:36px;align-items:stretch;">
+      <div style="flex:none;width:520px;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,26,26,.04);height:340px;">
+        <img src="shots/deck/seo.png" alt="SEO-страница: тексты уровня B1 с переводом" style="width:100%;display:block;">
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:18px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:24px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Страница = ответ на запрос</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:6px;">«Тексты на английском B1 с переводом» — сразу демо-текст, а не форма регистрации.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:24px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Шесть кадров на платформу</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:6px;">iPhone, iPad и Mac — одна сетка подписей, английские и русские версии.</div>
+        </div>
+        <div style="background:#1A1A1A;border-radius:16px;padding:24px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FBBF24;">Ноль отдельных макетов</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:6px;">Стор-кадры рендерятся из живых экранов: обновился продукт — обновились и материалы.</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-height:0;margin:0 -104px;overflow:hidden;">
+      <img src="shots/deck/store.png" alt="Стор-скриншоты Fluenta для iPhone: шесть кадров с подписями" style="width:100%;height:100%;object-fit:cover;object-position:center 88%;display:block;">
+    </div>
+  </section>
+
+  <section data-label="Результаты" data-screen-label="17 Results" data-speaker-notes="Результат кейса — сквозной продукт: цикл, который замыкается, система, которая держит все платформы, и понятные следующие шаги. Числа воронки — модель для приоритизации, а не боевая аналитика." style="background:#4F46E5;color:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;gap:48px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66);">09 · Results &amp; next</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;">Результаты и что дальше</h2>
+    </div>
+    <div style="display:flex;gap:28px;align-items:stretch;">
+      <div style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);">Сделано</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Сквозной цикл: чтение, пересказ, повторение и видео на одном материале.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">25+ экранов и состояний, включая офлайн, лимиты и ошибки оплаты.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Дизайн-система, страницы роста и полные наборы стор-материалов.</div>
+      </div>
+      <div style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);">Что это дало</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Каждый провал воронки получил конкретное решение на конкретном экране.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Слово из текста доходит до колоды без ручной работы пользователя.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Продукт и материалы для сторов живут из одной системы компонентов.</div>
+      </div>
+      <div style="flex:1;background:#FFFFFF;border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Дальше</div>
+        <div style="font-size:30px;line-height:1.45;color:#1A1A1A;">Озвучка фраз и целых абзацев, а не только слов.</div>
+        <div style="font-size:30px;line-height:1.45;color:#1A1A1A;">Оценка произношения в пересказе — свой голос против эталона.</div>
+        <div style="font-size:30px;line-height:1.45;color:#1A1A1A;">Общие тексты для групп и преподавателей.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:40px;border-top:1px solid rgba(255,255,255,.24);padding-top:24px;">
+      <div style="flex:1;min-width:0;font-size:30px;line-height:1.35;font-weight:500;color:#FFFFFF;">Одна мера успеха: Fluenta превращает то, что вы читаете, в то, что вы можете сказать.</div>
+      <div style="flex:none;width:660px;font-size:22px;line-height:1.5;color:rgba(255,255,255,.7);">Числа воронки — модель, собранная на карте экранов для приоритизации решений; это проектные допущения, а не боевая аналитика.</div>
+    </div>
+  </section>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1920,&quot;height&quot;:1080}}"></script>
+</body>
+</html>

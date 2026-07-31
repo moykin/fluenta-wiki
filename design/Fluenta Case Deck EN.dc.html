@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #0E0E10; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+  ::selection { background: rgba(79,70,229,.18); }
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+  <section data-label="Cover" data-screen-label="01 Cover" data-speaker-notes="Fluenta.wiki is a learning product for adults who read but cannot speak. I ran it from idea to outcome: research, architecture, interface, design system and store assets." style="background:#4F46E5;color:#FFFFFF;padding:88px 104px 76px;display:flex;gap:88px;align-items:center;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:36px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66);">Product design case · 2026</div>
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <h1 style="font-family:'Source Serif 4',Georgia,serif;font-size:128px;line-height:.98;font-weight:700;letter-spacing:-.02em;margin:0;">Fluenta.wiki</h1>
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:52px;line-height:1.2;font-weight:400;color:rgba(255,255,255,.9);">Turns what you read<br>into what you can say.</div>
+      </div>
+      <p style="font-size:32px;line-height:1.5;color:rgba(255,255,255,.82);margin:0;max-width:32ch;text-wrap:pretty;">Read → retell → repeat: language is learned on real texts, translation never pulls you out of the page, an AI tutor listens to your retelling, and the deck builds itself.</p>
+      <div style="display:flex;gap:14px;margin-top:8px;">
+        <span style="font-size:24px;font-weight:500;color:#FFFFFF;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 20px;">Role: product design, idea to outcome</span>
+        <span style="font-size:24px;font-weight:500;color:#FFFFFF;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:11px 20px;">RU · EN</span>
+      </div>
+    </div>
+    <div style="flex:none;width:720px;display:flex;flex-direction:column;gap:22px;align-items:flex-end;">
+      <img src="shots/deck/word-card.png" alt="Word card with translation, phonetics and pronunciation" style="width:560px;display:block;border-radius:20px;box-shadow:0 40px 90px rgba(12,10,40,.42);">
+      <div style="font-size:24px;line-height:1.45;color:rgba(255,255,255,.72);max-width:560px;">The core of the product: a word card inside the text — translation, base form, pronunciation and one tap to the deck.</div>
+    </div>
+  </section>
+
+  <section data-label="Context" data-screen-label="02 Overview" data-speaker-indent="" data-speaker-notes="Audience: adults at B1–B2 who read but cannot speak. The product was designed as one end-to-end loop, not a set of drills. I covered the whole design." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:52px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">01 · Overview</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Context and role</h2>
+    </div>
+    <div style="display:flex;gap:72px;align-items:flex-start;">
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:30px;">
+        <p style="font-size:32px;line-height:1.55;color:#374151;margin:0;text-wrap:pretty;">The audience is adults at B1–B2 who already read articles and books but cannot speak. Classic drills give rules and exercises; reading with translation gives comprehension without speech.</p>
+        <p style="font-size:32px;line-height:1.55;color:#374151;margin:0;text-wrap:pretty;">Fluenta joins three habits into one loop: reading with instant translation, retelling out loud to an AI tutor, and reviewing words already met in your own texts.</p>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;border-top:1px solid #E5E7EB;padding-top:24px;">My role: research and the funnel model, information architecture, interface across all platforms, the design system, growth pages and store assets.</div>
+      </div>
+      <div style="flex:none;width:700px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:28px 30px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#4F46E5;">25+</div>
+          <div style="font-size:26px;line-height:1.4;color:#374151;margin-top:12px;">screens and states in the prototype</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:28px 30px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#4F46E5;">7</div>
+          <div style="font-size:26px;line-height:1.4;color:#374151;margin-top:12px;">funnel stages with drop-off points</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:28px 30px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#4F46E5;">3</div>
+          <div style="font-size:26px;line-height:1.4;color:#374151;margin-top:12px;">store formats: iPhone, iPad, Mac</div>
+        </div>
+        <div style="background:#1A1A1A;border:1px solid #1A1A1A;border-radius:18px;padding:28px 30px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:64px;line-height:1;font-weight:700;color:#FBBF24;">1</div>
+          <div style="font-size:26px;line-height:1.4;color:rgba(255,255,255,.86);margin-top:12px;">designer — idea to outcome</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Problem" data-screen-label="03 Problem" data-speaker-notes="The problem is not motivation. Adult learners stall where translation, speech and review live in three different apps: context is lost at every switch." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:48px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">02 · Problem</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Translation, but no language</h2>
+    </div>
+    <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:44px 48px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+      <div style="font-family:'Source Serif 4',Georgia,serif;font-size:52px;line-height:1.3;font-weight:400;font-style:italic;color:#1A1A1A;">“I understand when I read. I can’t say it”</div>
+      <div style="font-size:26px;color:#6B7280;margin-top:18px;">The line every adult B1–B2 learner repeats — the project started here</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;">
+      <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:34px 34px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Gap 1</div>
+        <div style="font-size:36px;line-height:1.25;font-weight:600;color:#1A1A1A;">Translation lives away from the text</div>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;">A trip to the dictionary tab costs attention and breaks reading.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:34px 34px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Gap 2</div>
+        <div style="font-size:36px;line-height:1.25;font-weight:600;color:#1A1A1A;">Words never come back</div>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;">Hand-written notes get reviewed once. The deck is not tied to what was read.</div>
+      </div>
+      <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:34px 34px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Gap 3</div>
+        <div style="font-size:36px;line-height:1.25;font-weight:600;color:#1A1A1A;">Nowhere to speak</div>
+        <div style="font-size:26px;line-height:1.5;color:#6B7280;">Speaking needs a partner and some nerve, so it gets postponed.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Funnel" data-screen-label="04 Funnel" data-speaker-notes="The funnel model was built on the screen map, so every percentage points at a state. Four drop-offs set the design priorities." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:52px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">03 · Research</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Where people drop off</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:34ch;text-align:right;">Every percentage maps to a screen state, not to “low motivation”</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:22px;">
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Entry</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:100%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">100%</div>
+        <div style="flex:none;width:560px;font-size:24px;color:#9CA3AF;">Landing page and demo text, no signup</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Onboarding</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:79%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">79%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−21%</span><span style="font-size:24px;color:#6B7280;">12 placement questions with no end in sight</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Catalog</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:59%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">59%</div>
+        <div style="flex:none;width:560px;font-size:24px;color:#9CA3AF;">Choosing a text by level and topic</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Text</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:40%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">40%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−33%</span><span style="font-size:24px;color:#6B7280;">abandoned mid-text: no “2 min left” cue</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Speaking</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:17%;height:100%;background:#B91C1C;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#B91C1C;font-variant-numeric:tabular-nums;">17%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−57%</span><span style="font-size:24px;color:#6B7280;">mic permission asked upfront, unexplained</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Review</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:15%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">15%</div>
+        <div style="flex:none;width:560px;font-size:24px;color:#9CA3AF;">Card session, offline included</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;">
+        <div style="flex:none;width:270px;font-size:30px;font-weight:600;color:#1A1A1A;">Checkout</div>
+        <div style="flex:1;height:56px;background:#EFEFEC;border-radius:8px;overflow:hidden;"><div style="width:9%;height:100%;background:#4F46E5;border-radius:8px;"></div></div>
+        <div style="flex:none;width:110px;font-size:30px;font-weight:600;color:#1A1A1A;font-variant-numeric:tabular-nums;">9%</div>
+        <div style="flex:none;width:560px;display:flex;align-items:center;gap:12px;"><span style="font-size:24px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:6px 12px;">−49%</span><span style="font-size:24px;color:#6B7280;">card declined — no second method</span></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:18px;padding:30px 36px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+      <span style="flex:none;font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#4F46E5;">Takeaway</span>
+      <div style="font-size:30px;line-height:1.45;color:#374151;">Four drop-offs, four concrete design tasks: an end indicator for the test, a “2 min left” estimate, an explanation before the mic prompt, and a second payment method.</div>
+    </div>
+  </section>
+
+  <section data-label="Insight" data-screen-label="05 Insight" data-speaker-notes="The answer is not a third drill but a closed loop: what you read becomes what you retell, and retelling mistakes become cards." style="background:#1A1A1A;color:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;gap:56px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);">04 · Insight</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#FFFFFF;">One loop instead of three products</h2>
+      <div style="font-size:32px;line-height:1.35;color:rgba(255,255,255,.74);max-width:52ch;">One goal: Fluenta turns what you read into what you can say.</div>
+    </div>
+    <div style="display:flex;align-items:stretch;gap:28px;">
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:38px 36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1;font-weight:700;color:#A5B4FC;">01</div>
+        <div style="font-size:40px;line-height:1.2;font-weight:600;">Reading</div>
+        <div style="font-size:28px;line-height:1.5;color:rgba(255,255,255,.76);">The word card and the phrase breakdown come to the text, not the other way round. Saved words stay highlighted in the paragraph.</div>
+      </div>
+      <div style="flex:none;width:64px;display:flex;align-items:center;justify-content:center;font-size:44px;color:rgba(255,255,255,.4);">→</div>
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:38px 36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1;font-weight:700;color:#A5B4FC;">02</div>
+        <div style="font-size:40px;line-height:1.2;font-weight:600;">Retelling</div>
+        <div style="font-size:28px;line-height:1.5;color:rgba(255,255,255,.76);">Talk about what you have just read: the topic is familiar, the words are fresh, and the tutor corrects your phrasing.</div>
+      </div>
+      <div style="flex:none;width:64px;display:flex;align-items:center;justify-content:center;font-size:44px;color:rgba(255,255,255,.4);">→</div>
+      <div style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:38px 36px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1;font-weight:700;color:#A5B4FC;">03</div>
+        <div style="font-size:40px;line-height:1.2;font-weight:600;">Review</div>
+        <div style="font-size:28px;line-height:1.5;color:rgba(255,255,255,.76);">The deck builds itself: saved words and retelling mistakes come back on intervals.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:20px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);border-radius:16px;padding:26px 32px;">
+      <span style="flex:none;width:14px;height:14px;border-radius:50%;background:#FBBF24;"></span>
+      <div style="font-size:30px;line-height:1.45;color:#FDE68A;">Retelling mistakes become tomorrow’s cards — the loop closes with no manual work.</div>
+    </div>
+  </section>
+
+  <section data-label="Architecture" data-screen-label="06 IA" data-speaker-notes="The screen map is a working tool, not deck decoration: every state is drawn — empty, loading, error, free-plan limit — and every funnel loss is pinned to its screen." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:40px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">05 · Information architecture</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Screen and state map</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:30ch;text-align:right;">Seven stages across, every screen’s states down</div>
+    </div>
+    <div style="display:flex;gap:44px;align-items:stretch;">
+      <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,26,26,.04);height:600px;">
+        <img src="shots/deck/screenmap.png" alt="Fluenta screen map: funnel stages and screen states" style="width:1240px;display:block;">
+      </div>
+      <div style="flex:none;width:520px;display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">40+ states</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Empty, loading, error, offline and free-plan limits — drawn, not described in words.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">User paths</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">New, returning, paying and offline — the map filters by each scenario.</div>
+        </div>
+        <div style="background:#1A1A1A;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FBBF24;">Drop-offs marked on the map</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:8px;">Every funnel loss sits next to the screen that causes it, so priorities stop being an argument.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Section · Decisions" data-screen-label="07 Divider" data-speaker-notes="Next: four key interface decisions — reader, word card, tutor and review." style="background:#3730A3;color:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;justify-content:center;gap:28px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62);">06 · Key decisions</div>
+    <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:104px;line-height:1.05;font-weight:700;letter-spacing:-.02em;margin:0;max-width:24ch;">Key interface decisions</h2>
+    <div style="font-size:32px;line-height:1.5;color:rgba(255,255,255,.82);max-width:44ch;">Reader, word card, tutor and review — the four places where the loop becomes tangible.</div>
+  </section>
+
+  <section data-label="Reader" data-screen-label="08 Reader" data-speaker-notes="The reader keeps attention inside the text: hover gives the word card, a click saves the word with an amber highlight, selecting a phrase opens the breakdown panel." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:64px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:none;width:820px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Reader</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Word → translation without leaving the text</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">1</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Hover — the word card</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Translation, part of speech and pronunciation appear next to the word. Keyboard path: Tab, then S.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#FEF3C7;border:1px solid #FDE68A;color:#B45309;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">2</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Click — the word joins the deck</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">The amber highlight stays in the text: you see what you are learning without a separate list.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">3</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Select a phrase — get the breakdown</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">The panel explains why the phrase translates this way: tense, aspect, idiom, word order.</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:24px;line-height:1.45;color:#9CA3AF;border-top:1px solid #E5E7EB;padding-top:20px;">Reading progress, type size and the bookmark live in one thin bar, so the text stays the main object on screen.</div>
+    </div>
+    <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 20px 50px rgba(26,26,26,.09);">
+      <img src="shots/deck/reader.png" alt="Reader screen with the word card open" style="width:100%;display:block;">
+    </div>
+  </section>
+
+  <section data-label="Word card" data-screen-label="09 Word card" data-speaker-notes="The word card is the most frequent interface in the product. The latest iteration added pronunciation: normal speed and 0.5×, with a hover-safe popover so the button can be reached." style="background:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;gap:44px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Word card</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Translation, form and pronunciation in one card</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:28ch;text-align:right;">272 px wide — everything needed, nothing that distracts</div>
+    </div>
+    <div style="display:flex;gap:72px;align-items:center;">
+      <div style="flex:none;width:700px;background:#FAFAF8;border:1px solid #E5E7EB;border-radius:24px;padding:44px;display:flex;align-items:center;justify-content:center;">
+        <img src="shots/deck/word-card.png" alt="Word card: translation, part of speech, phonetics, pronunciation buttons" style="width:100%;display:block;border-radius:14px;box-shadow:0 24px 60px rgba(26,26,26,.14);">
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:20px;">
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">01</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Pronunciation and phonetics.</span> Normal speed and 0.5× for hard words; British or American accent.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">02</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Part of speech and base form.</span> “climbed → climb, Past Simple” — grammar explained at the moment of the question.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">03</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">Mnemonic image.</span> A thin line drawing instead of a second definition — faster to recognise.</div>
+        </div>
+        <div style="display:flex;gap:18px;align-items:baseline;">
+          <span style="flex:none;font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:700;color:#4F46E5;">04</span>
+          <div style="font-size:28px;line-height:1.45;color:#374151;"><span style="font-weight:600;color:#1A1A1A;">One action — save.</span> No forms: a click adds the word to the deck, a second click removes it.</div>
+        </div>
+        <div style="font-size:24px;line-height:1.45;color:#6B7280;background:#FAFAF8;border:1px solid #E5E7EB;border-radius:14px;padding:18px 22px;">Post-review iteration: to make the pronunciation button clickable, the popover became hover-safe — it stays put while the cursor travels from word to button.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Tutor" data-screen-label="10 Tutor" data-speaker-notes="The tutor listens to the retelling and corrects phrasing. A peek costs points, which keeps people from reading off the page. The wrap-up becomes cards." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:64px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 20px 50px rgba(26,26,26,.09);">
+      <img src="shots/deck/tutor.png" alt="AI tutor screen: retelling, mistake breakdown and the word card" style="width:100%;display:block;">
+    </div>
+    <div style="flex:none;width:800px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">AI tutor</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Retelling out loud, mistakes explained</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Speech is visible on screen</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Transcription runs live and mistakes are highlighted gently — amber, not red.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">A peek costs points</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">“Peek at the text” is available but lowers the retelling score — an honest price instead of a ban.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">The mic is explained first</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">The −57% drop is fixed with copy before the system prompt: why access is needed and what happens to the recording.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Review" data-screen-label="11 Review" data-speaker-notes="Review is the one screen designed mobile-first: a session on the move, offline, one tap per rating. Three card types, all made of the learner’s own texts." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:80px;align-items:center;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:none;width:520px;display:flex;justify-content:center;">
+      <img src="shots/deck/review.png" alt="Mobile review session: a cloze card and four ratings" style="width:420px;display:block;border-radius:38px;border:1px solid #E5E7EB;box-shadow:0 30px 70px rgba(26,26,26,.16);">
+    </div>
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:36px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Review</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Cards made of your own texts</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#1A1A1A;">Cloze in context</div>
+          <div style="font-size:24px;line-height:1.45;color:#6B7280;margin-top:6px;">A phrase from the text you read, with the form removed.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#1A1A1A;">Translate into English</div>
+          <div style="font-size:24px;line-height:1.45;color:#6B7280;margin-top:6px;">A native phrase into English, checking the key construction.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#1A1A1A;">Mistake from a retelling</div>
+          <div style="font-size:24px;line-height:1.45;color:#6B7280;margin-top:6px;">“he go → he went” — what you said out loud yesterday.</div>
+        </div>
+        <div style="background:#1A1A1A;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:28px;font-weight:600;color:#FBBF24;">Offline session</div>
+          <div style="font-size:24px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:6px;">Progress is kept on the device and syncs when the network returns.</div>
+        </div>
+      </div>
+      <div style="font-size:26px;line-height:1.5;color:#6B7280;border-top:1px solid #E5E7EB;padding-top:22px;">Four ratings — Again / Hard / Good / Easy — set the interval: keys 1–4 on desktop, large tap zones on the phone.</div>
+    </div>
+  </section>
+
+  <section data-label="Video" data-screen-label="12 Video" data-speaker-notes="Video is the second source of material: a clip becomes a timecoded transcript, a digest and a list of words with pronunciation that go into the same deck." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;gap:64px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:none;width:780px;display:flex;flex-direction:column;gap:32px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Video</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Words and meaning out of a video</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">1</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Transcript with timecodes</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Any line can be translated, saved as a phrase or replayed in the player.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">2</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">A digest instead of notes</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">The video in five points — material to retell, not to read.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:20px;align-items:flex-start;">
+          <span style="flex:none;width:44px;height:44px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;color:#4F46E5;font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;">3</span>
+          <div style="min-width:0;">
+            <div style="font-size:32px;font-weight:600;color:#1A1A1A;">Words — with audio, into the deck</div>
+            <div style="font-size:26px;line-height:1.5;color:#6B7280;margin-top:6px;">Only the words you cannot retell without; each one has pronunciation and a single click to a card.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 20px 50px rgba(26,26,26,.09);">
+      <img src="shots/deck/video.png" alt="Video breakdown screen: player, transcript and word list" style="width:100%;display:block;">
+    </div>
+  </section>
+
+  <section data-label="Library" data-screen-label="13 Library" data-speaker-notes="The catalog answers one question: what should I read today. Level, reading time and share of known words matter more than genre." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:40px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">Library</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">Pick a text by level, not by genre</h2>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <span style="font-size:24px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:10px 20px;">A2 — C1</span>
+        <span style="font-size:24px;font-weight:600;color:#B45309;background:#FEF3C7;border:1px solid #FDE68A;border-radius:999px;padding:10px 20px;">89% known</span>
+        <span style="font-size:24px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:10px 20px;">3 min read</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:44px;align-items:stretch;">
+      <div style="flex:1;min-width:0;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,26,26,.04);height:620px;">
+        <img src="shots/deck/library.png" alt="Text catalog with covers, levels and known-word estimates" style="width:100%;display:block;">
+      </div>
+      <div style="flex:none;width:560px;display:flex;flex-direction:column;gap:20px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Three labels per card</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">Level, reading time and share of known words — the decision takes a second.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Your own text</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">A link or a paste — the material becomes what the person already reads.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Free limit, stated upfront</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:8px;">The limit is shown on the card in advance, not at the moment of the tap.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Mobile & offline" data-screen-label="14 Mobile" data-speaker-notes="Mobile layouts are not a shrunken desktop: the translation panel becomes a sheet, a phrase is selected with a long press, and review works offline." style="background:#1A1A1A;color:#FFFFFF;padding:88px 104px 76px;display:flex;gap:72px;align-items:center;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:36px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);">Responsive</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#FFFFFF;">Mobile, responsive and offline</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FFFFFF;">375 / 768 / 1280</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.74);margin-top:8px;">Three widths were checked on live pages, not mockups: the side panel becomes a bottom sheet, the toolbar collapses into one row.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FFFFFF;">Gestures instead of hover</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.74);margin-top:8px;">A tap opens the word, a long press and drag selects a phrase — the same action, a different input.</div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FFFFFF;">Offline by default</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.74);margin-top:8px;">Review needs no network: the status is stated honestly and syncing waits for the connection.</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:none;width:820px;display:flex;gap:36px;justify-content:flex-end;align-items:flex-end;">
+      <img src="shots/deck/onboarding.png" alt="Mobile onboarding: choosing a language pair" style="width:340px;display:block;border-radius:34px;box-shadow:0 30px 70px rgba(0,0,0,.5);">
+      <img src="shots/deck/review.png" alt="Mobile review session" style="width:380px;display:block;border-radius:38px;box-shadow:0 30px 70px rgba(0,0,0,.5);">
+    </div>
+  </section>
+
+  <section data-label="Design system" data-screen-label="15 Design system" data-speaker-notes="The system is built around reading: paper ground, a serif for text and Inter for the interface, indigo for actions, amber only for learned words. Components are shared across platforms and store assets." style="background:#FAFAF8;padding:88px 104px 76px;display:flex;flex-direction:column;gap:40px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">07 · Design system</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">A design system built around reading</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:32ch;text-align:right;">One action colour, one colour for learned words, a paper ground and plenty of air</div>
+    </div>
+    <div style="display:flex;gap:28px;align-items:stretch;">
+      <div style="flex:1;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:22px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Palette</div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#4F46E5;"></span><span style="font-size:26px;color:#374151;">#4F46E5 — action</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#FBBF24;"></span><span style="font-size:26px;color:#374151;">#FBBF24 — learned</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#10B981;"></span><span style="font-size:26px;color:#374151;">#10B981 — success</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#FAFAF8;border:1px solid #E5E7EB;"></span><span style="font-size:26px;color:#374151;">#FAFAF8 — paper</span></div>
+          <div style="display:flex;align-items:center;gap:16px;"><span style="flex:none;width:56px;height:56px;border-radius:12px;background:#1A1A1A;"></span><span style="font-size:26px;color:#374151;">#1A1A1A — text</span></div>
+        </div>
+      </div>
+      <div style="flex:1;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:22px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Typography</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;line-height:1.1;font-weight:600;color:#1A1A1A;">Source Serif 4</div>
+          <div style="font-size:26px;color:#6B7280;">Texts, headings, the word in the card — everything that gets read</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;border-top:1px solid #F3F4F6;padding-top:20px;">
+          <div style="font-size:44px;line-height:1.1;font-weight:600;color:#1A1A1A;">Inter</div>
+          <div style="font-size:26px;color:#6B7280;">Interface: labels, buttons, progress figures</div>
+        </div>
+        <div style="font-size:24px;line-height:1.45;color:#9CA3AF;border-top:1px solid #F3F4F6;padding-top:20px;">Reading type size is 17–22 px, set by the reader.</div>
+      </div>
+      <div style="flex:1;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:20px;padding:34px;display:flex;flex-direction:column;gap:22px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Components</div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;">
+          <span style="font-size:26px;font-weight:500;color:#FFFFFF;background:#4F46E5;border-radius:12px;padding:14px 24px;">Start retelling</span>
+          <span style="font-size:26px;font-weight:500;color:#1A1A1A;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:12px;padding:14px 24px;">Stop</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+          <span style="font-size:24px;font-weight:600;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:8px 18px;">B1</span>
+          <span style="font-size:24px;font-weight:600;color:#B45309;background:#FEF3C7;border:1px solid #FDE68A;border-radius:999px;padding:8px 18px;">in deck</span>
+          <span style="font-size:24px;font-weight:600;color:#047857;background:#ECFDF5;border:1px solid #D1FAE5;border-radius:999px;padding:8px 18px;">offline</span>
+        </div>
+        <div style="font-size:26px;font-weight:500;color:#FFFFFF;background:#1A1A1A;border-radius:12px;padding:16px 22px;width:fit-content;">“lighthouse” — added to deck</div>
+        <div style="font-size:24px;line-height:1.45;color:#9CA3AF;border-top:1px solid #F3F4F6;padding-top:20px;">One library of buttons, chips, panels and toasts — for web, phone and store mockups.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Growth" data-screen-label="16 Growth" data-speaker-notes="Growth is built into the design: SEO pages assemble from the same components, and store frames for iPhone, iPad and Mac render from live screens." style="background:#FAFAF8;padding:88px 104px 0;display:flex;flex-direction:column;gap:36px;box-sizing:border-box;font-family:'Inter',sans-serif;overflow:hidden;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6B7280;">08 · Growth</div>
+        <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;color:#1A1A1A;">SEO pages and store assets</h2>
+      </div>
+      <div style="font-size:26px;line-height:1.45;color:#6B7280;max-width:34ch;text-align:right;">Acquisition surfaces are built from the same components as the product</div>
+    </div>
+    <div style="display:flex;gap:36px;align-items:stretch;">
+      <div style="flex:none;width:520px;border:1px solid #E5E7EB;border-radius:20px;overflow:hidden;background:#FFFFFF;box-shadow:0 1px 2px rgba(26,26,26,.04);height:340px;">
+        <img src="shots/deck/seo.png" alt="SEO page: B1 texts with translation" style="width:100%;display:block;">
+      </div>
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:18px;">
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:24px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">A page answers one query</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:6px;">“English texts B1 with translation” — a demo text right away, not a signup form.</div>
+        </div>
+        <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;padding:24px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#1A1A1A;">Six frames per platform</div>
+          <div style="font-size:26px;line-height:1.45;color:#6B7280;margin-top:6px;">iPhone, iPad and Mac — one caption grid, English and Russian versions.</div>
+        </div>
+        <div style="background:#1A1A1A;border-radius:16px;padding:24px 28px;">
+          <div style="font-size:30px;font-weight:600;color:#FBBF24;">Zero separate mockups</div>
+          <div style="font-size:26px;line-height:1.45;color:rgba(255,255,255,.82);margin-top:6px;">Store frames render from live screens: when the product changes, the assets change with it.</div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;min-height:0;margin:0 -104px;overflow:hidden;">
+      <img src="shots/deck/store.png" alt="Fluenta store screenshots for iPhone: six captioned frames" style="width:100%;height:100%;object-fit:cover;object-position:center 88%;display:block;">
+    </div>
+  </section>
+
+  <section data-label="Results" data-screen-label="17 Results" data-speaker-notes="The outcome is an end-to-end product: a loop that closes, one system holding every platform, and clear next steps. The funnel figures are a prioritisation model, not production analytics." style="background:#4F46E5;color:#FFFFFF;padding:88px 104px 76px;display:flex;flex-direction:column;gap:48px;box-sizing:border-box;font-family:'Inter',sans-serif;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:24px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.66);">09 · Results &amp; next</div>
+      <h2 style="font-family:'Source Serif 4',Georgia,serif;font-size:68px;line-height:1.1;font-weight:600;letter-spacing:-.01em;margin:0;">Results and what’s next</h2>
+    </div>
+    <div style="display:flex;gap:28px;align-items:stretch;">
+      <div style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);">Shipped</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">An end-to-end loop: reading, retelling, review and video on one piece of material.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">25+ screens and states, including offline, limits and payment errors.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">A design system, growth pages and complete store asset sets.</div>
+      </div>
+      <div style="flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);">What it gave</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Every funnel drop-off got a concrete fix on a concrete screen.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">A word travels from text to deck with no manual work.</div>
+        <div style="font-size:30px;line-height:1.45;color:#FFFFFF;">Product and store assets live off one component system.</div>
+      </div>
+      <div style="flex:1;background:#FFFFFF;border-radius:20px;padding:34px 36px;display:flex;flex-direction:column;gap:18px;">
+        <div style="font-size:24px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6B7280;">Next</div>
+        <div style="font-size:30px;line-height:1.45;color:#1A1A1A;">Pronunciation for phrases and whole paragraphs, not just words.</div>
+        <div style="font-size:30px;line-height:1.45;color:#1A1A1A;">Pronunciation scoring inside retellings — your voice against a reference.</div>
+        <div style="font-size:30px;line-height:1.45;color:#1A1A1A;">Shared texts for groups and teachers.</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:40px;border-top:1px solid rgba(255,255,255,.24);padding-top:24px;">
+      <div style="flex:1;min-width:0;font-size:30px;line-height:1.35;font-weight:500;color:#FFFFFF;">One measure of success: Fluenta turns what you read into what you can say.</div>
+      <div style="flex:none;width:660px;font-size:22px;line-height:1.5;color:rgba(255,255,255,.7);">The funnel figures are a model built on the screen map to prioritise design work — project assumptions, not production analytics.</div>
+    </div>
+  </section>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1920,&quot;height&quot;:1080}}"></script>
+</body>
+</html>

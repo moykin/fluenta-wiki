@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #FAFAF8; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+  ::selection { background: rgba(79,70,229,.14); }
+  html { scroll-behavior: smooth; }
+  button:focus-visible, a:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid #4F46E5; outline-offset: 2px; }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  @keyframes wv { 0%,100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  #stickyCta { display: none; }
+  @media (max-width: 639px) { #stickyCta { display: flex !important; } #navLinks { display: none !important; } }
+  @media (max-width: 860px) { #cmpWrap { overflow-x: auto; } }
+</style>
+</helmet>
+<div data-screen-label="SEO Pillar — Как выучить английский" style="min-height:100vh;background:#FAFAF8;">
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8;user-select:none;">
+    <div style="display:flex;align-items:center;gap:16px;height:58px;padding:0 clamp(16px,4vw,40px);max-width:1220px;margin:0 auto;">
+      <a href="Fluenta Landing.dc.html" style="display:flex;align-items:center;gap:9px;flex:none;color:#1A1A1A;text-decoration:none;">
+        <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif;">f</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:-.01em;">fluenta.wiki</span>
+      </a>
+      <div id="navLinks" style="display:flex;align-items:center;gap:10px;font-size:13px;color:#6B7280;">
+        <span>Я говорю</span>
+        <span style="position:relative;display:inline-flex;">
+          <select value="{{ nativeSel }}" onChange="{{ onNative }}" aria-label="Родной язык" style="appearance:none;-webkit-appearance:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#1A1A1A;background:#fff;border:1px solid #E5E7EB;border-radius:9px;padding:7px 26px 7px 11px;cursor:pointer;">
+            <sc-for list="{{ nativeLangs }}" as="l" hint-placeholder-count="3"><option value="{{ l.code }}">{{ l.name }}</option></sc-for>
+          </select>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+        <span>· учу</span>
+        <span style="position:relative;display:inline-flex;">
+          <select value="{{ targetSel }}" onChange="{{ onTarget }}" aria-label="Изучаемый язык" style="appearance:none;-webkit-appearance:none;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:#4F46E5;background:#fff;border:1px solid #C7D2FE;border-radius:9px;padding:7px 26px 7px 11px;cursor:pointer;">
+            <sc-for list="{{ targetLangs }}" as="l" hint-placeholder-count="3"><option value="{{ l.code }}">{{ l.name }}</option></sc-for>
+          </select>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:9px;top:50%;transform:translateY(-50%);pointer-events:none;"><path d="M6 9l6 6 6-6"></path></svg>
+        </span>
+        <span style="font-size:11.5px;color:#9CA3AF;background:#F3F4F6;border-radius:999px;padding:3px 9px;white-space:nowrap;">35 языков</span>
+      </div>
+      <div style="flex:1;"></div>
+      <a href="Fluenta Library v2.dc.html" style="font-size:13.5px;font-weight:500;color:#6B7280;flex:none;" style-hover="color:#1A1A1A;">Войти</a>
+      <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:flex;align-items:center;justify-content:center;height:34px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:13px;font-weight:500;flex:none;" style-hover="background:#4338CA;color:#fff;">Начать бесплатно</a>
+    </div>
+  </div>
+  <sc-if value="{{ pairNote }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:66px;left:50%;transform:translateX(-50%);z-index:60;background:#1A1A1A;color:#fff;font-size:12.5px;border-radius:10px;padding:9px 14px;box-shadow:0 10px 26px rgba(26,26,26,.24);animation:rise .2s ease;max-width:90vw;">{{ pairNote }}</div>
+  </sc-if>
+
+  <main style="max-width:1060px;margin:0 auto;padding:88px clamp(16px,4vw,40px) 0;box-sizing:border-box;">
+    <nav aria-label="Хлебные крошки" style="max-width:68ch;margin:0 auto;">
+      <ol style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;list-style:none;margin:0;padding:0;font-size:12.5px;color:#9CA3AF;">
+        <li><a href="Fluenta Landing.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Главная</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="#levels" style="color:#6B7280;" style-hover="color:#1A1A1A;">Английский</a></li>
+        <li aria-hidden="true">›</li>
+        <li style="color:#9CA3AF;">Как выучить английский по текстам</li>
+      </ol>
+    </nav>
+
+    <article style="max-width:68ch;margin:0 auto;">
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(30px,4.6vw,44px);font-weight:700;letter-spacing:-.015em;line-height:1.2;margin:18px 0 0;text-wrap:pretty;">Как выучить английский по текстам: метод чтения с&nbsp;пересказом</h1>
+      <p style="font-family:'Source Serif 4',serif;font-size:18px;line-height:1.7;color:#374151;margin:18px 0 0;text-wrap:pretty;">Самый надёжный способ выучить английский без зубрёжки — регулярно читать тексты «чуть выше» своего уровня и проговаривать прочитанное вслух. На этой странице — метод из четырёх шагов (читать → понимать почему → пересказывать → повторять) и живое демо каждого шага: попробуйте прямо здесь.</p>
+      <div style="display:flex;align-items:center;gap:11px;margin-top:22px;padding-top:18px;border-top:1px solid #ECECE8;flex-wrap:wrap;">
+        <span style="width:34px;height:34px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none;">ЕМ</span>
+        <div style="font-size:12.5px;line-height:1.45;">
+          <div style="font-weight:600;">Fluenta — независимый проект <a href="Fluenta About.dc.html">Евгения Мойкина</a></div>
+          <div style="color:#9CA3AF;">Обновлено 20 июля 2026 · 7 мин чтения</div>
+        </div>
+      </div>
+      <nav aria-label="Содержание" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;">
+        <a href="#method" class="fl-tap" style="display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:500;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 12px;" style-hover="background:#E0E7FF;color:#4338CA;">Метод</a>
+        <a href="#compare" class="fl-tap" style="display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:500;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 12px;" style-hover="background:#E0E7FF;color:#4338CA;">Сравнение приложений</a>
+        <a href="#levels" class="fl-tap" style="display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:500;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 12px;" style-hover="background:#E0E7FF;color:#4338CA;">Уровни A1–C2</a>
+        <a href="#faq" class="fl-tap" style="display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:500;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:999px;padding:5px 12px;" style-hover="background:#E0E7FF;color:#4338CA;">Вопросы</a>
+      </nav>
+
+      <h2 id="why" style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:52px 0 0;scroll-margin-top:80px;">Почему чтение работает лучше упражнений</h2>
+      <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;">Язык усваивается из <em>понятного входа</em>: когда вы читаете текст, в котором знаете 95–98% слов, мозг достраивает остальное из контекста — так работает гипотеза input Стивена Крашена и вся практика extensive reading. Упражнения тренируют упражнения; чтение тренирует язык.</p>
+      <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;">Но у чистого чтения два разрыва: вы понимаете фразу, не понимая, <em>почему</em> она устроена так, — и вы узнаёте слова глазами, но не можете произнести их в речи. Метод ниже закрывает оба.</p>
+    </article>
+
+    <div style="max-width:820px;margin:36px auto 0;">
+      <div style="height:clamp(200px,36vw,340px);border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="seo-pillar-hero" shape="rect" placeholder="Скриншот читалки Fluenta или иллюстрация метода — перетащите сюда" hint-size="100%,100%"></x-import>
+      </div>
+      <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px;">Читалка Fluenta: перевод и разбор — по нажатию на слово</div>
+    </div>
+
+    <section id="method" style="max-width:820px;margin:64px auto 0;scroll-margin-top:80px;">
+      <div style="max-width:68ch;margin:0 auto;">
+        <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0;">Метод: четыре шага от текста к речи</h2>
+        <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;">Всё демо ниже — настоящее: наводите, нажимайте, играйте диалог. Так же это работает в приложении с любым текстом.</p>
+      </div>
+
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 12px 34px rgba(26,26,26,.07);margin-top:24px;overflow:hidden;">
+        <div style="padding:22px clamp(16px,3.5vw,30px) 24px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Source Serif 4',serif;font-size:14px;color:#D1D5DB;">01</span>
+            <h3 style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;">Читайте — и нажимайте на непонятное</h3>
+          </div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;margin-top:14px;"><span class="fl-hide-m">Наведите на любое слово</span><span class="fl-only-m">Нажмите на любое слово</span></div>
+          <p lang="en" data-demo-words="1" style="font-family:'Source Serif 4',serif;font-size:clamp(19px,2.6vw,23px);line-height:1.8;margin:12px 0 0;max-width:68ch;">
+            <sc-for list="{{ demoWords }}" as="tok" hint-placeholder-count="8"><span onMouseEnter="{{ tok.enter }}" onMouseLeave="{{ tok.leave }}" onClick="{{ tok.click }}" style="{{ tok.style }}">{{ tok.w }}</span> </sc-for>
+          </p>
+          <div style="font-size:13.5px;color:#9CA3AF;margin-top:8px;">Когда она открыла окно, улица уже затихла.</div>
+        </div>
+        <div style="border-top:1px solid #F3F4F6;padding:22px clamp(16px,3.5vw,30px) 24px;background:#FDFDFC;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Source Serif 4',serif;font-size:14px;color:#D1D5DB;">02</span>
+            <h3 style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;">Понимайте, почему фраза устроена так</h3>
+          </div>
+          <div style="margin-top:14px;background:#FAFAF8;border:1px solid #ECECE8;border-radius:12px;padding:16px 18px;">
+            <div style="display:flex;align-items:center;gap:7px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><circle cx="12" cy="12" r="10"></circle><path d="M12 17h.01"></path></svg>
+              <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#B45309;">Почему так переводится</span>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:10px;">
+              <span lang="en" style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;">had already gone quiet</span>
+              <span style="font-size:13.5px;color:#6B7280;">→ «уже затихла (до того момента)»</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+              <div style="display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.6;color:#374151;"><span style="flex:none;width:5px;height:5px;border-radius:50%;background:#4F46E5;margin-top:8px;"></span><span>Past Perfect: had + третья форма (go → gone). Улица затихла <em>до</em> того, как она открыла окно, — «прошлое до прошлого».</span></div>
+              <div style="display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.6;color:#374151;"><span style="flex:none;width:5px;height:5px;border-radius:50%;background:#4F46E5;margin-top:8px;"></span><span>opened — обычный Past Simple: точка на линии прошлого, порядок событий ясен.</span></div>
+              <div style="display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.6;color:#374151;"><span style="flex:none;width:5px;height:5px;border-radius:50%;background:#4F46E5;margin-top:8px;"></span><span>already встаёт между had и gone — как «уже» в русском.</span></div>
+            </div>
+            <div style="margin-top:12px;font-size:13px;"><a href="Fluenta SEO Grammar.dc.html">Полный разбор: Past Perfect и Past Simple — в чём разница →</a></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #F3F4F6;padding:22px clamp(16px,3.5vw,30px) 24px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Source Serif 4',serif;font-size:14px;color:#D1D5DB;">03</span>
+            <h3 style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;">Пересказывайте вслух голосовому тьютору</h3>
+          </div>
+          <div style="margin-top:14px;background:#FAFAF8;border:1px solid #ECECE8;border-radius:12px;padding:16px 18px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:'Source Serif 4',serif;flex:none;">f</span>
+              <span style="font-size:12.5px;font-weight:600;">Тьютор</span>
+            </div>
+            <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.65;color:#1A1A1A;margin-top:8px;">Tell me in one sentence: what had happened before she opened the window?</div>
+            <sc-if value="{{ retellIdle }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ playRetell }}" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;height:38px;padding:0 16px;background:#4F46E5;color:#fff;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;" style-hover="background:#4338CA;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"></path></svg>
+                Сыграть диалог
+              </button>
+            </sc-if>
+            <sc-if value="{{ retellUser }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:flex-start;gap:8px;margin-top:14px;animation:rise .25s ease;">
+                <span style="width:22px;height:22px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none;">Вы</span>
+                <div style="min-width:0;">
+                  <sc-if value="{{ retellSpeaking }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:inline-flex;align-items:center;gap:3px;height:22px;">
+                      <span style="width:3px;height:14px;background:#4F46E5;border-radius:2px;animation:wv .7s ease-in-out infinite;"></span><span style="width:3px;height:14px;background:#4F46E5;border-radius:2px;animation:wv .7s ease-in-out .12s infinite;"></span><span style="width:3px;height:14px;background:#4F46E5;border-radius:2px;animation:wv .7s ease-in-out .24s infinite;"></span><span style="width:3px;height:14px;background:#818CF8;border-radius:2px;animation:wv .7s ease-in-out .36s infinite;"></span><span style="width:3px;height:14px;background:#818CF8;border-radius:2px;animation:wv .7s ease-in-out .48s infinite;"></span>
+                    </span>
+                  </sc-if>
+                  <sc-if value="{{ retellUserText }}" hint-placeholder-val="{{ false }}">
+                    <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.65;">«The street <span style="background:rgba(251,191,36,.35);border-radius:3px;padding:0 2px;">already went</span> quiet before she opened the window.»</div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ retellFeedback }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;animation:rise .25s ease;">
+                <span style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:'Source Serif 4',serif;flex:none;">f</span>
+                <div style="font-size:13.5px;line-height:1.65;color:#374151;">Почти! Смысл передан верно. Одна поправка: затихла <em>до</em> другого прошедшего события — здесь нужен Past Perfect: <span lang="en" style="font-family:'Source Serif 4',serif;font-weight:600;">the street had already gone quiet</span>. Скажем ещё раз?</div>
+              </div>
+              <button onClick="{{ resetRetell }}" style="margin-top:12px;background:none;border:none;padding:0;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:#6B7280;cursor:pointer;text-decoration:underline;" style-hover="color:#1A1A1A;">Сыграть заново</button>
+            </sc-if>
+          </div>
+        </div>
+        <div style="border-top:1px solid #F3F4F6;padding:22px clamp(16px,3.5vw,30px) 24px;background:#FDFDFC;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Source Serif 4',serif;font-size:14px;color:#D1D5DB;">04</span>
+            <h3 style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;">Повторяйте перед тем, как забыть</h3>
+          </div>
+          <p style="font-size:13.5px;line-height:1.65;color:#6B7280;margin:10px 0 0;max-width:60ch;">Фразы из пересказа попадают в очередь повторений FSRS — открытый алгоритм предсказывает момент, когда вы начнёте забывать, и назначает повторение прямо перед ним.</p>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;">
+            <sc-for list="{{ fsrsSteps }}" as="s" hint-placeholder-count="5">
+              <span style="{{ s.style }}">{{ s.t }}</span>
+              <sc-if value="{{ s.arrow }}" hint-placeholder-val="{{ true }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg></sc-if>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside style="max-width:820px;margin:36px auto 0;background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:24px clamp(18px,3.5vw,30px);display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+    <div style="flex:1 1 320px;min-width:260px;">
+      <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:9px;padding:6px 11px;margin-bottom:9px;text-wrap:pretty;">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;">Попробуйте метод на настоящем тексте</div>
+      <div style="font-size:13.5px;color:#6B7280;margin-top:5px;">Библиотека размечена по уровням A2–C2 — или загрузите свой текст.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 20px;background:#4F46E5;color:#fff;border-radius:10px;font-size:13.5px;font-weight:500;" style-hover="background:#4338CA;color:#fff;">Начать читать бесплатно</a>
+      <span style="font-size:12px;color:#9CA3AF;">Без карты</span>
+    </div>
+    </aside>
+
+    <section aria-label="Видео" style="max-width:68ch;margin:72px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;letter-spacing:-.01em;margin:0;">Метод — в коротком видео</h2>
+      <p style="font-size:14px;line-height:1.65;color:#6B7280;margin:10px 0 0;">90 секунд о том, как чтение с пересказом складывается в один цикл.</p>
+      <div style="position:relative;margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid #E5E7EB;background:#1A1A1A;aspect-ratio:16/9;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <sc-if value="{{ ytIdle }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ ytHasId }}" hint-placeholder-val="{{ false }}">
+            <div aria-hidden="true" style="position:absolute;inset:0;background-image:url({{ ytThumb }});background-size:cover;background-position:center;opacity:.85;"></div>
+          </sc-if>
+          <button onClick="{{ playYt }}" aria-label="Смотреть видео" style="position:absolute;inset:0;width:100%;height:100%;background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">
+            <span style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.35);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#4F46E5" style="margin-left:3px;"><path d="M8 5v14l11-7z"></path></svg>
+            </span>
+            <sc-if value="{{ ytNoId }}" hint-placeholder-val="{{ true }}">
+              <span style="font-family:'Inter',sans-serif;font-size:12.5px;color:rgba(255,255,255,.75);">Место под видео — укажите YouTube ID в настройках</span>
+            </sc-if>
+          </button>
+        </sc-if>
+        <sc-if value="{{ ytPlaying }}" hint-placeholder-val="{{ false }}">
+          <iframe src="{{ ytSrc }}" title="Метод Fluenta за 90 секунд" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen="{{ true }}"></iframe>
+        </sc-if>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#9CA3AF;margin-top:8px;">
+        <span>Видео: метод Fluenta — читать, понимать, пересказывать, повторять</span>
+        <span style="flex:1;"></span>
+        <sc-if value="{{ ytHasId }}" hint-placeholder-val="{{ false }}"><a href="{{ ytWatch }}" target="_blank" rel="noopener" style="font-weight:500;">Смотреть на YouTube →</a></sc-if>
+      </div>
+    </section>
+
+    <section id="compare" style="max-width:820px;margin:72px auto 0;scroll-margin-top:80px;">
+      <div style="max-width:68ch;margin:0 auto;">
+        <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0;">Читалки, тьютор-приложения и Fluenta — сравнение</h2>
+        <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;">Читалки дают вход, но не речь. Разговорные приложения дают речь, но без опоры на текст. Fluenta соединяет цикл целиком.</p>
+      </div>
+      <div id="cmpWrap" style="margin-top:22px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);">
+        <table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:560px;">
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;padding:14px 18px;border-bottom:1px solid #E5E7EB;"> </th>
+              <th scope="col" style="text-align:left;font-weight:600;padding:14px 12px;border-bottom:1px solid #E5E7EB;color:#374151;">Приложения-читалки</th>
+              <th scope="col" style="text-align:left;font-weight:600;padding:14px 12px;border-bottom:1px solid #E5E7EB;color:#374151;">Разговорные ИИ-тьюторы</th>
+              <th scope="col" style="text-align:left;font-weight:600;padding:14px 18px 14px 12px;border-bottom:1px solid #E5E7EB;color:#4F46E5;background:#FAFAFF;">Fluenta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ cmpRows }}" as="r" hint-placeholder-count="5">
+              <tr>
+                <th scope="row" style="text-align:left;font-weight:500;color:#374151;padding:13px 18px;border-bottom:1px solid #F3F4F6;">{{ r.f }}</th>
+                <td style="padding:13px 12px;border-bottom:1px solid #F3F4F6;color:{{ r.aC }};">{{ r.a }}</td>
+                <td style="padding:13px 12px;border-bottom:1px solid #F3F4F6;color:{{ r.bC }};">{{ r.b }}</td>
+                <td style="padding:13px 18px 13px 12px;border-bottom:1px solid #F3F4F6;background:#FAFAFF;color:{{ r.cC }};font-weight:500;">{{ r.c }}</td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:10px;max-width:68ch;margin-left:auto;margin-right:auto;">Сравниваются классы приложений, а не конкретные бренды: возможности внутри класса различаются.</div>
+    </section>
+
+    <section id="levels" style="max-width:820px;margin:72px auto 0;scroll-margin-top:80px;">
+      <div style="max-width:68ch;margin:0 auto;">
+        <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0;">Что читать на каждом уровне: гид A1–C2</h2>
+        <p style="font-family:'Source Serif 4',serif;font-size:17px;line-height:1.75;color:#374151;margin:14px 0 0;text-wrap:pretty;">Правило одно: в тексте должно быть 95–98% знакомых слов. Ниже — с чего начинать на каждом уровне; у каждого уровня есть своя подборка текстов с переводом.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px;">
+        <sc-for list="{{ levels }}" as="lv" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:18px;display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <span style="font-family:'Source Serif 4',serif;font-size:21px;font-weight:700;color:#4F46E5;">{{ lv.code }}</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:.04em;color:#6B7280;background:#F3F4F6;border-radius:6px;padding:2px 8px;">{{ lv.name }}</span>
+            </div>
+            <div style="font-size:13px;line-height:1.6;color:#374151;">{{ lv.desc }}</div>
+            <div style="font-size:12.5px;line-height:1.55;color:#9CA3AF;">{{ lv.read }}</div>
+            <div style="margin-top:auto;padding-top:6px;font-size:13px;font-weight:500;"><a href="{{ lv.href }}" title="{{ lv.linkTitle }}">{{ lv.link }}</a></div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <aside style="max-width:820px;margin:36px auto 0;background:#4F46E5;border-radius:16px;padding:28px clamp(18px,3.5vw,32px);display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+      <div style="flex:1 1 320px;min-width:260px;">
+        <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:#fff;">Уровень определится за 2 минуты</div>
+        <div style="font-size:13.5px;color:#C7D2FE;margin-top:6px;">Короткий тест при регистрации — и библиотека подстроится под вас.</div>
+      </div>
+      <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:42px;padding:0 20px;background:#fff;color:#4F46E5;border-radius:10px;font-size:13.5px;font-weight:600;" style-hover="background:#EEF2FF;color:#4338CA;">Пройти тест уровня</a>
+    </aside>
+
+    <section id="faq" style="max-width:68ch;margin:72px auto 0;scroll-margin-top:80px;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3vw,29px);font-weight:700;letter-spacing:-.01em;margin:0;">Частые вопросы</h2>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">
+        <sc-for list="{{ faqItems }}" as="f" hint-placeholder-count="6">
+          <details style="background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:0 18px;">
+            <summary style="cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 0;font-size:14.5px;font-weight:600;color:#1A1A1A;">
+              <span style="flex:1;">{{ f.q }}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
+            </summary>
+            <div style="font-size:14px;line-height:1.7;color:#374151;padding:0 0 16px;max-width:62ch;">{{ f.a }}</div>
+          </details>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:72px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:600;margin:0;">Читать дальше</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:16px;">
+        <sc-for list="{{ related }}" as="r" hint-placeholder-count="4">
+          <a href="{{ r.href }}" title="{{ r.title }}" style="display:flex;flex-direction:column;gap:7px;background:#fff;border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:16px 18px;color:#1A1A1A;" style-hover="border-color:#C7D2FE;box-shadow:0 4px 14px rgba(26,26,26,.06);color:#1A1A1A;">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">{{ r.kind }}</span>
+            <span style="font-family:'Source Serif 4',serif;font-size:15.5px;font-weight:600;line-height:1.4;">{{ r.t }}</span>
+            <span style="font-size:12px;color:#9CA3AF;">{{ r.slug }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <div style="max-width:68ch;margin:64px auto 0;text-align:center;">
+      <div style="font-size:13px;font-weight:500;color:#4338CA;margin-bottom:10px;">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(22px,3vw,27px);font-weight:700;margin:0;">Начните с одного текста сегодня</h2>
+      <p style="font-size:14px;color:#6B7280;line-height:1.65;margin:10px auto 0;max-width:46ch;">15 минут чтения с пересказом в день — заметный прогресс через месяц.</p>
+      <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:46px;padding:0 26px;background:#4F46E5;color:#fff;border-radius:11px;font-size:14.5px;font-weight:500;margin-top:18px;" style-hover="background:#4338CA;color:#fff;">Начать читать бесплатно</a>
+      <div style="font-size:12.5px;color:#9CA3AF;margin-top:10px;">Без карты · 2 минуты на настройку</div>
+    </div>
+
+    <sc-if value="{{ showPassport }}" hint-placeholder-val="{{ true }}">
+      <details style="max-width:820px;margin:72px auto 0;border:1px dashed #D1D5DB;border-radius:12px;padding:0 18px;background:#FDFDFC;">
+        <summary style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:13px 0;font-size:12.5px;font-weight:600;color:#6B7280;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          SEO-паспорт страницы: meta, slug, hreflang, JSON-LD
+          <span style="flex:1;"></span>
+          <span style="font-size:11px;color:#9CA3AF;font-weight:500;">для разработчика</span>
+        </summary>
+        <div style="padding:4px 0 18px;display:flex;flex-direction:column;gap:12px;">
+          <div style="font-size:12.5px;line-height:1.7;color:#374151;">
+            <div><span style="color:#9CA3AF;">slug:</span> <code style="background:#F3F4F6;border-radius:5px;padding:1px 6px;">/ru/en/kak-vyuchit-anglijskij-po-tekstam</code></div>
+            <div style="margin-top:6px;"><span style="color:#9CA3AF;">title:</span> Как выучить английский по текстам: метод чтения с пересказом — Fluenta</div>
+            <div><span style="color:#9CA3AF;">description:</span> Пошаговый метод: читайте тексты своего уровня, понимайте грамматику в контексте, пересказывайте вслух ИИ-тьютору и запоминайте с FSRS. Живое демо на странице.</div>
+            <div style="margin-top:6px;"><span style="color:#9CA3AF;">hreflang:</span> 35 языковых версий по шаблону <code style="background:#F3F4F6;border-radius:5px;padding:1px 6px;">/{native}/{target}/…</code> + x-default</div>
+          </div>
+          <div style="position:relative;">
+            <pre style="margin:0;background:#1A1A1A;color:#D1D5DB;border-radius:10px;padding:14px 16px;font-size:11px;line-height:1.55;overflow-x:auto;max-height:260px;">{{ jsonLd }}</pre>
+            <button onClick="{{ copyJsonLd }}" style="position:absolute;top:10px;right:10px;background:#374151;color:#fff;border:none;border-radius:7px;padding:5px 10px;font-family:'Inter',sans-serif;font-size:11px;font-weight:500;cursor:pointer;" style-hover="background:#4B5563;">{{ copyLabel }}</button>
+          </div>
+        </div>
+      </details>
+    </sc-if>
+
+    <section aria-label="От автора" style="max-width:68ch;margin:64px auto 0;">
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:24px clamp(18px,3.5vw,28px);">
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+          <div style="width:64px;height:64px;flex:none;border-radius:50%;overflow:hidden;border:1px solid #E5E7EB;">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-portrait" shape="circle" fit="cover" placeholder="Фото" hint-size="64px,64px"></x-import>
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;">От автора</div>
+            <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;margin-top:5px;">Евгений Мойкин</div>
+            <div style="font-size:12.5px;color:#9CA3AF;margin-top:2px;">Создатель fluenta.wiki · независимый проект, один человек</div>
+          </div>
+        </div>
+        <p style="font-family:'Source Serif 4',serif;font-size:16px;line-height:1.75;color:#374151;margin:16px 0 0;text-wrap:pretty;">Я не придумал этот метод — я так выучил английский сам: статьи, документация, потом книги. Читать научился быстро, а говорить — нет, пока не начал пересказывать прочитанное вслух. Fluenta — инструмент, который я делаю для себя двухлетней давности: без инвесторов, контент-ферм и погони за стриками.</p>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;">
+          <span style="font-family:'Source Serif 4',serif;font-style:italic;font-size:15px;color:#6B7280;">— Евгений</span>
+          <span style="flex:1;"></span>
+          <a href="Fluenta About.dc.html" style="font-size:13px;font-weight:500;">Читать историю проекта →</a>
+        </div>
+      </div>
+    </section>
+
+    <footer style="max-width:820px;margin:64px auto 0;padding:28px 0 110px;border-top:1px solid #ECECE8;">
+      <div style="display:flex;gap:32px;flex-wrap:wrap;">
+        <div style="flex:1 1 220px;min-width:200px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="width:22px;height:22px;border-radius:7px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;font-family:'Source Serif 4',serif;">f</span>
+            <span style="font-family:'Source Serif 4',serif;font-size:15px;font-weight:600;">fluenta.wiki</span>
+          </div>
+          <div style="font-size:12.5px;color:#9CA3AF;line-height:1.6;margin-top:8px;">Учите язык через чтение и пересказ. Независимый проект Евгения Мойкина.</div>
+        </div>
+        <div style="flex:0 1 auto;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">Продукт</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px;font-size:13px;">
+            <a href="Fluenta Library v2.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Библиотека</a>
+            <a href="Fluenta Tutor.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Голосовой тьютор</a>
+            <a href="Fluenta Pricing.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Тарифы</a>
+          </div>
+        </div>
+        <div style="flex:0 1 auto;">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#9CA3AF;">Учить английский</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px;font-size:13px;">
+            <a href="Fluenta SEO Texts B1.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Тексты с переводом (B1)</a>
+            <a href="Fluenta SEO Grammar.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Past Perfect vs Past Simple</a>
+            <a href="Fluenta About.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">О проекте</a>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#9CA3AF;margin-top:24px;">© 2026 Fluenta · fluenta.wiki</div>
+    </footer>
+  </main>
+
+  <sc-if value="{{ tipShow }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:{{ tipX }}px;top:{{ tipY }}px;transform:translate(-50%,-108%);z-index:90;background:#1A1A1A;color:#fff;border-radius:10px;padding:8px 12px;max-width:250px;box-shadow:0 10px 26px rgba(26,26,26,.24);pointer-events:none;">
+      <div style="display:flex;align-items:baseline;gap:8px;"><span style="font-family:'Source Serif 4',serif;font-size:14.5px;font-weight:600;">{{ tipWord }}</span><span style="font-size:13px;color:#D1D5DB;">{{ tipT }}</span></div>
+      <sc-if value="{{ tipNote }}" hint-placeholder-val="{{ false }}"><div style="font-size:11.5px;color:#9CA3AF;margin-top:4px;line-height:1.45;">{{ tipNote }}</div></sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ stickyShow }}" hint-placeholder-val="{{ false }}">
+    <div id="stickyCta" style="position:fixed;left:10px;right:10px;bottom:10px;z-index:70;display:none;align-items:center;gap:10px;background:rgba(255,255,255,.98);border:1px solid #E5E7EB;border-radius:14px;box-shadow:0 10px 30px rgba(26,26,26,.14);padding:10px 12px;animation:rise .3s ease;">
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:12.5px;font-weight:600;">Читать с переводом бесплатно</div>
+        <div style="font-size:11px;color:#9CA3AF;">Без карты · 35 языков</div>
+      </div>
+      <a href="Fluenta Onboarding.dc.html" style="display:inline-flex;align-items:center;height:36px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:12.5px;font-weight:500;flex:none;" style-hover="background:#4338CA;color:#fff;">Начать</a>
+      <button onClick="{{ dismissSticky }}" aria-label="Скрыть" style="width:28px;height:28px;border:none;background:none;color:#9CA3AF;font-size:16px;cursor:pointer;flex:none;padding:0;" style-hover="color:#1A1A1A;">×</button>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;youtubeId&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Видео&quot;},
+  &quot;stickyCta&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Поведение&quot;},
+  &quot;showSeoPassport&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Поведение&quot;}
+}">
+class Component extends DCLogic {
+  state = { native: 'ru', target: 'en', tip: null, pairNote: null, ytPlaying: false, retell: 0, copied: false, stickyDismissed: false, scrolled: false };
+
+  TOKENS = [
+    { w: 'When', t: 'когда' }, { w: 'she', t: 'она' }, { w: 'opened', t: 'открыла', note: 'open + -ed, Past Simple' },
+    { w: 'the', t: 'артикль — не переводится' }, { w: 'window,', t: 'окно' }, { w: 'the', t: 'артикль — не переводится' },
+    { w: 'street', t: 'улица' }, { w: 'had', t: '(вспом. глагол)', hl: 1 }, { w: 'already', t: 'уже', hl: 1 },
+    { w: 'gone', t: 'затихла (стала)', hl: 1, note: 'go → gone, III форма' }, { w: 'quiet.', t: 'тихой', hl: 1 }
+  ];
+
+  NATIVE = [
+    { code: 'ru', name: 'Русский' }, { code: 'uk', name: 'Українська' }, { code: 'en', name: 'English' }, { code: 'es', name: 'Español' }, { code: 'de', name: 'Deutsch' },
+    { code: 'fr', name: 'Français' }, { code: 'it', name: 'Italiano' }, { code: 'pt', name: 'Português' }, { code: 'pl', name: 'Polski' }, { code: 'tr', name: 'Türkçe' }
+  ];
+  TARGET = [
+    { code: 'en', name: 'Английский' }, { code: 'es', name: 'Испанский' }, { code: 'de', name: 'Немецкий' }, { code: 'fr', name: 'Французский' }, { code: 'it', name: 'Итальянский' },
+    { code: 'pt', name: 'Португальский' }, { code: 'nl', name: 'Нидерландский' }, { code: 'ja', name: 'Японский' }, { code: 'ko', name: 'Корейский' }, { code: 'zh', name: 'Китайский' }
+  ];
+
+  componentDidMount() {
+    this._onScroll = () => {
+      if (this.state.tip) this.setState({ tip: null });
+      const sc = window.scrollY > 500;
+      if (sc !== this.state.scrolled) this.setState({ scrolled: sc });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onDocDown = (e) => { if (this.state.tip && !(e.target.closest && e.target.closest('[data-demo-words]'))) this.setState({ tip: null }); };
+    document.addEventListener('pointerdown', this._onDocDown, true);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    document.removeEventListener('pointerdown', this._onDocDown, true);
+    (this._timers || []).forEach(clearTimeout);
+  }
+
+  pairChange(kind, code) {
+    const s = { [kind]: code, pairNote: null };
+    this.setState(s, () => {
+      const n = this.state.native, t = this.state.target;
+      this.setState({ pairNote: 'Каждая пара — отдельный URL: /' + n + '/' + t + '/kak-vyuchit-… (hreflang свяжет 35 версий)' });
+      clearTimeout(this._noteT);
+      this._noteT = setTimeout(() => this.setState({ pairNote: null }), 3200);
+    });
+  }
+
+  playRetell() {
+    this.setState({ retell: 1 });
+    this._timers = [
+      setTimeout(() => this.setState({ retell: 2 }), 1500),
+      setTimeout(() => this.setState({ retell: 3 }), 2600)
+    ];
+  }
+
+  jsonLd() {
+    const vid = this.props.youtubeId || 'VIDEO_ID';
+    const faq = this.faqData().map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }));
+    return JSON.stringify([
+      { '@context': 'https://schema.org', '@type': 'Article', headline: 'Как выучить английский по текстам: метод чтения с пересказом',
+        inLanguage: 'ru', dateModified: '2026-07-20',
+        author: { '@type': 'Person', name: 'Yevgeniy Moykin', url: 'https://fluenta.wiki/about' },
+        publisher: { '@type': 'Organization', name: 'Fluenta', url: 'https://fluenta.wiki' },
+        mainEntityOfPage: 'https://fluenta.wiki/ru/en/kak-vyuchit-anglijskij-po-tekstam' },
+      { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://fluenta.wiki/ru' },
+        { '@type': 'ListItem', position: 2, name: 'Английский', item: 'https://fluenta.wiki/ru/en' },
+        { '@type': 'ListItem', position: 3, name: 'Как выучить английский по текстам' } ] },
+      { '@context': 'https://schema.org', '@type': 'VideoObject', name: 'Метод Fluenta за 90 секунд: чтение с пересказом',
+        description: 'Как складывается цикл: читать → понимать почему → пересказывать → повторять.',
+        thumbnailUrl: 'https://i.ytimg.com/vi/' + vid + '/maxresdefault.jpg', uploadDate: '2026-07-20',
+        embedUrl: 'https://www.youtube-nocookie.com/embed/' + vid, contentUrl: 'https://www.youtube.com/watch?v=' + vid },
+      { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq }
+    ], null, 2);
+  }
+
+  faqData() {
+    return [
+      { q: 'Сколько времени нужно, чтобы выучить английский по текстам?', a: 'При 15–20 минутах в день переход на следующий уровень CEFR занимает обычно 4–8 месяцев: чтение с пересказом покрывает и словарь, и грамматику, и разговорную практику. Важна регулярность, а не длина сессий.' },
+      { q: 'Можно ли выучить английский только чтением, без учебника грамматики?', a: 'Да, если грамматика объясняется в контексте. Когда вы видите, почему в конкретной фразе стоит именно эта форма, правило запоминается вместе с живым примером — это эффективнее, чем таблицы. Для системности полезно иногда открывать разборы конкретных тем.' },
+      { q: 'С какого уровня можно учить английский по текстам?', a: 'С A2 комфортно почти всем: короткие адаптированные рассказы с 95%+ знакомых слов. На A1 начинайте с диалогов и текстов из 3–5 предложений с пословным переводом.' },
+      { q: 'Что читать новичку на английском?', a: 'Адаптированные рассказы (graded readers) уровня A2–B1, короткий научпоп и тревел-заметки: сюжет держит внимание, а лексика повторяется. Подборка с переводом и разбором — на странице текстов для B1.' },
+      { q: 'Как запоминать новые слова из текстов?', a: 'Не выписывать списками, а повторять предложениями: слово без контекста — это словарь, предложение — это речь. Fluenta ставит фразы в очередь FSRS и показывает их ровно перед тем, как вы начнёте забывать.' },
+      { q: 'Чем Fluenta отличается от читалок вроде LingQ и тренажёров вроде Duolingo?', a: 'Читалки останавливаются на переводе слова, тренажёры — на упражнениях. Fluenta замыкает цикл: перевод с объяснением «почему так», пересказ вслух голосовому тьютору и повторения FSRS по вашей личной истории слов.' }
+    ];
+  }
+
+  renderVals() {
+    const baseStyle = 'cursor:pointer;border-bottom:1px dashed #C7CBD4;border-radius:3px;';
+    const hlStyle = 'cursor:pointer;background:rgba(251,191,36,.35);border-radius:3px;padding:0 2px;';
+    const tip = this.state.tip;
+    const yt = this.props.youtubeId ?? '';
+    const r = this.state.retell;
+    const fsrsRaw = ['сегодня', 'через 1 день', '3 дня', '8 дней', '21 день'];
+    return {
+      nativeLangs: this.NATIVE, targetLangs: this.TARGET,
+      ytHasId: !!yt, ytNoId: !yt, ytPlaying: !!yt && this.state.ytPlaying, ytIdle: !(!!yt && this.state.ytPlaying),
+      ytThumb: 'https://i.ytimg.com/vi/' + yt + '/maxresdefault.jpg',
+      ytSrc: 'https://www.youtube-nocookie.com/embed/' + yt + '?autoplay=1&rel=0',
+      ytWatch: 'https://www.youtube.com/watch?v=' + yt,
+      playYt: () => { if (yt) this.setState({ ytPlaying: true }); },
+      nativeSel: this.state.native, targetSel: this.state.target,
+      onNative: (e) => this.pairChange('native', e.target.value),
+      onTarget: (e) => this.pairChange('target', e.target.value),
+      pairNote: this.state.pairNote,
+      demoWords: this.TOKENS.map(tok => ({
+        w: tok.w, style: tok.hl ? hlStyle : baseStyle,
+        enter: (e) => this.showTip(tok, e), leave: () => this.setState({ tip: null }), click: (e) => this.showTip(tok, e)
+      })),
+      tipShow: !!tip, tipX: tip ? tip.x : 0, tipY: tip ? tip.y : 0,
+      tipWord: tip ? tip.w : '', tipT: tip ? tip.t : '', tipNote: tip ? tip.note : null,
+      retellIdle: r === 0, retellUser: r >= 1, retellSpeaking: r === 1, retellUserText: r >= 2, retellFeedback: r >= 3,
+      playRetell: () => this.playRetell(), resetRetell: () => this.setState({ retell: 0 }),
+      fsrsSteps: fsrsRaw.map((t, i) => ({
+        t, arrow: i < fsrsRaw.length - 1,
+        style: 'font-size:12.5px;font-weight:600;color:' + (i === 0 ? '#fff;background:#4F46E5;' : '#374151;background:#fff;border:1px solid #E5E7EB;') + 'border-radius:999px;padding:6px 12px;white-space:nowrap;'
+      })),
+      cmpRows: [
+        { f: 'Настоящие тексты по уровню', a: '✓', aC: '#10B981', b: '—', bC: '#D1D5DB', c: '✓', cC: '#10B981' },
+        { f: 'Объяснение «почему такая форма»', a: 'только перевод', aC: '#9CA3AF', b: '—', bC: '#D1D5DB', c: '✓ грамматика в контексте', cC: '#10B981' },
+        { f: 'Разговорная практика вслух', a: '—', aC: '#D1D5DB', b: '✓', bC: '#10B981', c: '✓ пересказ прочитанного', cC: '#10B981' },
+        { f: 'Интервальные повторения', a: 'карточки слов', aC: '#9CA3AF', b: '—', bC: '#D1D5DB', c: '✓ FSRS, предложениями', cC: '#10B981' },
+        { f: 'Связь чтения и речи в один цикл', a: '—', aC: '#D1D5DB', b: '—', bC: '#D1D5DB', c: '✓', cC: '#10B981' }
+      ],
+      levels: [
+        { code: 'A1', name: 'Beginner', desc: 'Диалоги и тексты из 3–5 предложений, пословный перевод.', read: 'Приветствия, меню, короткие сообщения.', href: '#', link: 'Тексты для A1 →', linkTitle: 'слаг: /ru/en/teksty-a1 — страница в работе' },
+        { code: 'A2', name: 'Elementary', desc: 'Адаптированные рассказы до 200 слов, простое прошедшее.', read: 'Бытовые истории, письма, простые описания.', href: '#', link: 'Тексты для A2 →', linkTitle: 'слаг: /ru/en/teksty-a2 — страница в работе' },
+        { code: 'B1', name: 'Intermediate', desc: 'Короткие рассказы и научпоп 150–400 слов, все прошедшие времена.', read: 'Истории, путешествия, психология.', href: 'Fluenta SEO Texts B1.dc.html', link: 'Тексты для B1 с переводом →', linkTitle: 'Тексты на английском с переводом — B1' },
+        { code: 'B2', name: 'Upper-Int.', desc: 'Неадаптированные статьи и эссе, сложные конструкции.', read: 'Журналистика, эссе, современные рассказы.', href: '#', link: 'Тексты для B2 →', linkTitle: 'слаг: /ru/en/teksty-b2 — страница в работе' },
+        { code: 'C1', name: 'Advanced', desc: 'Литература и лонгриды без адаптации.', read: 'Романы, The Atlantic-стиль, публицистика.', href: '#', link: 'Тексты для C1 →', linkTitle: 'слаг: /ru/en/teksty-c1 — страница в работе' },
+        { code: 'C2', name: 'Proficiency', desc: 'Любые тексты; работа над нюансами и стилем.', read: 'Классика, поэзия, профессиональные тексты.', href: '#', link: 'Тексты для C2 →', linkTitle: 'слаг: /ru/en/teksty-c2 — страница в работе' }
+      ],
+      faqItems: this.faqData(),
+      related: [
+        { kind: 'Тексты', t: 'Тексты на английском с переводом — B1', slug: '/ru/en/teksty-b1', href: 'Fluenta SEO Texts B1.dc.html', title: 'Открыть' },
+        { kind: 'Грамматика', t: 'Past Perfect и Past Simple: в чём разница', slug: '/ru/en/grammar/past-perfect-vs-past-simple', href: 'Fluenta SEO Grammar.dc.html', title: 'Открыть' },
+        { kind: 'Грамматика', t: 'Present Perfect и Past Simple: когда какое', slug: '/ru/en/grammar/present-perfect-vs-past-simple', href: '#', title: 'страница в работе' },
+        { kind: 'Метод', t: 'Пересказ как техника: почему он работает', slug: '/ru/method/retelling', href: '#', title: 'страница в работе' }
+      ],
+      jsonLd: this.jsonLd(),
+      copyJsonLd: () => {
+        navigator.clipboard.writeText(this.jsonLd()).then(() => {
+          this.setState({ copied: true });
+          setTimeout(() => this.setState({ copied: false }), 1600);
+        });
+      },
+      copyLabel: this.state.copied ? 'Скопировано ✓' : 'Копировать',
+      showPassport: this.props.showSeoPassport ?? true,
+      stickyShow: (this.props.stickyCta ?? true) && this.state.scrolled && !this.state.stickyDismissed,
+      dismissSticky: () => this.setState({ stickyDismissed: true })
+    };
+  }
+
+  showTip(tok, e) {
+    const rct = e.currentTarget.getBoundingClientRect();
+    this.setState({ tip: { w: tok.w.replace(/[.,?!]$/, ''), t: tok.t, note: tok.note || null, x: Math.round(rct.left + rct.width / 2), y: Math.round(rct.top) } });
+  }
+}
+</script>
+</body>
+</html>

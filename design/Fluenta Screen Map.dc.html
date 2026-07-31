@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#F4F4F1;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.sm-el{display:block;text-decoration:none;color:inherit;transition:transform .14s,box-shadow .14s,opacity .18s}
+.sm-el:hover{transform:translateY(-3px);color:inherit}
+.sm-el:hover .sm-frame{box-shadow:0 12px 26px rgba(26,26,26,.13)}
+.sm-el:hover .sm-name{color:#4F46E5}
+.sm-frame{background:#fff;border-radius:10px;overflow:hidden;position:relative;transition:box-shadow .14s}
+.sm-dim{opacity:.3;filter:saturate(.35)}
+.sm-row{display:flex;flex-wrap:nowrap;align-items:flex-start;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.sm-row::-webkit-scrollbar{height:7px}
+.sm-row::-webkit-scrollbar-thumb{background:#DCDCD6;border-radius:4px}
+</style>
+</helmet>
+<div data-screen-label="Screen Map" style="min-height:100vh;padding:24px clamp(14px,3vw,30px) 56px">
+<div style="max-width:1720px;margin:0 auto;animation:fadein .2s ease-out">
+
+  <div style="display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+    <div>
+      <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9CA3AF;margin-bottom:6px">fluenta.wiki · storyboard</div>
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(24px,3vw,31px);font-weight:700;letter-spacing:-.015em;margin:0">Карта экранов и состояний</h1>
+      <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:9px;padding:6px 11px;margin-top:8px;text-wrap:pretty">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      <div style="font-size:13px;color:#6B7280;margin-top:6px">{{ totalLabel }} — один элемент = один экран в одном состоянии, в порядке прохождения. Клик открывает настоящий экран.</div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:nowrap">
+      <a href="Fluenta Visual Map.dc.html" style="border:1px solid #C7D2FE;background:#EEF2FF;border-radius:9px;padding:9px 14px;font-size:12.5px;font-weight:600;color:#4338CA" style-hover="border-color:#A5B4FC;color:#4338CA">Живые макеты →</a>
+      <a href="Fluenta Flow Map.dc.html" style="border:1px solid #E5E7EB;background:#fff;border-radius:9px;padding:9px 14px;font-size:12.5px;font-weight:600;color:#374151" style-hover="border-color:#C7D2FE;color:#4338CA">Карта путей</a>
+      <a href="Fluenta Admin.dc.html" style="border:1px solid #E5E7EB;background:#fff;border-radius:9px;padding:9px 14px;font-size:12.5px;font-weight:600;color:#374151" style-hover="border-color:#C7D2FE;color:#4338CA">Админка</a>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:11px 14px;margin-bottom:20px;position:sticky;top:0;z-index:20">
+    <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Сценарий</span>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <sc-for list="{{ pathChips }}" as="p" hint-placeholder-count="5">
+        <button onClick="{{ p.on }}" style="border:1px solid {{ p.bd }};background:{{ p.bg }};color:{{ p.cl }};font-weight:{{ p.fw }};border-radius:999px;padding:6px 13px;font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ p.label }}</button>
+      </sc-for>
+    </div>
+    <span style="width:1px;height:22px;background:#EFEFEB"></span>
+    <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF">Размер</span>
+    <div style="display:flex;gap:6px">
+      <sc-for list="{{ zoomChips }}" as="z" hint-placeholder-count="3">
+        <button onClick="{{ z.on }}" style="border:1px solid {{ z.bd }};background:{{ z.bg }};color:{{ z.cl }};font-weight:{{ z.fw }};border-radius:8px;padding:6px 11px;font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ z.label }}</button>
+      </sc-for>
+    </div>
+    <span style="margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:11.5px;color:#6B7280">
+      <sc-for list="{{ legend }}" as="l" hint-placeholder-count="6">
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:3px;background:{{ l.color }}"></span>{{ l.label }}</span>
+      </sc-for>
+    </span>
+  </div>
+
+  <sc-for list="{{ stages }}" as="st" hint-placeholder-count="7">
+    <div class="{{ st.dim }}" style="margin-bottom:26px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="width:25px;height:25px;border-radius:8px;background:{{ st.nBg }};color:{{ st.nCl }};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">{{ st.n }}</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:700;letter-spacing:-.01em">{{ st.stage }}</span>
+        <span style="font-size:12px;font-weight:600;color:{{ st.reachCl }};background:{{ st.reachBg }};border:1px solid {{ st.reachBd }};border-radius:6px;padding:2px 8px">{{ st.reach }}</span>
+        <span style="font-size:12.5px;color:#9CA3AF">{{ st.count }}</span>
+        <span style="flex:1;height:1px;background:#E4E4DF"></span>
+      </div>
+      <div class="sm-row">
+        <sc-for list="{{ st.nodes }}" as="n" hint-placeholder-count="5">
+          <a href="{{ n.href }}" class="sm-el" style="width:{{ n.w }};flex:none">
+            <div class="sm-frame" style="height:{{ n.frameH }};border:1px solid {{ n.frameBd }};border-top:3px solid {{ n.accent }}">
+              <div style="height:15px;background:#FAFAF8;border-bottom:1px solid #F2F2EF;display:flex;align-items:center;gap:4px;padding:0 6px">
+                <span style="width:7px;height:7px;border-radius:2px;background:#C7C5EF;flex:none"></span>
+                <span style="height:3px;width:26px;background:#E9E9E4;border-radius:2px"></span>
+                <span style="margin-left:auto;height:3px;width:12px;background:#E9E9E4;border-radius:2px"></span>
+              </div>
+              <div style="padding:7px;display:flex;flex-direction:column;gap:4px;height:calc(100% - 15px);box-sizing:border-box;justify-content:space-evenly">
+                <sc-for list="{{ n.parts }}" as="p" hint-placeholder-count="4">
+                  <sc-if value="{{ p.isRow }}" hint-placeholder-val="{{ false }}">
+                    <span style="display:flex;gap:4px;align-items:flex-end">
+                      <sc-for list="{{ p.sub }}" as="s" hint-placeholder-count="2">
+                        <span style="display:block;height:{{ s.h }};width:{{ s.w }};background:{{ s.bg }};border-radius:{{ s.r }}"></span>
+                      </sc-for>
+                    </span>
+                  </sc-if>
+                  <sc-if value="{{ p.isSolo }}" hint-placeholder-val="{{ true }}">
+                    <span style="display:flex;align-items:center;justify-content:{{ p.just }};height:{{ p.h }};width:{{ p.w }};background:{{ p.bg }};border:{{ p.bd }};border-radius:{{ p.r }};font-size:{{ p.fs }};font-weight:600;color:{{ p.glyphCl }};align-self:{{ p.self }};line-height:1">{{ p.glyph }}</span>
+                  </sc-if>
+                </sc-for>
+              </div>
+              <sc-if value="{{ n.hasOverlay }}" hint-placeholder-val="{{ false }}">
+                <span style="position:absolute;inset:0;background:rgba(26,26,26,.34);display:flex;align-items:center;justify-content:center;padding:9px">
+                  <span style="background:#fff;border-radius:8px;box-shadow:0 6px 16px rgba(0,0,0,.2);padding:8px 9px;width:100%;display:flex;flex-direction:column;gap:5px;align-items:center">
+                    <span style="width:20px;height:20px;border-radius:50%;background:{{ n.ovBg }};color:{{ n.ovCl }};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700">{{ n.ovGlyph }}</span>
+                    <span style="font-size:8.5px;font-weight:600;color:#374151;text-align:center;line-height:1.3">{{ n.ovText }}</span>
+                    <span style="height:8px;width:60%;border-radius:3px;background:{{ n.ovBar }}"></span>
+                  </span>
+                </span>
+              </sc-if>
+              <sc-if value="{{ n.hasToast }}" hint-placeholder-val="{{ false }}">
+                <span style="position:absolute;left:8px;right:8px;bottom:7px;background:#1A1A1A;border-radius:5px;height:13px;display:flex;align-items:center;padding:0 5px">
+                  <span style="height:3px;width:58%;background:rgba(255,255,255,.75);border-radius:2px"></span>
+                </span>
+              </sc-if>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:6px;margin-top:8px;min-height:33px">
+              <span style="font-size:11px;font-weight:600;color:#6B7280;font-variant-numeric:tabular-nums;flex:none;padding-top:1px">{{ n.id }}</span>
+              <span class="sm-name" style="font-size:12.5px;font-weight:600;line-height:1.3;min-width:0;transition:color .14s">{{ n.name }}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:4px">
+              <span style="font-size:10px;font-weight:600;color:{{ n.tagCl }};background:{{ n.tagBg }};border:1px solid {{ n.tagBd }};border-radius:4px;padding:1.5px 5px">{{ n.tag }}</span>
+              <sc-if value="{{ n.hasFlag }}" hint-placeholder-val="{{ false }}">
+                <span title="{{ n.note }}" style="font-size:10px;font-weight:600;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:4px;padding:1.5px 5px">{{ n.flag }}</span>
+              </sc-if>
+            </div>
+            <sc-if value="{{ n.hasNote }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:10.5px;line-height:1.4;color:#B45309;margin-top:5px;max-width:{{ n.w }}">{{ n.note }}</div>
+            </sc-if>
+          </a>
+          <sc-if value="{{ n.hasArrow }}" hint-placeholder-val="{{ true }}">
+            <span style="flex:none;display:flex;align-items:center;height:{{ n.frameH }};color:#C3C6CC;padding:0 1px">
+              <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1 6h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path><path d="M8.5 2.5L12 6l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </span>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+
+  <div style="background:#fff;border:1px solid #E5E7EB;border-radius:13px;padding:16px 18px;font-size:12.5px;line-height:1.6;color:#6B7280;max-width:900px">
+    Ветки — слева направо, стадии — сверху вниз; клик открывает настоящий экран. <b style="color:#0F766E">Бирюзовое «новое»</b> — карьерный контур и онбординг за 3 минуты. <b style="color:#B91C1C">Красное</b> — где теряем людей: <b style="color:#B91C1C">5.2 запрос микрофона</b> и <b style="color:#B91C1C">8.6 отклонённая карта</b>. <b style="color:#6B7280">«Удалено»</b> — архивы 9.1–9.2: онбординг v1 и библиотека v1 убраны, все ссылки переведены на действующие версии. Янтарные подписи — что улучшить следующим шагом. Ссылайтесь на элементы по номеру.
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1720,&quot;height&quot;:1100}}">
+class Component extends DCLogic {
+  state = { path: 'all', zoom: 'm' };
+  kinds() { return {
+    content: ['контент', '#4338CA', '#EEF2FF', '#E0E7FF', '#4F46E5'],
+    ok: ['успех', '#047857', '#ECFDF5', '#D1FAE5', '#10B981'],
+    empty: ['пусто', '#4B5563', '#F6F6F3', '#E5E7EB', '#C9C9C2'],
+    load: ['загрузка', '#4338CA', '#F5F5FF', '#E0E7FF', '#A5B4FC'],
+    err: ['ошибка', '#B91C1C', '#FEF2F2', '#FECACA', '#EF4444'],
+    off: ['офлайн', '#92400E', '#FFFBEB', '#FDE68A', '#F59E0B'],
+    lock: ['лимит', '#9A3412', '#FFF7ED', '#FED7AA', '#FB923C'],
+    new: ['новое', '#0F766E', '#F0FDFA', '#99F6E4', '#14B8A6'],
+    del: ['удалено', '#6B7280', '#F6F6F3', '#D1D5DB', '#9CA3AF']
+  }; }
+  // part builders
+  ln(w, c) { return { h: '4px', w: w || '100%', bg: c || '#EDEDE8', r: '2px' }; }
+  bl(h, w, c) { return { h: h, w: w || '100%', bg: c || '#EDEDE8', r: '4px' }; }
+  gl(g, cl, bg, h) { return { h: h || '22px', w: h || '22px', bg: bg || '#EEF2FF', r: '50%', glyph: g, glyphCl: cl || '#4F46E5', center: true, self: 'center', fs: '11px' }; }
+  dash(h) { return { h: h, w: '100%', bg: 'transparent', bd: '1px dashed #D8D8D0', r: '5px' }; }
+  row(sub) { return { row: sub }; }
+  data() { return [
+    { stage: 'Вход', reach: '100%', tone: 'ok', paths: ['all', 'new', 'pay'], nodes: [
+      { id: '1.1', name: 'Лендинг', tag: 'content', href: 'Fluenta Landing.dc.html', parts: [this.bl('16px', '70%', '#DEDDF7'), this.ln('90%'), this.ln('62%'), this.row([this.bl('11px', '38%', '#C7C5EF'), this.bl('11px', '26%')])] },
+      { id: '1.2', name: 'Демо-текст без входа', tag: 'content', href: 'Fluenta Landing.dc.html', parts: [this.ln('96%'), this.ln('88%'), this.ln('92%', '#C7C5EF'), this.ln('54%'), this.bl('10px', '44%', '#DEDDF7')] },
+      { id: '1.3', name: 'Регистрация — пусто', tag: 'empty', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('40%'), this.dash('13px'), this.dash('13px'), this.bl('11px', '100%', '#DEDDF7')] },
+      { id: '1.4', name: 'E-mail уже занят', tag: 'err', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('40%'), { h: '13px', w: '100%', bg: '#FEF2F2', bd: '1px solid #FECACA', r: '4px' }, this.ln('66%', '#FCA5A5'), this.bl('11px', '100%', '#EDEDE8')] },
+      { id: '1.5', name: 'Отправка', tag: 'load', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('40%'), this.bl('13px', '100%', '#F1F1FB'), this.gl('◴', '#4F46E5', '#EEF2FF')] },
+      { id: '1.6', name: 'Аккаунт создан', tag: 'ok', href: 'Fluenta Onboarding.dc.html', parts: [this.gl('✓', '#047857', '#ECFDF5', '26px'), this.ln('56%'), this.bl('11px', '70%', '#C7C5EF')] }
+    ] },
+    { stage: 'Онбординг', reach: '79%', tone: 'warn', paths: ['all', 'new'], nodes: [
+      { id: '2.1', name: 'Пара не выбрана', tag: 'empty', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('52%'), this.row([this.dash('20px'), this.dash('20px')]), this.row([this.dash('20px'), this.dash('20px')])] },
+      { id: '2.2', name: 'EN → RU выбрано', tag: 'ok', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('52%'), this.row([this.bl('20px', '50%', '#C7C5EF'), this.bl('20px', '50%')]), this.row([this.bl('20px', '50%'), this.bl('20px', '50%')])] },
+      { id: '2.3', name: 'Тест уровня 1/12', tag: 'load', href: 'Fluenta Onboarding.dc.html', parts: [this.row([this.bl('4px', '18%', '#4F46E5'), this.bl('4px', '82%')]), this.ln('84%'), this.bl('11px', '100%', '#F1F1FB'), this.bl('11px', '100%', '#F1F1FB')] },
+      { id: '2.4', name: 'Брошен на 4-м вопросе', tag: 'err', href: 'Fluenta Onboarding.dc.html', flag: '−21%', note: '12 вопросов без индикатора конца. Сократить до 6 адаптивных.', parts: [this.row([this.bl('4px', '34%', '#F59E0B'), this.bl('4px', '66%')]), this.ln('84%'), this.bl('11px', '100%', '#FFFBEB'), this.ln('30%', '#FCD34D')] },
+      { id: '2.5', name: 'Уровень B2', tag: 'ok', href: 'Fluenta Progress.dc.html', parts: [this.gl('B2', '#4338CA', '#EEF2FF', '26px'), this.ln('62%'), this.row([this.bl('5px', '62%', '#4F46E5'), this.bl('5px', '38%')])] },
+      { id: '2.6', name: 'Цель на неделю', tag: 'ok', href: 'Fluenta Profile.dc.html', parts: [this.ln('44%'), this.row([this.bl('18px', '33%'), this.bl('18px', '33%', '#C7C5EF'), this.bl('18px', '33%')]), this.bl('11px', '100%', '#DEDDF7')] }
+    ] },
+    { stage: 'Каталог', reach: '59%', tone: 'ok', paths: ['all', 'new', 'return', 'pay', 'offline'], nodes: [
+      { id: '3.1', name: 'Скелетоны', tag: 'load', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('26px', '50%', '#F0F0EA'), this.bl('26px', '50%', '#F0F0EA')]), this.row([this.bl('26px', '50%', '#F0F0EA'), this.bl('26px', '50%', '#F0F0EA')])] },
+      { id: '3.2', name: 'Каталог с обложками', tag: 'content', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('9px', '30%', '#C7C5EF'), this.bl('9px', '22%')]), this.row([this.bl('24px', '50%', '#A5B4FC'), this.bl('24px', '50%', '#5EEAD4')]), this.row([this.bl('24px', '50%', '#FCD34D'), this.bl('24px', '50%', '#FDA4AF')])] },
+      { id: '3.3', name: 'Фильтры пусты', tag: 'empty', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('9px', '30%', '#C7C5EF'), this.bl('9px', '22%')]), this.dash('34px'), this.ln('46%')] },
+      { id: '3.4', name: 'Офлайн-кэш', tag: 'off', href: 'Fluenta Library v2.dc.html', parts: [{ h: '12px', w: '100%', bg: '#FFFBEB', bd: '1px solid #FDE68A', r: '4px' }, this.row([this.bl('22px', '50%', '#E4E1D6'), this.bl('22px', '50%', '#E4E1D6')]), this.ln('60%')] },
+      { id: '3.5', name: 'Дайджест недели', tag: 'content', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('8px', '38%', '#FCD34D'), this.bl('8px', '20%')]), this.row([this.bl('28px', '46%', '#5EEAD4'), this.bl('28px', '46%', '#A5B4FC')]), this.ln('70%')] },
+      { id: '3.6', name: 'Импорт: анализ', tag: 'load', href: 'Fluenta Library v2.dc.html', parts: [this.dash('16px'), this.gl('◴', '#4F46E5', '#EEF2FF'), this.ln('58%')] },
+      { id: '3.7', name: 'Лимит Free', tag: 'lock', href: 'Fluenta Pricing.dc.html', overlay: ['⊘', 'Импорт на Free — 1 текст', 'lock'], parts: [this.dash('16px'), this.ln('80%'), this.ln('50%')] }
+    ] },
+    { stage: 'Текст', reach: '40%', tone: 'warn', paths: ['all', 'new', 'return', 'pay', 'offline'], nodes: [
+      { id: '4.1', name: 'Чтение', tag: 'content', href: 'Fluenta Reader.dc.html', parts: [this.ln('100%'), this.ln('94%'), this.ln('98%'), this.ln('88%'), this.ln('40%')] },
+      { id: '4.2', name: 'Слово → перевод', tag: 'content', href: 'Fluenta Reader.dc.html', parts: [this.ln('100%'), this.ln('62%', '#C7C5EF'), { h: '26px', w: '100%', bg: '#F5F5FF', bd: '1px solid #E0E7FF', r: '5px' }, this.ln('70%')] },
+      { id: '4.3', name: 'Слово в колоде', tag: 'ok', href: 'Fluenta Review.dc.html', toast: true, parts: [this.ln('100%'), this.ln('92%'), this.ln('96%'), this.ln('58%')] },
+      { id: '4.4', name: 'Брошено на середине', tag: 'err', href: 'Fluenta Reader.dc.html', flag: '−33%', note: 'Нет оценки «осталось 2 мин» и возврата к тексту пушем.', parts: [this.row([this.bl('4px', '46%', '#F59E0B'), this.bl('4px', '54%')]), this.ln('100%'), this.ln('92%'), this.ln('34%', '#E4E1D6')] },
+      { id: '4.5', name: 'Дочитано → обсудим?', tag: 'ok', href: 'Fluenta Tutor.dc.html', parts: [this.gl('✓', '#047857', '#ECFDF5'), this.ln('66%'), this.bl('12px', '100%', '#C7C5EF')] }
+    ] },
+    { stage: 'Разговор', reach: '17%', tone: 'bad', paths: ['all', 'new', 'return', 'pay'], nodes: [
+      { id: '5.1', name: 'До старта', tag: 'empty', href: 'Fluenta Tutor.dc.html', parts: [this.ln('56%'), this.gl('▮', '#9CA3AF', '#F2F2EF', '28px'), this.bl('12px', '70%', '#DEDDF7')] },
+      { id: '5.2', name: 'Запрос микрофона', tag: 'err', href: 'Fluenta Tutor.dc.html', flag: '−57%', note: 'Разрешение просят сразу, без объяснения. Дать текстовый режим и разогрев.', overlay: ['!', 'Разрешить доступ к микрофону?', 'err'], parts: [this.ln('56%'), this.ln('80%'), this.ln('40%')] },
+      { id: '5.3', name: 'Слушаю', tag: 'load', href: 'Fluenta Tutor.dc.html', parts: [this.gl('◉', '#B91C1C', '#FEF2F2', '26px'), this.row([this.bl('12px', '16%', '#C7C5EF'), this.bl('18px', '16%', '#A5B4FC'), this.bl('9px', '16%', '#C7C5EF'), this.bl('16px', '16%', '#A5B4FC'), this.bl('11px', '16%', '#C7C5EF')]), this.ln('44%')] },
+      { id: '5.4', name: 'Диалог идёт', tag: 'content', href: 'Fluenta Tutor.dc.html', parts: [this.row([this.bl('11px', '62%', '#F1F1FB'), this.bl('11px', '10%', 'transparent')]), this.row([this.bl('11px', '18%', 'transparent'), this.bl('11px', '72%', '#C7C5EF')]), this.row([this.bl('11px', '54%', '#F1F1FB'), this.bl('11px', '10%', 'transparent')]), this.ln('30%')] },
+      { id: '5.5', name: 'Минуты кончились', tag: 'lock', href: 'Fluenta Pricing.dc.html', flag: 'пейволл', note: 'Первый пейволл именно здесь — ценность ещё не прожита.', overlay: ['⊘', '0 минут · нужен Pro', 'lock'], parts: [this.ln('60%'), this.ln('80%'), this.ln('40%')] },
+      { id: '5.6', name: 'Разбор разговора', tag: 'content', href: 'Fluenta Review.dc.html', parts: [this.row([this.bl('20px', '30%', '#A5B4FC'), this.bl('20px', '30%', '#5EEAD4'), this.bl('20px', '30%', '#FCD34D')]), this.ln('86%'), this.ln('58%')] }
+    ] },
+    { stage: 'Трекинг', reach: '15%', tone: 'ok', paths: ['all', 'return', 'pay', 'offline'], nodes: [
+      { id: '6.1', name: 'Нечего повторять', tag: 'empty', href: 'Fluenta Review.dc.html', parts: [this.dash('30px'), this.ln('50%'), this.bl('11px', '60%', '#EDEDE8')] },
+      { id: '6.2', name: 'Сессия карточек', tag: 'content', href: 'Fluenta Review.dc.html', parts: [this.bl('30px', '100%', '#F1F1FB'), this.row([this.bl('11px', '48%', '#FECACA'), this.bl('11px', '48%', '#D1FAE5')])] },
+      { id: '6.3', name: 'Серия завершена', tag: 'ok', href: 'Fluenta Review.dc.html', parts: [this.gl('7', '#047857', '#ECFDF5', '26px'), this.ln('60%'), this.bl('11px', '66%', '#C7C5EF')] },
+      { id: '6.4', name: 'Прогресс: графики', tag: 'content', href: 'Fluenta Progress.dc.html', parts: [this.row([this.bl('10px', '14%', '#C7C5EF'), this.bl('18px', '14%', '#A5B4FC'), this.bl('14px', '14%', '#C7C5EF'), this.bl('24px', '14%', '#4F46E5'), this.bl('16px', '14%', '#A5B4FC'), this.bl('20px', '14%', '#C7C5EF')]), this.ln('70%'), this.ln('40%')] },
+      { id: '6.5', name: 'Уровень вырос', tag: 'ok', href: 'Fluenta Progress.dc.html', parts: [this.gl('C1', '#047857', '#ECFDF5', '26px'), this.row([this.bl('5px', '80%', '#10B981'), this.bl('5px', '20%')]), this.ln('54%')] }
+    ] },
+    { stage: 'Профиль и оплата', reach: '9%', tone: 'warn', paths: ['all', 'return', 'pay'], nodes: [
+      { id: '7.1', name: 'Профиль Free', tag: 'empty', href: 'Fluenta Profile.dc.html', parts: [this.row([this.gl('А', '#9CA3AF', '#F2F2EF', '20px'), this.bl('8px', '54%')]), this.ln('86%'), this.bl('12px', '64%', '#EDEDE8')] },
+      { id: '7.2', name: 'Профиль Pro + бонусы', tag: 'content', href: 'Fluenta Profile.dc.html', parts: [this.row([this.gl('А', '#4F46E5', '#EEF2FF', '20px'), this.bl('8px', '54%', '#C7C5EF')]), { h: '18px', w: '100%', bg: '#F5F5FF', bd: '1px solid #E0E7FF', r: '5px' }, this.ln('70%')] },
+      { id: '7.3', name: 'Промокод не найден', tag: 'err', href: 'Fluenta Profile.dc.html', parts: [this.ln('40%'), { h: '13px', w: '100%', bg: '#FEF2F2', bd: '1px solid #FECACA', r: '4px' }, this.ln('58%', '#FCA5A5')] },
+      { id: '7.4', name: 'Выбор плана', tag: 'content', href: 'Fluenta Pricing.dc.html', parts: [this.row([this.bl('34px', '32%'), this.bl('40px', '32%', '#C7C5EF'), this.bl('34px', '32%')]), this.ln('56%')] },
+      { id: '7.5', name: 'Платёж обрабатывается', tag: 'load', href: 'Fluenta Pricing.dc.html', parts: [this.gl('◴', '#4F46E5', '#EEF2FF', '26px'), this.ln('60%'), this.ln('34%')] },
+      { id: '7.6', name: 'Карта отклонена', tag: 'err', href: 'Fluenta Pricing.dc.html', flag: '−49%', note: 'Нет альтернативы оплаты и подсказки, что делать дальше.', overlay: ['!', 'Банк отклонил платёж', 'err'], parts: [this.ln('60%'), this.ln('80%'), this.ln('44%')] },
+      { id: '7.7', name: 'Pro активен', tag: 'ok', href: 'Fluenta Profile.dc.html', parts: [this.gl('✓', '#047857', '#ECFDF5', '26px'), this.ln('64%'), this.bl('12px', '70%', '#C7C5EF')] }
+    ] }
+  ]; }
+  dataNew() { return [
+    { stage: 'Вход и маркетинг', reach: 'доходит 100%', tone: 'ok', paths: ['all', 'new', 'pay', 'career'], nodes: [
+      { id: '1.1', name: 'Лендинг', tag: 'content', href: 'Fluenta Landing.dc.html', parts: [this.bl('16px', '70%', '#DEDDF7'), this.ln('90%'), this.ln('62%'), this.row([this.bl('11px', '38%', '#C7C5EF'), this.bl('11px', '26%')])] },
+      { id: '1.2', name: 'SEO: метод', tag: 'content', href: 'Fluenta SEO Pillar.dc.html', parts: [this.ln('44%', '#C7C5EF'), this.ln('96%'), this.ln('88%'), this.ln('70%'), this.bl('10px', '40%', '#DEDDF7')] },
+      { id: '1.3', name: 'SEO: для работы', tag: 'new', href: 'Fluenta SEO Career.dc.html', note: 'Новая воронка под карьерные запросы и рекламу: план на 14 дней, до/после, FAQ.', parts: [this.ln('50%', '#5EEAD4'), this.ln('92%'), this.row([this.bl('14px', '32%', '#DEDDF7'), this.bl('14px', '32%'), this.bl('14px', '32%')]), this.ln('60%')] },
+      { id: '1.4', name: 'SEO-куст: тексты · грамматика · видео', tag: 'content', href: 'Fluenta SEO Texts.dc.html', parts: [this.row([this.bl('20px', '32%'), this.bl('20px', '32%', '#C7C5EF'), this.bl('20px', '32%')]), this.ln('80%'), this.ln('54%')] },
+      { id: '1.5', name: 'Тарифы: минуты и пакеты', tag: 'ok', href: 'Fluenta Pricing.dc.html', note: 'Free ≈15 мин/мес, Pro 150, пакеты +60/+180. Слова «безлимит» нигде нет.', parts: [this.row([this.bl('30px', '32%'), this.bl('34px', '32%', '#C7C5EF'), this.bl('30px', '32%')]), this.ln('56%')] },
+      { id: '1.6', name: 'О проекте', tag: 'content', href: 'Fluenta About.dc.html', parts: [this.ln('60%'), this.ln('90%'), this.ln('84%'), this.bl('12px', '50%', '#DEDDF7')] }
+    ] },
+    { stage: 'Онбординг · 3 минуты', reach: 'доходит 84%', tone: 'ok', paths: ['all', 'new', 'career'], nodes: [
+      { id: '2.1', name: 'Один вопрос: язык', tag: 'new', href: 'Fluenta Onboarding.dc.html', note: 'Телефон, планшет и ПК — один поток, переключатель под рамкой.', parts: [this.ln('58%', '#C7C5EF'), this.bl('13px', '100%'), this.bl('13px', '100%'), this.bl('13px', '100%')] },
+      { id: '2.2', name: 'Текст + разбор фразы', tag: 'content', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('100%'), this.ln('62%', '#C7C5EF'), { h: '26px', w: '100%', bg: '#F5F5FF', bd: '1px solid #E0E7FF', r: '5px' }, this.ln('70%')] },
+      { id: '2.3', name: 'Пересказ + «сохранить запись»', tag: 'content', href: 'Fluenta Onboarding.dc.html', note: 'Запись: Pro; Free — 1 в месяц. Включённый тумблер — мотиватор создать аккаунт.', parts: [this.gl('◉', '#4F46E5', '#EEF2FF', '24px'), this.row([this.bl('10px', '16%', '#C7C5EF'), this.bl('16px', '16%', '#A5B4FC'), this.bl('8px', '16%', '#C7C5EF'), this.bl('14px', '16%', '#A5B4FC'), this.bl('10px', '16%', '#C7C5EF')]), this.bl('11px', '62%', '#DEDDF7')] },
+      { id: '2.4', name: 'Одна правка: go → went', tag: 'ok', href: 'Fluenta Onboarding.dc.html', parts: [{ h: '13px', w: '100%', bg: '#FEF2F2', bd: '1px solid #FECACA', r: '4px' }, { h: '13px', w: '100%', bg: '#ECFDF5', bd: '1px solid #A7F3D0', r: '4px' }, this.ln('66%')] },
+      { id: '2.5', name: '«Вернётся завтра» · aha', tag: 'new', href: 'Fluenta Onboarding.dc.html', note: 'Кривая забывания и точка «завтра, 09:00» — момент, ради которого всё.', parts: [this.gl('↻', '#4338CA', '#EEF2FF', '24px'), this.ln('84%'), this.ln('58%', '#C7C5EF')] },
+      { id: '2.6', name: 'Мягкая стена аккаунта', tag: 'ok', href: 'Fluenta Onboarding.dc.html', parts: [this.ln('50%'), this.bl('12px', '100%', '#DEDDF7'), this.bl('12px', '100%'), this.ln('64%')] }
+    ] },
+    { stage: 'Каталог', reach: 'доходит 63%', tone: 'ok', paths: ['all', 'new', 'return', 'pay', 'offline'], nodes: [
+      { id: '3.1', name: 'Скелетоны', tag: 'load', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('26px', '50%', '#F0F0EA'), this.bl('26px', '50%', '#F0F0EA')]), this.row([this.bl('26px', '50%', '#F0F0EA'), this.bl('26px', '50%', '#F0F0EA')])] },
+      { id: '3.2', name: 'Каталог с обложками', tag: 'content', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('9px', '30%', '#C7C5EF'), this.bl('9px', '22%')]), this.row([this.bl('24px', '50%', '#A5B4FC'), this.bl('24px', '50%', '#5EEAD4')]), this.row([this.bl('24px', '50%', '#FCD34D'), this.bl('24px', '50%', '#FDA4AF')])] },
+      { id: '3.3', name: 'Фильтры пусты', tag: 'empty', href: 'Fluenta Library v2.dc.html', parts: [this.row([this.bl('9px', '30%', '#C7C5EF'), this.bl('9px', '22%')]), this.dash('34px'), this.ln('46%')] },
+      { id: '3.4', name: 'Офлайн-кэш', tag: 'off', href: 'Fluenta Library v2.dc.html', parts: [{ h: '12px', w: '100%', bg: '#FFFBEB', bd: '1px solid #FDE68A', r: '4px' }, this.row([this.bl('22px', '50%', '#E4E1D6'), this.bl('22px', '50%', '#E4E1D6')]), this.ln('60%')] },
+      { id: '3.5', name: 'Импорт: анализ', tag: 'load', href: 'Fluenta Library v2.dc.html', parts: [this.dash('16px'), this.gl('◴', '#4F46E5', '#EEF2FF'), this.ln('58%')] },
+      { id: '3.6', name: 'Лимит импорта Free', tag: 'lock', href: 'Fluenta Pricing.dc.html', overlay: ['⊘', 'Импорт на Free — 3 в месяц', 'lock'], parts: [this.dash('16px'), this.ln('80%'), this.ln('50%')] }
+    ] },
+    { stage: 'Текст', reach: 'доходит 45%', tone: 'warn', paths: ['all', 'new', 'return', 'pay', 'offline'], nodes: [
+      { id: '4.1', name: 'Чтение', tag: 'content', href: 'Fluenta Reader.dc.html', parts: [this.ln('100%'), this.ln('94%'), this.ln('98%'), this.ln('88%'), this.ln('40%')] },
+      { id: '4.2', name: 'Слово → перевод и «почему»', tag: 'content', href: 'Fluenta Reader.dc.html', parts: [this.ln('100%'), this.ln('62%', '#C7C5EF'), { h: '26px', w: '100%', bg: '#F5F5FF', bd: '1px solid #E0E7FF', r: '5px' }, this.ln('70%')] },
+      { id: '4.3', name: 'Слово в колоде', tag: 'ok', href: 'Fluenta Review.dc.html', toast: true, parts: [this.ln('100%'), this.ln('92%'), this.ln('96%'), this.ln('58%')] },
+      { id: '4.4', name: 'Брошено на середине', tag: 'err', href: 'Fluenta Reader.dc.html', flag: '−33%', note: 'Нет оценки «осталось 2 мин» и возврата к тексту пушем.', parts: [this.row([this.bl('4px', '46%', '#F59E0B'), this.bl('4px', '54%')]), this.ln('100%'), this.ln('92%'), this.ln('34%', '#E4E1D6')] },
+      { id: '4.5', name: 'Дочитано → обсудим?', tag: 'ok', href: 'Fluenta Tutor.dc.html', parts: [this.gl('✓', '#047857', '#ECFDF5'), this.ln('66%'), this.bl('12px', '100%', '#C7C5EF')] }
+    ] },
+    { stage: 'Разговор', reach: 'доходит 24%', tone: 'warn', paths: ['all', 'new', 'return', 'pay', 'career'], nodes: [
+      { id: '5.1', name: 'До старта · остаток минут', tag: 'content', href: 'Fluenta Tutor.dc.html', note: 'Чип «128 / 150 мин» уже в шапке тьютора.', parts: [this.ln('56%'), this.gl('▮', '#9CA3AF', '#F2F2EF', '28px'), this.bl('12px', '70%', '#DEDDF7')] },
+      { id: '5.2', name: 'Запрос микрофона', tag: 'err', href: 'Fluenta Tutor.dc.html', flag: '−38%', note: 'Стало мягче: просим в контексте пересказа. Добавить текстовый режим-запасной.', overlay: ['!', 'Разрешить доступ к микрофону?', 'err'], parts: [this.ln('56%'), this.ln('80%'), this.ln('40%')] },
+      { id: '5.3', name: 'Слушаю', tag: 'load', href: 'Fluenta Tutor.dc.html', parts: [this.gl('◉', '#B91C1C', '#FEF2F2', '26px'), this.row([this.bl('12px', '16%', '#C7C5EF'), this.bl('18px', '16%', '#A5B4FC'), this.bl('9px', '16%', '#C7C5EF'), this.bl('16px', '16%', '#A5B4FC'), this.bl('11px', '16%', '#C7C5EF')]), this.ln('44%')] },
+      { id: '5.4', name: 'Диалог идёт', tag: 'content', href: 'Fluenta Tutor.dc.html', parts: [this.row([this.bl('11px', '62%', '#F1F1FB'), this.bl('11px', '10%', 'transparent')]), this.row([this.bl('11px', '18%', 'transparent'), this.bl('11px', '72%', '#C7C5EF')]), this.row([this.bl('11px', '54%', '#F1F1FB'), this.bl('11px', '10%', 'transparent')]), this.ln('30%')] },
+      { id: '5.5', name: 'Минуты кончились', tag: 'lock', href: 'Fluenta Pricing.dc.html', flag: 'пейволл', note: 'Смягчено: сначала пакеты +60/+180, подписка — вторым шагом.', overlay: ['⊘', '0 минут · пакет или Pro', 'lock'], parts: [this.ln('60%'), this.ln('80%'), this.ln('40%')] },
+      { id: '5.6', name: 'Разбор разговора', tag: 'content', href: 'Fluenta Review.dc.html', parts: [this.row([this.bl('20px', '30%', '#A5B4FC'), this.bl('20px', '30%', '#5EEAD4'), this.bl('20px', '30%', '#FCD34D')]), this.ln('86%'), this.ln('58%')] }
+    ] },
+    { stage: 'Карьера', reach: 'доходит 12%', tone: 'ok', paths: ['all', 'career', 'pay'], nodes: [
+      { id: '6.1', name: 'Треки: 10 профессий', tag: 'new', href: 'Fluenta Career.dc.html', note: 'Free — один трек на выбор, смена раз в месяц. Включая рабочие специальности.', parts: [this.row([this.bl('22px', '32%', '#5EEAD4'), this.bl('22px', '32%', '#A5B4FC'), this.bl('22px', '32%')]), this.row([this.bl('22px', '32%'), this.bl('22px', '32%', '#C7C5EF'), this.bl('22px', '32%')]), this.ln('54%')] },
+      { id: '6.2', name: 'Самопрезентация: гайд', tag: 'new', href: 'Fluenta Career.dc.html', parts: [this.ln('56%', '#C7C5EF'), this.ln('92%'), this.ln('86%'), this.bl('11px', '52%', '#DEDDF7')] },
+      { id: '6.3', name: 'Термины с произношением', tag: 'new', href: 'Fluenta Career.dc.html', parts: [this.row([this.bl('12px', '24%', '#C7C5EF'), this.bl('12px', '72%')]), this.row([this.bl('12px', '24%', '#C7C5EF'), this.bl('12px', '72%')]), this.ln('60%')] },
+      { id: '6.4', name: 'Mock interview', tag: 'new', href: 'Fluenta Career.dc.html', note: '12 мин из запаса, предупреждение до старта, разбор S-T-A-R после.', parts: [this.gl('◉', '#B91C1C', '#FEF2F2', '24px'), this.ln('80%'), this.row([this.bl('6px', '25%', '#10B981'), this.bl('6px', '25%', '#10B981'), this.bl('6px', '25%', '#F59E0B'), this.bl('6px', '25%', '#EF4444')])] },
+      { id: '6.5', name: 'Спринт к собеседованию', tag: 'new', href: 'Fluenta Career.dc.html', parts: [this.row([this.bl('18px', '32%', '#D1FAE5'), this.bl('18px', '32%', '#FDE68A'), this.bl('18px', '32%')]), this.row([this.bl('18px', '32%'), this.bl('18px', '32%'), this.bl('18px', '32%')]), this.ln('58%')] },
+      { id: '6.6', name: 'Разбор вакансии', tag: 'new', href: 'Fluenta Career.dc.html', note: 'Дальше: загрузка PDF-резюме и история разборов.', parts: [this.dash('16px'), this.row([this.bl('10px', '30%', '#DEDDF7'), this.bl('10px', '30%', '#DEDDF7'), this.bl('10px', '30%', '#DEDDF7')]), this.ln('64%')] }
+    ] },
+    { stage: 'Трекинг', reach: 'доходит 18%', tone: 'ok', paths: ['all', 'return', 'pay', 'offline'], nodes: [
+      { id: '7.1', name: 'Нечего повторять', tag: 'empty', href: 'Fluenta Review.dc.html', parts: [this.dash('30px'), this.ln('50%'), this.bl('11px', '60%', '#EDEDE8')] },
+      { id: '7.2', name: 'Сессия карточек', tag: 'content', href: 'Fluenta Review.dc.html', parts: [this.bl('30px', '100%', '#F1F1FB'), this.row([this.bl('11px', '48%', '#FECACA'), this.bl('11px', '48%', '#D1FAE5')])] },
+      { id: '7.3', name: 'Серия завершена', tag: 'ok', href: 'Fluenta Review.dc.html', parts: [this.gl('7', '#047857', '#ECFDF5', '26px'), this.ln('60%'), this.bl('11px', '66%', '#C7C5EF')] },
+      { id: '7.4', name: 'Прогресс: графики + минуты речи', tag: 'content', href: 'Fluenta Progress.dc.html', note: 'Добавлена метрика «минут речи» — 22 за месяц, 128 в запасе.', parts: [this.row([this.bl('10px', '14%', '#C7C5EF'), this.bl('18px', '14%', '#A5B4FC'), this.bl('14px', '14%', '#C7C5EF'), this.bl('24px', '14%', '#4F46E5'), this.bl('16px', '14%', '#A5B4FC'), this.bl('20px', '14%', '#C7C5EF')]), this.ln('70%'), this.ln('40%')] },
+      { id: '7.5', name: 'Уровень вырос', tag: 'ok', href: 'Fluenta Progress.dc.html', parts: [this.gl('C1', '#047857', '#ECFDF5', '26px'), this.row([this.bl('5px', '80%', '#10B981'), this.bl('5px', '20%')]), this.ln('54%')] }
+    ] },
+    { stage: 'Профиль и оплата', reach: 'доходит 9%', tone: 'warn', paths: ['all', 'return', 'pay', 'career'], nodes: [
+      { id: '8.1', name: 'Профиль Free', tag: 'empty', href: 'Fluenta Profile.dc.html', parts: [this.row([this.gl('А', '#9CA3AF', '#F2F2EF', '20px'), this.bl('8px', '54%')]), this.ln('86%'), this.bl('12px', '64%', '#EDEDE8')] },
+      { id: '8.2', name: 'Профиль: минуты и история', tag: 'content', href: 'Fluenta Profile.dc.html', note: 'Счётчик 150 мин и журнал расхода — готово.', parts: [this.row([this.gl('А', '#4F46E5', '#EEF2FF', '20px'), this.bl('8px', '54%', '#C7C5EF')]), { h: '18px', w: '100%', bg: '#F5F5FF', bd: '1px solid #E0E7FF', r: '5px' }, this.ln('70%')] },
+      { id: '8.3', name: 'Промокод не найден', tag: 'err', href: 'Fluenta Profile.dc.html', parts: [this.ln('40%'), { h: '13px', w: '100%', bg: '#FEF2F2', bd: '1px solid #FECACA', r: '4px' }, this.ln('58%', '#FCA5A5')] },
+      { id: '8.4', name: 'Выбор плана', tag: 'content', href: 'Fluenta Pricing.dc.html', parts: [this.row([this.bl('34px', '32%'), this.bl('40px', '32%', '#C7C5EF'), this.bl('34px', '32%')]), this.ln('56%')] },
+      { id: '8.5', name: 'Платёж обрабатывается', tag: 'load', href: 'Fluenta Pricing.dc.html', parts: [this.gl('◴', '#4F46E5', '#EEF2FF', '26px'), this.ln('60%'), this.ln('34%')] },
+      { id: '8.6', name: 'Карта отклонена', tag: 'err', href: 'Fluenta Pricing.dc.html', flag: '−49%', note: 'Нет альтернативы оплаты и подсказки, что делать дальше.', overlay: ['!', 'Банк отклонил платёж', 'err'], parts: [this.ln('60%'), this.ln('80%'), this.ln('44%')] },
+      { id: '8.7', name: 'Pro активен', tag: 'ok', href: 'Fluenta Profile.dc.html', parts: [this.gl('✓', '#047857', '#ECFDF5', '26px'), this.ln('64%'), this.bl('12px', '70%', '#C7C5EF')] }
+    ] },
+    { stage: 'Решения и архив', reach: 'служебная стадия', tone: 'warn', paths: ['all', 'clean'], nodes: [
+      { id: '9.1', name: 'Онбординг v1 · моб. и ПК', tag: 'del', href: 'Fluenta Onboarding.dc.html', flag: 'удалено', note: 'Старый 4-шаговый поток удалён — действует онбординг за 3 минуты.', parts: [this.ln('60%', '#D1D5DB'), this.ln('84%', '#E5E7EB'), this.ln('40%', '#E5E7EB')] },
+      { id: '9.2', name: 'Библиотека v1', tag: 'del', href: 'Fluenta Library v2.dc.html', flag: 'удалено', note: 'Все ссылки переведены на v2, файл удалён.', parts: [this.ln('60%', '#D1D5DB'), this.row([this.bl('20px', '50%', '#E5E7EB'), this.bl('20px', '50%', '#E5E7EB')])] },
+      { id: '9.3', name: 'Видео-раздел', tag: 'content', href: 'Fluenta Video.dc.html', note: 'Оставить: кормит SEO-страницу про видео. Не развивать до релиза.', parts: [this.bl('30px', '100%', '#E4E1D6'), this.ln('70%'), this.ln('44%')] },
+      { id: '9.4', name: 'Responsive QA', tag: 'content', href: 'Fluenta Responsive QA.dc.html', parts: [this.row([this.bl('22px', '32%', '#F0F0EA'), this.bl('22px', '32%', '#F0F0EA'), this.bl('22px', '32%', '#F0F0EA')]), this.ln('50%')] },
+      { id: '9.5', name: 'Бренд: Люмен и сторы', tag: 'content', href: 'Fluenta Mascot Kit.dc.html', parts: [this.gl('☺', '#4F46E5', '#EEF2FF', '24px'), this.ln('64%'), this.ln('40%')] }
+    ] }
+  ]; }
+  renderVals() {
+    const st = this.state;
+    const K = this.kinds();
+    const Z = { s: ['118px', '78px', 0.8], m: ['150px', '96px', 1], l: ['196px', '124px', 1.34] };
+    const z = Z[st.zoom] || Z.m;
+    const f = z[2];
+    const sc = (v) => (typeof v === 'string' && v.indexOf('px') > -1 ? (parseFloat(v) * f).toFixed(1) + 'px' : v);
+    const tones = { ok: ['#4F46E5', '#EEF2FF', '#E0E7FF', '#4338CA'], warn: ['#F59E0B', '#FFFBEB', '#FDE68A', '#B45309'], bad: ['#EF4444', '#FEF2F2', '#FECACA', '#B91C1C'] };
+    const raw = this.dataNew();
+    let total = 0;
+    const stages = raw.map((s, i) => {
+      const t = tones[s.tone] || tones.ok;
+      const active = st.path === 'all' || s.paths.indexOf(st.path) > -1;
+      total += s.nodes.length;
+      return {
+        key: s.stage, n: String(i + 1), stage: s.stage, reach: s.reach,
+        reachCl: t[3], reachBg: t[1], reachBd: t[2],
+        nBg: active ? t[1] : '#F0F0EE', nCl: active ? t[3] : '#9CA3AF',
+        dim: active ? '' : 'sm-dim',
+        count: s.nodes.length + ' состояний',
+        nodes: s.nodes.map((n, j) => {
+          const k = K[n.tag] || K.content;
+          const ov = n.overlay;
+          const ovK = ov ? (K[ov[2]] || K.err) : null;
+          return {
+            key: n.id, id: n.id, name: n.name, href: n.href,
+            w: z[0], frameH: z[1],
+            accent: k[4], frameBd: n.flag ? '#FECACA' : '#E5E7EB',
+            tag: k[0], tagCl: k[1], tagBg: k[2], tagBd: k[3],
+            hasFlag: !!n.flag, flag: n.flag || '',
+            hasNote: !!n.note && st.zoom !== 's', note: n.note || '',
+            hasToast: !!n.toast,
+            hasOverlay: !!ov, ovGlyph: ov ? ov[0] : '', ovText: ov ? ov[1] : '',
+            ovBg: ovK ? ovK[2] : '', ovCl: ovK ? ovK[1] : '', ovBar: ovK ? ovK[4] : '',
+            hasArrow: j < s.nodes.length - 1,
+            parts: n.parts.map((p, q) => {
+              if (p.row) return { key: q, isRow: true, isSolo: false, sub: p.row.map((x, w) => ({ key: w, h: sc(x.h), w: sc(x.w), bg: x.bg, r: x.r || '3px' })) };
+              return {
+                key: q, isRow: false, isSolo: true, h: sc(p.h), w: sc(p.w), bg: p.bg, r: p.r || '3px',
+                bd: p.bd || 'none', glyph: p.glyph || '', glyphCl: p.glyphCl || 'transparent',
+                just: p.center ? 'center' : 'flex-start', self: p.self || 'stretch',
+                fs: p.fs ? (parseFloat(p.fs) * f).toFixed(1) + 'px' : (9 * f).toFixed(1) + 'px'
+              };
+            })
+          };
+        })
+      };
+    });
+    const pathChips = [['all', 'Все состояния'], ['new', 'Новый пользователь'], ['return', 'Возвращается'], ['pay', 'Путь к оплате'], ['career', 'К собеседованию'], ['offline', 'Офлайн'], ['clean', 'Решения и архив']].map(p => ({
+      key: p[0], label: p[1],
+      bg: st.path === p[0] ? '#EEF2FF' : '#fff', bd: st.path === p[0] ? '#C7D2FE' : '#E5E7EB',
+      cl: st.path === p[0] ? '#4338CA' : '#4B5563', fw: st.path === p[0] ? 600 : 400,
+      on: () => this.setState({ path: p[0] })
+    }));
+    const zoomChips = [['s', 'мелко'], ['m', 'средне'], ['l', 'крупно']].map(p => ({
+      key: p[0], label: p[1],
+      bg: st.zoom === p[0] ? '#EEF2FF' : '#fff', bd: st.zoom === p[0] ? '#C7D2FE' : '#E5E7EB',
+      cl: st.zoom === p[0] ? '#4338CA' : '#4B5563', fw: st.zoom === p[0] ? 600 : 400,
+      on: () => this.setState({ zoom: p[0] })
+    }));
+    const legend = ['content', 'ok', 'empty', 'load', 'err', 'off', 'lock', 'new', 'del'].map(k => ({ key: k, label: K[k][0], color: K[k][4] }));
+    return { stages, pathChips, zoomChips, legend, totalLabel: total + ' экранов-состояний в ' + stages.length + ' стадиях' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<script src="fluenta-word-art.js"></script>
+<style>
+  html, body { margin: 0; padding: 0; background: #FAFAF8; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; text-decoration: underline; }
+  ::selection { background: rgba(79,70,229,.14); }
+  @keyframes rvPop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes rvSoft { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+  .rv-scale { transform-origin: top center; }
+  @media (max-width: 639px) { [data-screen-label="Review session"] { padding: 78px 12px 150px !important; justify-content: flex-start !important; } }
+  @media (max-width: 429px) { .rv-scale { transform: scale(.88); margin-bottom: -101px; } }
+  @media (max-width: 379px) { .rv-scale { transform: scale(.80); margin-bottom: -169px; } }
+  @media (max-width: 339px) { .rv-scale { transform: scale(.72); margin-bottom: -236px; } }
+</style>
+</helmet>
+<div data-screen-label="Review session" style="min-height:100vh;background:#FAFAF8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:88px 24px 48px;box-sizing:border-box;">
+  <dc-import name="FluentaShell" active="review" title="Повторение" sync-state="offline" due="14" hint-size="100%,0px"></dc-import>
+  <div class="rv-scale">
+  <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ fw }}" height="{{ fh }}" hint-size="390px,844px">
+    <div id="rv-screen" style="position:relative;height:100%;box-sizing:border-box;display:flex;flex-direction:column;background:#FAFAF8;font-family:'Inter',sans-serif;color:#1A1A1A;padding:54px 0 0;">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 14px 0;">
+        <div style="display:flex;">
+          <button id="rv-close" aria-label="Завершить сессию" class="fl-tap" style="width:32px;height:32px;border:none;background:transparent;border-radius:8px;color:#6B7280;cursor:pointer;display:flex;align-items:center;justify-content:center;" style-hover="background:#F0F0EE;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+          </button>
+        </div>
+        <div id="rv-count" style="font-size:14px;font-weight:600;color:#1A1A1A;text-align:center;">14 карточек</div>
+        <div style="display:flex;justify-content:flex-end;">
+          <div id="rv-off" title="Офлайн — прогресс сохраняется на этом устройстве" style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:500;color:#6B7280;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:999px;padding:4px 9px;">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.3 6.3A5.5 5.5 0 0 0 7 17h11a3.5 3.5 0 0 0 1.9-.55"></path><path d="M10 5.1A5.5 5.5 0 0 1 17.5 9a4.5 4.5 0 0 1 3.6 2.6"></path><path d="M3 3l18 18"></path></svg>
+            Офлайн
+          </div>
+        </div>
+      </div>
+      <div style="margin:10px 16px 0;height:3px;background:#ECECE8;border-radius:2px;overflow:hidden;">
+        <div id="rv-prog" style="height:100%;width:0%;background:#4F46E5;border-radius:2px;transition:width .25s ease;"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;padding:16px 16px 6px;min-height:0;">
+        <div id="rv-card" style="flex:1;display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:18px 20px 14px;min-height:0;transition:opacity .18s ease, transform .18s ease;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex:none;">
+            <span id="rv-tag" style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;background:#F5F5F3;border:1px solid #ECECE8;border-radius:999px;padding:3px 9px;">Пропуск в контексте</span>
+            <span id="rv-idx" style="font-size:11px;color:#9CA3AF;">1 / 14</span>
+          </div>
+          <div id="rv-body" style="margin-top:20px;flex:1;min-height:0;"></div>
+          <div id="rv-hint" style="flex:none;display:flex;justify-content:center;padding:10px 0 12px;">
+            <span style="font-size:12.5px;color:#6B7280;border:1px solid #E5E7EB;border-radius:999px;padding:6px 14px;">Нажмите, чтобы открыть ответ</span>
+          </div>
+          <div style="flex:none;border-top:1px solid #F3F4F6;padding-top:11px;display:flex;align-items:center;gap:5px;font-size:12px;color:#9CA3AF;">
+            из:
+            <button id="rv-src" style="border:none;background:transparent;padding:0;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#4F46E5;cursor:pointer;">The Lighthouse Keeper’s Daughter</button>
+          </div>
+        </div>
+        <div id="rv-summary" style="display:none;flex:1;flex-direction:column;justify-content:center;">
+          <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:30px 24px 22px;text-align:center;">
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(16,185,129,.12);display:flex;align-items:center;justify-content:center;margin:0 auto;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+            </div>
+            <div style="font-family:'Source Serif 4',Georgia,serif;font-size:22px;font-weight:600;margin-top:14px;">Сессия завершена</div>
+            <div style="font-size:13px;color:#6B7280;margin-top:5px;">Каждая карточка здесь — из текстов, которые вы читали.</div>
+            <div style="margin-top:20px;text-align:left;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 2px;border-top:1px solid #F3F4F6;font-size:13.5px;">
+                <span style="color:#6B7280;">Карточек повторено</span>
+                <span id="rv-sum-n" style="font-weight:600;">14</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 2px;border-top:1px solid #F3F4F6;font-size:13.5px;">
+                <span style="color:#6B7280;">Стабильность памяти</span>
+                <span style="font-weight:600;display:flex;align-items:center;gap:5px;">8,4 д → 9,6 д
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M9 7h8v8"></path></svg>
+                </span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 2px;border-top:1px solid #F3F4F6;font-size:13.5px;">
+                <span style="color:#6B7280;">Следующая сессия</span>
+                <span style="font-weight:600;">через 2 дня · чт, 23 июля</span>
+              </div>
+            </div>
+            <button id="rv-done" style="width:100%;height:44px;margin-top:18px;background:#4F46E5;color:#FFFFFF;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;" style-hover="background:#4338CA;">Готово</button>
+            <a href="Fluenta Library v2.dc.html" style="display:block;text-align:center;margin-top:12px;font-size:13px;font-weight:500;color:#4F46E5;text-decoration:none;">Читать следующий текст →</a>
+            <div style="display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;color:#9CA3AF;margin-top:12px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.3 6.3A5.5 5.5 0 0 0 7 17h11a3.5 3.5 0 0 0 1.9-.55"></path><path d="M10 5.1A5.5 5.5 0 0 1 17.5 9a4.5 4.5 0 0 1 3.6 2.6"></path><path d="M3 3l18 18"></path></svg>
+              Повторение прошло офлайн — синхронизируется, когда появится сеть
+            </div>
+          </div>
+        </div>
+        <div id="rv-empty" style="display:none;flex:1;flex-direction:column;justify-content:center;">
+          <div style="background:#FFFFFF;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 1px 2px rgba(26,26,26,.04);padding:36px 24px;text-align:center;animation:rvPop .2s ease both;">
+            <div style="width:44px;height:44px;border-radius:50%;background:#EEF2FF;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
+            </div>
+            <div style="font-family:'Source Serif 4',Georgia,serif;font-size:21px;font-weight:600;margin-top:14px;">Всё повторено. Вернитесь завтра</div>
+            <div style="font-size:13px;color:#6B7280;margin-top:6px;line-height:1.55;">Новые карточки появятся из чтения и пересказов.</div>
+            <a href="Fluenta Library v2.dc.html" style="display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 18px;margin-top:18px;background:#4F46E5;color:#FFFFFF;border-radius:10px;font-size:13.5px;font-weight:500;text-decoration:none;" style-hover="background:#4338CA;color:#FFFFFF;" style-active="background:#3730A3;">Читать следующий текст</a>
+          </div>
+        </div>
+      </div>
+      <div style="flex:none;padding:8px 16px 46px;">
+        <div id="rv-wait" style="height:58px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#9CA3AF;">Оцените карточку после того, как откроете ответ</div>
+        <div id="rv-ratings" style="display:none;grid-template-columns:repeat(4,1fr);gap:8px;">
+          <button id="rv-r0" style="height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:12px;cursor:pointer;font-family:'Inter',sans-serif;" style-hover="background:#FAFAF8;" style-active="background:#F0F0EE;">
+            <span style="font-size:13px;font-weight:600;color:#1A1A1A;">Снова</span>
+            <span id="rv-i0" style="font-size:10.5px;color:#9CA3AF;">&lt;10 мин</span>
+          </button>
+          <button id="rv-r1" style="height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:12px;cursor:pointer;font-family:'Inter',sans-serif;" style-hover="background:#FAFAF8;" style-active="background:#F0F0EE;">
+            <span style="font-size:13px;font-weight:600;color:#1A1A1A;">Трудно</span>
+            <span id="rv-i1" style="font-size:10.5px;color:#9CA3AF;">2 д</span>
+          </button>
+          <button id="rv-r2" style="height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#4F46E5;border:1px solid #4F46E5;border-radius:12px;cursor:pointer;font-family:'Inter',sans-serif;" style-hover="background:#4338CA;" style-active="background:#3730A3;">
+            <span style="font-size:13px;font-weight:600;color:#FFFFFF;">Хорошо</span>
+            <span id="rv-i2" style="font-size:10.5px;color:rgba(255,255,255,.72);">5 д</span>
+          </button>
+          <button id="rv-r3" style="height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:#FFFFFF;border:1px solid #E5E7EB;border-radius:12px;cursor:pointer;font-family:'Inter',sans-serif;" style-hover="background:#FAFAF8;" style-active="background:#F0F0EE;">
+            <span style="font-size:13px;font-weight:600;color:#1A1A1A;">Легко</span>
+            <span id="rv-i3" style="font-size:10.5px;color:#9CA3AF;">12 д</span>
+          </button>
+        </div>
+      </div>
+      <div id="rv-toast" style="position:absolute;left:50%;bottom:120px;transform:translateX(-50%) translateY(6px);background:#1A1A1A;color:#FFFFFF;font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:10px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .18s ease, transform .18s ease;z-index:30;"></div>
+    </div>
+  </x-import>
+  </div>
+  <div style="max-width:430px;text-align:center;font-size:12.5px;line-height:1.6;color:#9CA3AF;">Сессия повторения · мобильная раскладка 390×844. На десктопе та же сессия открывается колонкой 480 px поверх затемнённой библиотеки — раскладка та же, оценки — клавишами 1–4.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;dueCount&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:14,&quot;min&quot;:0,&quot;max&quot;:40,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Session&quot;},&quot;showOffline&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Session&quot;},&quot;showImages&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Session&quot;}}">
+class Component extends DCLogic {
+  renderVals() { return { fw: 390, fh: 844 }; }
+  componentDidMount() {
+    this.$ = (id) => document.getElementById(id);
+    this.CARDS = [
+      { type: 'cloze', tag: 'Пропуск в контексте', pre: ['She ', ' the letter before anyone noticed.'], answer: 'had burned',
+        note: 'Past Perfect — действие завершилось раньше другого действия в прошлом.',
+        src: 'The Lighthouse Keeper’s Daughter', iv: ['<10 мин', '1 д', '3 д', '8 д'], img: 'flame' },
+      { type: 'trans', tag: 'Переведите на английский', ru: 'Годы спустя люди всё ещё говорили о той ночи.',
+        en: ['Years later, people ', 'still talked', ' about the night.'],
+        note: '“Still” + Past Simple — действие всё ещё продолжалось в прошлом.',
+        src: 'The Lighthouse Keeper’s Daughter', iv: ['<10 мин', '2 д', '5 д', '12 д'], img: 'moon' },
+      { type: 'mistake', tag: 'Ошибка из вашего пересказа', said: ['he ', 'go', ' to the harbor'], corr: ['he ', 'went', ' to the harbor'],
+        note: 'Past Simple: go → went (неправильный глагол).',
+        src: 'Ваш пересказ · 16 июля', iv: ['<10 мин', '1 д', '4 д', '10 д'], img: 'anchor' },
+      { type: 'cloze', tag: 'Пропуск в контексте', pre: ['The old lamp flickered twice before it ', '.'], answer: 'went out',
+        note: 'Фразовый глагол “go out” — о свете: перестать гореть, «погаснуть».',
+        src: 'The Lighthouse Keeper’s Daughter', iv: ['<10 мин', '2 д', '6 д', '14 д'], img: 'lampoff' },
+      { type: 'trans', tag: 'Переведите на английский', ru: 'Она глубоко вздохнула и сама зажгла запасной фонарь.',
+        en: ['She took a deep breath and lit the spare lantern ', 'herself', '.'],
+        note: 'Усилительное “herself” в конце = «сама»; “lit” — неправильное прошедшее от “light”.',
+        src: 'The Lighthouse Keeper’s Daughter', iv: ['<10 мин', '3 д', '7 д', '16 д'], img: 'lantern' },
+      { type: 'mistake', tag: 'Ошибка из вашего пересказа', said: ['she ', 'was knowing', ' the answer'], corr: ['she ', 'knew', ' the answer'],
+        note: 'Глаголы состояния (know, believe, understand) не используются в Continuous.',
+        src: 'Ваш пересказ · 16 июля', iv: ['<10 мин', '2 д', '5 д', '12 д'] },
+      { type: 'write', tag: 'Напишите по-английски', ru: 'Ветер был холоднее, чем она ожидала.',
+        en: ['The wind was ', 'colder than', ' she expected.'],
+        note: 'Сравнительная степень: “colder than” = «холоднее, чем». Письмо тренирует ту же грамматику, что нужна и в речи.',
+        src: 'The Lighthouse Keeper’s Daughter', iv: ['<10 мин', '2 д', '5 д', '12 д'], img: 'snow' }
+    ];
+    this.reviewed = 0;
+    this.revealed = false;
+    this.ready = false;
+    const tryInit = () => {
+      if (this.ready) return;
+      if (!document.getElementById('rv-card')) { this.initT = setTimeout(tryInit, 100); return; }
+      this.ready = true;
+      this.applyProps();
+      this.bind();
+      this.refresh();
+      if (this.total > 0) {
+        this.skeletonOn = true;
+        this.renderSkeleton();
+        this.skelT = setTimeout(() => { this.skeletonOn = false; this.renderCard(); }, 700);
+      }
+    };
+    tryInit();
+  }
+  componentWillUnmount() { clearTimeout(this.initT); clearTimeout(this.skelT); }
+  componentDidUpdate() {
+    if (!this.ready) return;
+    this.applyProps();
+    this.refresh();
+    if (!this.summaryOn && this.total > 0 && !this.skeletonOn) this.renderCard();
+  }
+  applyProps() {
+    this.total = this.props.dueCount != null ? this.props.dueCount : 14;
+    if (this.reviewed > this.total) this.reviewed = this.total;
+    const off = this.$('rv-off');
+    if (off) off.style.display = (this.props.showOffline != null ? this.props.showOffline : true) ? 'flex' : 'none';
+    const empty = this.total === 0 && !this.summaryOn;
+    const em = this.$('rv-empty');
+    if (em) em.style.display = empty ? 'flex' : 'none';
+    if (empty) {
+      this.$('rv-card').style.display = 'none';
+      this.$('rv-wait').style.display = 'none';
+      this.$('rv-ratings').style.display = 'none';
+      this.$('rv-count').textContent = 'На сегодня всё';
+      this.$('rv-prog').style.width = '100%';
+    } else if (!this.summaryOn && this.$('rv-card').style.display === 'none') {
+      this.$('rv-card').style.display = 'flex';
+    }
+  }
+  card() { return this.CARDS[this.reviewed % this.CARDS.length]; }
+  esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  amber(t) { return '<span style="background:rgba(251,191,36,.28);box-shadow:inset 0 -1.5px 0 rgba(251,191,36,.9);border-radius:3px;padding:0 2px;">' + t + '</span>'; }
+  green(t) { return '<span style="background:rgba(16,185,129,.14);box-shadow:inset 0 -1.5px 0 rgba(16,185,129,.65);border-radius:3px;padding:0 2px;">' + t + '</span>'; }
+  label(t) { return '<div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;margin-bottom:10px;">' + t + '</div>'; }
+  noteHtml(t) {
+    return '<div style="display:flex;gap:8px;align-items:flex-start;margin-top:18px;animation:rvPop .15s ease both;">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5" style="flex:none;margin-top:2px;"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5" stroke-linecap="round"></path><path d="M12 8v.5" stroke-linecap="round"></path></svg>' +
+      '<div style="font-size:13px;line-height:1.55;color:#6B7280;">' + t + '</div></div>';
+  }
+  renderSkeleton() {
+    this.$('rv-tag').textContent = 'Загружаем…';
+    this.$('rv-hint').style.display = 'none';
+    this.$('rv-body').innerHTML =
+      '<div aria-hidden="true" style="display:flex;flex-direction:column;gap:12px;">' +
+      '<div style="width:42%;height:12px;border-radius:6px;background:#EFEFEB;animation:rvSoft 1.3s ease-in-out infinite;"></div>' +
+      '<div style="width:92%;height:22px;border-radius:6px;background:#EFEFEB;animation:rvSoft 1.3s ease-in-out .12s infinite;"></div>' +
+      '<div style="width:70%;height:22px;border-radius:6px;background:#EFEFEB;animation:rvSoft 1.3s ease-in-out .24s infinite;"></div></div>';
+  }
+  renderCard() {
+    const c = this.card();
+    const serif = 'font-family:\'Source Serif 4\',Georgia,serif;font-size:21px;line-height:1.6;color:#1A1A1A;';
+    let h = '';
+    if (c.type === 'cloze') {
+      h = this.label('Вспомните пропущенные слова') +
+        '<div style="' + serif + '">' + c.pre[0] +
+        (this.revealed ? this.amber(c.answer) : '<span style="display:inline-block;min-width:92px;border-bottom:1.5px solid #C7CBD1;"> </span>') +
+        c.pre[1] + '</div>';
+    } else if (c.type === 'trans') {
+      h = this.label('Скажите это по-английски') +
+        '<div style="' + serif + '">' + c.ru + '</div>' +
+        (this.revealed ? '<div style="' + serif + 'margin-top:16px;animation:rvPop .15s ease both;">' + c.en[0] + this.amber(c.en[1]) + c.en[2] + '</div>' : '');
+    } else if (c.type === 'write') {
+      h = this.label('Напишите это по-английски') +
+        '<div style="' + serif + '">' + c.ru + '</div>' +
+        (this.revealed
+          ? (this.userText ? '<div style="margin-top:16px;animation:rvPop .15s ease both;">' + this.label('Ваш вариант') + '<div style="' + serif + 'font-style:italic;font-size:17px;color:#6B7280;">“' + this.esc(this.userText) + '”</div></div>' : '') +
+            '<div style="margin-top:16px;animation:rvPop .15s ease both;">' + this.label('Оригинал') + '<div style="' + serif + '">' + c.en[0] + this.amber(c.en[1]) + c.en[2] + '</div></div>'
+          : '<textarea id="rv-winput" rows="2" placeholder="Напишите свой вариант по-английски…" style="width:100%;box-sizing:border-box;margin-top:16px;font-family:\'Source Serif 4\',Georgia,serif;font-size:17px;line-height:1.5;color:#1A1A1A;background:#FAFAF8;border:1px solid #E5E7EB;border-radius:10px;padding:10px 12px;resize:none;outline:none;" onfocus="this.style.borderColor=\'#4F46E5\';this.style.background=\'#fff\';" onblur="this.style.borderColor=\'#E5E7EB\';this.style.background=\'#FAFAF8\';"></textarea>' +
+            '<div style="margin-top:10px;"><button id="rv-wcheck" style="height:36px;padding:0 16px;background:#4F46E5;color:#fff;border:none;border-radius:9px;font-family:\'Inter\',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">Проверить</button></div>');
+    } else {
+      const wrong = this.revealed ? '<span style="text-decoration:line-through;text-decoration-color:#C7CBD1;">' + c.said[1] + '</span>' : c.said[1];
+      h = this.label('Вы сказали') +
+        '<div style="' + serif + 'font-style:italic;color:#6B7280;font-size:19px;">“' + c.said[0] + wrong + c.said[2] + '”</div>' +
+        (this.revealed ? '<div style="margin-top:16px;animation:rvPop .15s ease both;">' + this.label('Правильно') +
+          '<div style="' + serif + '">' + c.corr[0] + this.green(c.corr[1]) + c.corr[2] + '</div></div>' : '');
+    }
+    const artOk = (this.showImages != null ? this.showImages : true) && c.img && window.FluentaWordArt && FluentaWordArt.has(c.img) && (this.revealed || c.type === 'trans' || c.type === 'write');
+    if (artOk) h = '<div aria-hidden="true" style="float:right;margin:0 0 10px 14px;width:54px;height:54px;border-radius:12px;background:#EEF2FF;border:1px solid #E0E7FF;display:flex;align-items:center;justify-content:center;animation:rvPop .15s ease both;">' + FluentaWordArt.svg(c.img, 28) + '</div>' + h;
+    if (this.revealed) h += this.noteHtml(c.note);
+    this.$('rv-tag').textContent = c.tag;
+    this.$('rv-body').innerHTML = h;
+    this.$('rv-src').textContent = c.src;
+    for (let j = 0; j < 4; j++) this.$('rv-i' + j).textContent = c.iv[j];
+    this.$('rv-hint').style.display = (this.revealed || c.type === 'write') ? 'none' : 'flex';
+    this.$('rv-wait').style.display = this.revealed ? 'none' : 'flex';
+    this.$('rv-ratings').style.display = this.revealed ? 'grid' : 'none';
+    this.$('rv-card').style.cursor = this.revealed ? 'default' : 'pointer';
+  }
+  refresh() {
+    if (this.total === 0) return;
+    const left = this.total - this.reviewed;
+    const f = left % 10 === 1 && left % 100 !== 11 ? 'карточка' : left % 10 >= 2 && left % 10 <= 4 && (left % 100 < 12 || left % 100 > 14) ? 'карточки' : 'карточек';
+    this.$('rv-count').textContent = this.summaryOn ? 'На сегодня всё' : left + ' ' + f;
+    this.$('rv-prog').style.width = (this.reviewed / this.total * 100) + '%';
+    this.$('rv-idx').textContent = Math.min(this.reviewed + 1, this.total) + ' / ' + this.total;
+  }
+  reveal(force) {
+    if (this.revealed || this.summaryOn) return;
+    if (this.card().type === 'write' && !force) return;
+    this.revealed = true;
+    this.renderCard();
+  }
+  rate() {
+    if (!this.revealed) return;
+    this.reviewed++;
+    this.revealed = false;
+    this.userText = '';
+    if (this.reviewed >= this.total) { this.showSummary(); return; }
+    const card = this.$('rv-card');
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(-14px)';
+    setTimeout(() => {
+      this.renderCard();
+      this.refresh();
+      card.style.transition = 'none';
+      card.style.transform = 'translateX(14px)';
+      void card.offsetWidth;
+      card.style.transition = 'opacity .18s ease, transform .18s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateX(0)';
+    }, 160);
+  }
+  showSummary() {
+    this.summaryOn = true;
+    this.$('rv-card').style.display = 'none';
+    this.$('rv-wait').style.display = 'none';
+    this.$('rv-ratings').style.display = 'none';
+    this.$('rv-sum-n').textContent = this.reviewed;
+    const s = this.$('rv-summary');
+    s.style.display = 'flex';
+    s.style.animation = 'rvPop .2s ease both';
+    this.$('rv-prog').style.width = '100%';
+    this.$('rv-count').textContent = 'На сегодня всё';
+  }
+  toast(t) {
+    const el = this.$('rv-toast');
+    el.textContent = t;
+    el.style.opacity = '1';
+    el.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(this.toastT);
+    this.toastT = setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateX(-50%) translateY(6px)';
+    }, 3000);
+  }
+  bind() {
+    this.$('rv-card').addEventListener('click', (e) => {
+      if (e.target.closest && e.target.closest('#rv-src')) return;
+      if (e.target.closest && e.target.closest('#rv-wcheck')) {
+        const inp = document.getElementById('rv-winput');
+        this.userText = inp ? inp.value.trim() : '';
+        this.reveal(true);
+        return;
+      }
+      if (e.target.closest && e.target.closest('#rv-winput')) return;
+      this.reveal();
+    });
+    for (let j = 0; j < 4; j++) this.$('rv-r' + j).addEventListener('click', () => this.rate());
+    this.$('rv-close').addEventListener('click', () => this.showSummary());
+    this.$('rv-done').addEventListener('click', () => {
+      this.summaryOn = false;
+      this.reviewed = 0;
+      this.revealed = false;
+      this.$('rv-summary').style.display = 'none';
+      this.$('rv-card').style.display = 'flex';
+      this.renderCard();
+      this.refresh();
+    });
+    this.$('rv-src').addEventListener('click', () => this.toast('Откроет это предложение в читалке'));
+    document.addEventListener('keydown', (e) => {
+      if (e.target && (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT')) return;
+      if (this.summaryOn) return;
+      if (e.key === ' ' || e.key === 'Enter') { this.reveal(); }
+      if (this.revealed && ['1', '2', '3', '4'].includes(e.key)) this.rate();
+    });
+  }
+}
+</script>
+</body>
+</html>

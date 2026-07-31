@@ -1,0 +1,76 @@
+# ─── Секреты и креды (НИКОГДА не коммитить — репо публичный) ───
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*_rsa
+*_ed25519
+id_*
+*.p12
+*.pfx
+secrets/
+credentials*
+*.credentials
+*.jks
+*.keystore
+*.mobileprovision
+google-services.json
+GoogleService-Info.plist
+
+# ─── Локальные операционные / инфра-заметки (не для публичного репо) ───
+*.local.md
+*.local
+.local/
+
+# ─── Рабочие исходники дизайна: тяжёлые, держим вне репо ───
+Work under design*
+robot character*
+Gemini_Generated_Image_*.png
+
+# ─── Node / JS ───
+node_modules/
+dist/
+.next/
+out/
+.astro/
+
+# ─── Python ───
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Flutter / Dart ───
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+*.iml
+app/ios/Pods/
+app/ios/.symlinks/
+app/ios/Flutter/Flutter.framework
+app/ios/Flutter/Flutter.podspec
+app/ios/Flutter/ephemeral/
+app/macos/Pods/
+app/macos/Flutter/ephemeral/
+app/android/.gradle/
+app/android/local.properties
+app/android/key.properties
+app/.flutter-plugins*
+
+# ─── OS / редактор ───
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# ─── Логи ───
+*.log
+logs/

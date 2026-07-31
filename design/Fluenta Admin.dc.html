@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#FAFAF8;color:#1A1A1A;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#4F46E5;text-decoration:none}a:hover{color:#4338CA}
+::selection{background:rgba(79,70,229,.16)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #4F46E5;outline-offset:2px}
+input::placeholder,textarea::placeholder{color:#9CA3AF}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes growbar{from{transform:scaleY(.04)}to{transform:scaleY(1)}}
+.acard{background:#fff;border:1px solid #E5E7EB;border-radius:14px}
+.arow{transition:background .12s}
+.arow:hover{background:#FAFAFF}
+.ainput{border:1px solid #E5E7EB;border-radius:9px;padding:9px 11px;font-family:Inter,sans-serif;font-size:13px;background:#fff;color:#1A1A1A;width:100%;box-sizing:border-box}
+.abtn{border:none;border-radius:9px;padding:9px 15px;font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;background:#4F46E5;color:#fff}
+.abtn:hover{background:#4338CA}
+.abtn2{border:1px solid #E5E7EB;border-radius:9px;padding:8px 13px;font-family:Inter,sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;background:#fff;color:#374151}
+.abtn2:hover{border-color:#C7D2FE;color:#4338CA}
+.anav{display:flex;align-items:center;gap:10px;width:100%;border:none;background:transparent;color:#9BA0A8;border-radius:9px;padding:9px 11px;font-family:Inter,sans-serif;font-size:13.5px;font-weight:500;cursor:pointer;text-align:left}
+.anav:hover{background:rgba(255,255,255,.06);color:#fff}
+.anav.on{background:#4F46E5;color:#fff;font-weight:600}
+@media (max-width:900px){.ashell{grid-template-columns:1fr !important}.aside{position:static !important;height:auto !important;flex-direction:row !important;overflow-x:auto}.anavwrap{flex-direction:row !important}.anav{white-space:nowrap}}
+</style>
+</helmet>
+<div data-screen-label="Admin" style="min-height:100vh">
+<div class="ashell" style="display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh">
+
+  <aside class="aside" style="position:sticky;top:0;height:100vh;background:#141518;padding:18px 14px;display:flex;flex-direction:column;gap:16px;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:9px;padding:0 4px">
+      <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-weight:600;font-size:14px">f</span>
+      <span style="font-family:'Source Serif 4',serif;font-size:15.5px;font-weight:600;color:#fff">fluenta admin</span>
+    </div>
+    <div class="anavwrap" style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="7">
+        <button onClick="{{ n.on }}" class="anav {{ n.cls }}">
+          <span style="width:16px;display:flex;justify-content:center;flex:none;opacity:.9">{{ n.icon }}</span>
+          <span style="flex:1;min-width:0">{{ n.label }}</span>
+          <sc-if value="{{ n.hasCount }}" hint-placeholder-val="{{ false }}">
+            <span style="flex:none;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);border-radius:999px;padding:1px 7px">{{ n.count }}</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <div style="margin-top:auto;border-top:1px solid rgba(255,255,255,.09);padding-top:14px;display:flex;flex-direction:column;gap:9px">
+      <div style="display:flex;align-items:center;gap:9px">
+        <span style="width:28px;height:28px;border-radius:50%;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">Д</span>
+        <span style="min-width:0">
+          <span style="display:block;font-size:12.5px;font-weight:600;color:#fff">Дмитрий</span>
+          <span style="display:block;font-size:11px;color:#8B9099">владелец · все права</span>
+        </span>
+      </div>
+      <a href="Fluenta Library v2.dc.html" style="font-size:12px;color:#8B9099" style-hover="color:#fff">← к приложению</a>
+    </div>
+  </aside>
+
+  <main style="padding:26px clamp(16px,3vw,34px) 60px;min-width:0;animation:fadein .2s ease-out">
+    <div style="display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:22px">
+      <div>
+        <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,2.8vw,29px);font-weight:700;letter-spacing:-.015em;margin:0">{{ secTitle }}</h1>
+        <div style="font-size:13px;color:#6B7280;margin-top:5px">{{ secHint }}</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:9px;flex-wrap:wrap">
+        <sc-if value="{{ hasAction }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ doAction }}" class="abtn">{{ actionLabel }}</button>
+        </sc-if>
+      </div>
+    </div>
+
+    <sc-if value="{{ isOverview }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));gap:14px;margin-bottom:18px">
+        <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+          <div class="acard" style="padding:15px 16px">
+            <div style="font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">{{ k.label }}</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;margin-top:8px">
+              <span style="font-family:'Source Serif 4',serif;font-size:27px;font-weight:700;line-height:1">{{ k.value }}</span>
+              <span style="font-size:12px;font-weight:600;color:{{ k.deltaCl }};padding-bottom:3px">{{ k.delta }}</span>
+            </div>
+            <div style="display:flex;align-items:flex-end;gap:3px;height:26px;margin-top:11px">
+              <sc-for list="{{ k.spark }}" as="s" hint-placeholder-count="12">
+                <span style="flex:1;height:{{ s.h }};background:{{ s.color }};border-radius:2px"></span>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-bottom:16px">
+        <div class="acard" style="padding:18px 20px">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px">
+            <div style="font-size:15px;font-weight:600">Регистрации, 14 дней</div>
+            <span style="margin-left:auto;font-size:12px;color:#9CA3AF">всего 486 · пик 62 (вт)</span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:5px;height:132px">
+            <sc-for list="{{ regBars }}" as="b" hint-placeholder-count="14">
+              <span title="{{ b.title }}" style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%">
+                <span style="display:block;height:{{ b.h }};background:{{ b.color }};border-radius:3px 3px 2px 2px;transform-origin:bottom;animation:growbar .45s ease-out {{ b.delay }} both"></span>
+              </span>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:5px;margin-top:7px">
+            <sc-for list="{{ regBars }}" as="b" hint-placeholder-count="14">
+              <span style="flex:1;text-align:center;font-size:9.5px;color:#B4B9C0">{{ b.day }}</span>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="acard" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:4px">Воронка пути пользователя</div>
+          <div style="font-size:12.5px;color:#6B7280;margin-bottom:16px">Где теряем людей — за последние 30 дней</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <sc-for list="{{ funnel }}" as="f" hint-placeholder-count="6">
+              <div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:5px">
+                  <span style="font-size:13px;font-weight:500;color:#1A1A1A">{{ f.label }}</span>
+                  <span style="font-size:12px;color:#9CA3AF">{{ f.count }}</span>
+                  <span style="margin-left:auto;font-size:12px;font-weight:600;color:{{ f.dropCl }}">{{ f.drop }}</span>
+                </div>
+                <div style="height:9px;border-radius:5px;background:#F2F2EF;overflow:hidden">
+                  <span style="display:block;height:100%;width:{{ f.w }};background:{{ f.barCl }};border-radius:5px"></span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <a href="Fluenta Flow Map.dc.html" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;margin-top:16px">Открыть карту путей →</a>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+        <div class="acard" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">Контент в системе</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ contentStats }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:11px">
+                <span style="width:9px;height:9px;border-radius:2px;background:{{ c.color }};flex:none"></span>
+                <span style="font-size:13px;color:#374151;flex:none;min-width:132px">{{ c.label }}</span>
+                <span style="flex:1;height:7px;border-radius:4px;background:#F2F2EF;overflow:hidden"><span style="display:block;height:100%;width:{{ c.w }};background:{{ c.color }}"></span></span>
+                <span style="font-size:12.5px;font-weight:600;color:#374151;flex:none;width:44px;text-align:right">{{ c.n }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div class="acard" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">Что происходит сейчас</div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ feed }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F5F5F3">
+                <span style="width:7px;height:7px;border-radius:50%;background:{{ f.color }};flex:none"></span>
+                <span style="font-size:13px;color:#374151;min-width:0;flex:1">{{ f.text }}</span>
+                <span style="font-size:11.5px;color:#B4B9C0;flex:none">{{ f.time }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isUsers }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px">
+        <input value="{{ q }}" onChange="{{ qChange }}" placeholder="Поиск по имени или e-mail…" class="ainput" style="flex:1 1 240px;max-width:340px">
+        <sc-for list="{{ userChips }}" as="ch" hint-placeholder-count="4">
+          <button onClick="{{ ch.on }}" style="border:1px solid {{ ch.bd }};background:{{ ch.bg }};color:{{ ch.cl }};font-weight:{{ ch.fw }};border-radius:999px;padding:7px 13px;font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer" style-hover="border-color:#C7D2FE">{{ ch.label }}</button>
+        </sc-for>
+        <span style="margin-left:auto;font-size:12.5px;color:#9CA3AF">{{ userCount }}</span>
+      </div>
+      <div class="acard" style="overflow:hidden">
+        <div style="display:grid;grid-template-columns:minmax(190px,2fr) 68px 96px minmax(96px,1fr) 92px 132px;gap:12px;padding:11px 18px;background:#FAFAF8;border-bottom:1px solid #EFEFEB;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">
+          <span>Пользователь</span><span>Уровень</span><span>План</span><span>Последний вход</span><span>Минуты</span><span style="text-align:right">Действия</span>
+        </div>
+        <sc-for list="{{ users }}" as="u" hint-placeholder-count="8">
+          <div class="arow" style="display:grid;grid-template-columns:minmax(190px,2fr) 68px 96px minmax(96px,1fr) 92px 132px;gap:12px;padding:12px 18px;border-bottom:1px solid #F5F5F3;align-items:center">
+            <span style="display:flex;align-items:center;gap:10px;min-width:0">
+              <span style="width:30px;height:30px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">{{ u.initial }}</span>
+              <span style="min-width:0">
+                <span style="display:block;font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.name }}</span>
+                <span style="display:block;font-size:11.5px;color:#9CA3AF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.email }}</span>
+              </span>
+            </span>
+            <span style="font-size:11.5px;font-weight:600;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:6px;padding:2px 7px;justify-self:start">{{ u.lvl }}</span>
+            <span style="font-size:12px;font-weight:600;color:{{ u.planCl }};background:{{ u.planBg }};border:1px solid {{ u.planBd }};border-radius:6px;padding:2.5px 8px;justify-self:start;white-space:nowrap">{{ u.plan }}</span>
+            <span style="font-size:12.5px;color:{{ u.seenCl }}">{{ u.seen }}</span>
+            <span style="font-size:12.5px;color:#374151;font-variant-numeric:tabular-nums">{{ u.minutes }}</span>
+            <span style="display:flex;gap:6px;justify-content:flex-end">
+              <button onClick="{{ u.bonus }}" class="abtn2" style="padding:6px 10px;font-size:12px">+ бонус</button>
+              <button onClick="{{ u.open }}" class="abtn2" style="padding:6px 9px;font-size:12px">···</button>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPay }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:18px">
+        <sc-for list="{{ payKpis }}" as="k" hint-placeholder-count="4">
+          <div class="acard" style="padding:15px 16px">
+            <div style="font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">{{ k.label }}</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;margin-top:8px">
+              <span style="font-family:'Source Serif 4',serif;font-size:25px;font-weight:700;line-height:1">{{ k.value }}</span>
+              <span style="font-size:12px;font-weight:600;color:{{ k.deltaCl }};padding-bottom:2px">{{ k.delta }}</span>
+            </div>
+            <div style="font-size:11.5px;color:#9CA3AF;margin-top:7px">{{ k.hint }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div class="acard" style="overflow:hidden">
+        <div style="display:grid;grid-template-columns:minmax(180px,2fr) 110px 96px minmax(120px,1fr) 110px 100px;gap:12px;padding:11px 18px;background:#FAFAF8;border-bottom:1px solid #EFEFEB;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">
+          <span>Пользователь</span><span>Сумма</span><span>План</span><span>Дата</span><span>Статус</span><span style="text-align:right">Действие</span>
+        </div>
+        <sc-for list="{{ payments }}" as="p" hint-placeholder-count="7">
+          <div class="arow" style="display:grid;grid-template-columns:minmax(180px,2fr) 110px 96px minmax(120px,1fr) 110px 100px;gap:12px;padding:12px 18px;border-bottom:1px solid #F5F5F3;align-items:center">
+            <span style="min-width:0">
+              <span style="display:block;font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span>
+              <span style="display:block;font-size:11.5px;color:#9CA3AF">{{ p.method }}</span>
+            </span>
+            <span style="font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums">{{ p.amount }}</span>
+            <span style="font-size:12.5px;color:#374151">{{ p.plan }}</span>
+            <span style="font-size:12.5px;color:#6B7280">{{ p.date }}</span>
+            <span style="font-size:12px;font-weight:600;color:{{ p.stCl }};background:{{ p.stBg }};border:1px solid {{ p.stBd }};border-radius:6px;padding:2.5px 9px;justify-self:start;white-space:nowrap">{{ p.status }}</span>
+            <span style="display:flex;justify-content:flex-end"><button onClick="{{ p.act }}" class="abtn2" style="padding:6px 10px;font-size:12px">{{ p.actLabel }}</button></span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isPromo }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-bottom:16px">
+        <div class="acard" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">Новый промокод</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <label style="display:block"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Код</span><input value="{{ nCode }}" onChange="{{ nCodeCh }}" placeholder="AUTUMN30" class="ainput" style="text-transform:uppercase"></label>
+            <div style="display:flex;gap:11px;flex-wrap:wrap">
+              <label style="display:block;flex:1 1 120px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Скидка, %</span><input value="{{ nPct }}" onChange="{{ nPctCh }}" placeholder="30" class="ainput"></label>
+              <label style="display:block;flex:1 1 120px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Лимит активаций</span><input value="{{ nLimit }}" onChange="{{ nLimitCh }}" placeholder="200" class="ainput"></label>
+            </div>
+            <label style="display:block"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Действует до</span><input value="{{ nUntil }}" onChange="{{ nUntilCh }}" placeholder="31.08.2026" class="ainput"></label>
+            <button onClick="{{ addPromo }}" class="abtn" style="align-self:flex-start;margin-top:2px">Создать код</button>
+          </div>
+        </div>
+        <div class="acard" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:4px">Начислить бонусные минуты</div>
+          <div style="font-size:12.5px;color:#6B7280;margin-bottom:14px">Минуты появятся в профиле сразу и тратятся на разговор с тьютором</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <label style="display:block"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Кому</span><input value="{{ bWho }}" onChange="{{ bWhoCh }}" placeholder="e-mail, или «все на плане Free»" class="ainput"></label>
+            <div style="display:flex;gap:11px;flex-wrap:wrap">
+              <label style="display:block;flex:1 1 110px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Минут</span><input value="{{ bMin }}" onChange="{{ bMinCh }}" placeholder="30" class="ainput"></label>
+              <label style="display:block;flex:2 1 160px"><span style="display:block;font-size:12px;font-weight:600;color:#6B7280;margin-bottom:5px">Причина (видна в профиле)</span><input value="{{ bWhy }}" onChange="{{ bWhyCh }}" placeholder="Извинения за сбой 14 июля" class="ainput"></label>
+            </div>
+            <button onClick="{{ grantBonus }}" class="abtn" style="align-self:flex-start;margin-top:2px">Начислить</button>
+          </div>
+        </div>
+      </div>
+      <div class="acard" style="overflow:hidden">
+        <div style="display:grid;grid-template-columns:minmax(120px,1fr) 92px 100px minmax(140px,1.4fr) 110px 92px;gap:12px;padding:11px 18px;background:#FAFAF8;border-bottom:1px solid #EFEFEB;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">
+          <span>Код</span><span>Скидка</span><span>До</span><span>Активации</span><span>Статус</span><span style="text-align:right"></span>
+        </div>
+        <sc-for list="{{ promos }}" as="p" hint-placeholder-count="4">
+          <div class="arow" style="display:grid;grid-template-columns:minmax(120px,1fr) 92px 100px minmax(140px,1.4fr) 110px 92px;gap:12px;padding:12px 18px;border-bottom:1px solid #F5F5F3;align-items:center">
+            <span style="font-size:13.5px;font-weight:600;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.02em">{{ p.code }}</span>
+            <span style="font-size:13px;color:#374151">{{ p.pct }}</span>
+            <span style="font-size:12.5px;color:#6B7280">{{ p.until }}</span>
+            <span style="display:flex;align-items:center;gap:9px">
+              <span style="flex:1;height:6px;border-radius:3px;background:#F2F2EF;overflow:hidden;max-width:120px"><span style="display:block;height:100%;width:{{ p.w }};background:#4F46E5"></span></span>
+              <span style="font-size:12px;color:#6B7280;white-space:nowrap">{{ p.used }}</span>
+            </span>
+            <span style="font-size:12px;font-weight:600;color:{{ p.stCl }};background:{{ p.stBg }};border:1px solid {{ p.stBd }};border-radius:6px;padding:2.5px 9px;justify-self:start">{{ p.status }}</span>
+            <span style="display:flex;justify-content:flex-end"><button onClick="{{ p.toggle }}" class="abtn2" style="padding:6px 10px;font-size:12px">{{ p.toggleLabel }}</button></span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isTexts }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:14px;margin-bottom:18px">
+        <sc-for list="{{ sources }}" as="s" hint-placeholder-count="4">
+          <div class="acard" style="padding:15px 16px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="width:8px;height:8px;border-radius:2px;background:{{ s.color }}"></span>
+              <span style="font-size:13.5px;font-weight:600">{{ s.label }}</span>
+              <span style="margin-left:auto;font-size:12.5px;font-weight:600;color:#374151">{{ s.n }}</span>
+            </div>
+            <div style="font-size:12px;line-height:1.5;color:#6B7280">{{ s.hint }}</div>
+            <button onClick="{{ s.on }}" class="abtn2" style="align-self:flex-start;margin-top:auto">{{ s.action }}</button>
+          </div>
+        </sc-for>
+      </div>
+      <div class="acard" style="overflow:hidden">
+        <div style="display:grid;grid-template-columns:minmax(210px,2.2fr) 66px 108px 128px 92px 132px;gap:12px;padding:11px 18px;background:#FAFAF8;border-bottom:1px solid #EFEFEB;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">
+          <span>Текст</span><span>Уровень</span><span>Источник</span><span>Статус</span><span>Знакомо</span><span style="text-align:right">Действия</span>
+        </div>
+        <sc-for list="{{ texts }}" as="t" hint-placeholder-count="7">
+          <div class="arow" style="display:grid;grid-template-columns:minmax(210px,2.2fr) 66px 108px 128px 92px 132px;gap:12px;padding:12px 18px;border-bottom:1px solid #F5F5F3;align-items:center">
+            <span style="min-width:0">
+              <span style="display:block;font-family:'Source Serif 4',serif;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.title }}</span>
+              <span style="display:block;font-size:11.5px;color:#9CA3AF">{{ t.meta }}</span>
+            </span>
+            <span style="font-size:11.5px;font-weight:600;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:6px;padding:2px 7px;justify-self:start">{{ t.lvl }}</span>
+            <span style="font-size:12.5px;color:#6B7280">{{ t.source }}</span>
+            <span style="font-size:12px;font-weight:600;color:{{ t.stCl }};background:{{ t.stBg }};border:1px solid {{ t.stBd }};border-radius:6px;padding:2.5px 9px;justify-self:start;white-space:nowrap">{{ t.status }}</span>
+            <span style="font-size:12.5px;color:#374151">{{ t.known }}</span>
+            <span style="display:flex;gap:6px;justify-content:flex-end">
+              <button onClick="{{ t.edit }}" class="abtn2" style="padding:6px 10px;font-size:12px">Правка</button>
+              <button onClick="{{ t.pub }}" class="abtn2" style="padding:6px 10px;font-size:12px;{{ t.pubStyle }}">{{ t.pubLabel }}</button>
+            </span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-size:12.5px;color:#6B7280;margin-top:14px;line-height:1.6;max-width:760px">Откуда берутся тексты: <b>public domain</b> (Gutenberg, Wikisource — можно публиковать целиком), <b>RSS новостей</b> (мы пишем свой пересказ под уровень, не копируем оригинал), <b>импорт пользователей</b> (виден только автору) и <b>партнёрские лицензии</b>. Уровень, время чтения и % знакомых слов считаются автоматически при добавлении.</div>
+    </sc-if>
+
+    <sc-if value="{{ isNews }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px">
+        <div class="acard" style="padding:18px 20px">
+          <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:14px">
+            <div style="font-size:15px;font-weight:600">Выпуск на 25 июля</div>
+            <span style="font-size:11px;font-weight:600;color:#B45309;background:#FFFBEB;border:1px solid #FDE68A;padding:2px 8px;border-radius:6px">черновик</span>
+            <span style="margin-left:auto;font-size:12px;color:#9CA3AF">{{ pickedLabel }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ candidates }}" as="c" hint-placeholder-count="6">
+              <button onClick="{{ c.on }}" style="display:flex;align-items:center;gap:12px;text-align:left;border:1px solid {{ c.bd }};background:{{ c.bg }};border-radius:11px;padding:11px 13px;cursor:pointer;font-family:Inter,sans-serif" style-hover="border-color:#C7D2FE">
+                <span style="width:19px;height:19px;border-radius:6px;border:1.5px solid {{ c.boxBd }};background:{{ c.boxBg }};display:flex;align-items:center;justify-content:center;flex:none">{{ c.check }}</span>
+                <span style="min-width:0;flex:1">
+                  <span style="display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.title }}</span>
+                  <span style="display:block;font-size:11.5px;color:#9CA3AF;margin-top:2px">{{ c.meta }}</span>
+                </span>
+                <span style="font-size:11px;font-weight:600;color:#4F46E5;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:5px;padding:2px 7px;flex:none">{{ c.lvl }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:9px;margin-top:16px;flex-wrap:wrap">
+            <button onClick="{{ publishIssue }}" class="abtn">Опубликовать выпуск</button>
+            <button onClick="{{ saveDraft }}" class="abtn2">Сохранить черновик</button>
+          </div>
+        </div>
+        <div class="acard" style="padding:18px 20px">
+          <div style="font-size:15px;font-weight:600;margin-bottom:14px">Прошлые выпуски</div>
+          <div style="display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ issues }}" as="i" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #F5F5F3">
+                <span style="min-width:0;flex:1">
+                  <span style="display:block;font-size:13.5px;font-weight:600">{{ i.date }}</span>
+                  <span style="display:block;font-size:11.5px;color:#9CA3AF;margin-top:2px">{{ i.meta }}</span>
+                </span>
+                <span style="font-size:12.5px;color:#374151;flex:none;text-align:right">
+                  <span style="display:block;font-weight:600">{{ i.opens }}</span>
+                  <span style="display:block;font-size:11px;color:#9CA3AF">открытий</span>
+                </span>
+                <button onClick="{{ i.on }}" class="abtn2" style="padding:6px 10px;font-size:12px;flex:none">Копия</button>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-size:12.5px;color:#6B7280;line-height:1.6;margin-top:14px">Дайджест собирается вручную из кандидатов, которые парсер приносит из RSS каждое утро. Каждая новость пересказывается под три уровня (B1 / B2 / C1) — оригинал не копируется.</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+      <div class="acard" style="overflow:hidden;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:minmax(190px,2fr) minmax(140px,1fr) minmax(150px,1.4fr) 100px;gap:12px;padding:11px 18px;background:#FAFAF8;border-bottom:1px solid #EFEFEB;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9CA3AF">
+          <span>Человек</span><span>Роль</span><span>Доступ</span><span style="text-align:right"></span>
+        </div>
+        <sc-for list="{{ team }}" as="t" hint-placeholder-count="4">
+          <div class="arow" style="display:grid;grid-template-columns:minmax(190px,2fr) minmax(140px,1fr) minmax(150px,1.4fr) 100px;gap:12px;padding:12px 18px;border-bottom:1px solid #F5F5F3;align-items:center">
+            <span style="display:flex;align-items:center;gap:10px;min-width:0">
+              <span style="width:30px;height:30px;border-radius:50%;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex:none">{{ t.initial }}</span>
+              <span style="min-width:0">
+                <span style="display:block;font-size:13.5px;font-weight:500">{{ t.name }}</span>
+                <span style="display:block;font-size:11.5px;color:#9CA3AF">{{ t.email }}</span>
+              </span>
+            </span>
+            <span style="font-size:12.5px;font-weight:600;color:{{ t.roleCl }};background:{{ t.roleBg }};border:1px solid {{ t.roleBd }};border-radius:6px;padding:3px 9px;justify-self:start">{{ t.role }}</span>
+            <span style="font-size:12.5px;color:#6B7280;line-height:1.45">{{ t.access }}</span>
+            <span style="display:flex;justify-content:flex-end"><button onClick="{{ t.on }}" class="abtn2" style="padding:6px 10px;font-size:12px">Изменить</button></span>
+          </div>
+        </sc-for>
+      </div>
+      <button onClick="{{ invite }}" class="abtn">Пригласить в команду</button>
+    </sc-if>
+  </main>
+</div>
+
+<sc-if value="{{ modalOn }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeModal }}" style="position:fixed;inset:0;background:rgba(20,21,24,.42);z-index:90;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadein .14s ease-out">
+    <div onClick="{{ stop }}" style="background:#fff;border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.24);width:100%;max-width:400px;padding:22px">
+      <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:700;margin-bottom:6px">{{ modalTitle }}</div>
+      <div style="font-size:13px;color:#6B7280;line-height:1.55;margin-bottom:16px">{{ modalBody }}</div>
+      <div style="display:flex;gap:9px;justify-content:flex-end">
+        <button onClick="{{ closeModal }}" class="abtn2">Отмена</button>
+        <button onClick="{{ confirmModal }}" class="abtn">{{ modalOk }}</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+<sc-if value="{{ toastOn }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:95;background:#1A1A1A;color:#fff;font-size:13px;font-weight:500;padding:9px 15px;border-radius:10px;box-shadow:0 8px 20px rgba(26,26,26,.2)">{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1360,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    sec: 'overview', q: '', userFilter: 'all', toast: null, modal: null,
+    nCode: '', nPct: '', nLimit: '', nUntil: '', bWho: '', bMin: '', bWhy: '',
+    picked: { c1: true, c2: true, c3: true, c4: false, c5: true, c6: false },
+    promoOff: {}
+  };
+  componentWillUnmount() { clearTimeout(this._tt); }
+  toastMsg(t) { clearTimeout(this._tt); this.setState({ toast: t }); this._tt = setTimeout(() => this.setState({ toast: null }), 1900); }
+  pill(kind) {
+    const P = {
+      ok: ['#047857', '#ECFDF5', '#D1FAE5'], warn: ['#92400E', '#FFFBEB', '#FDE68A'],
+      bad: ['#B91C1C', '#FEF2F2', '#FECACA'], info: ['#4338CA', '#EEF2FF', '#E0E7FF'],
+      mute: ['#4B5563', '#F6F6F3', '#E5E7EB']
+    };
+    const p = P[kind] || P.mute;
+    return { cl: p[0], bg: p[1], bd: p[2] };
+  }
+  spark(seed, up) {
+    const out = [];
+    for (let i = 0; i < 12; i++) {
+      const v = 30 + ((seed * (i + 3) * 37) % 55) + (up ? i * 2.2 : -i * 1.1);
+      out.push({ key: i, h: Math.max(12, Math.min(100, Math.round(v))) + '%', color: i === 11 ? '#4F46E5' : '#DDDCF5' });
+    }
+    return out;
+  }
+  usersData() { return [
+    ['Анна Ковалёва', 'anna.k@gmail.com', 'B2', 'Pro', '2 часа назад', '74 / 120', 'fresh'],
+    ['Игорь Лебедев', 'igor.leb@yandex.ru', 'B1', 'Pro', 'вчера', '38 / 120', 'fresh'],
+    ['Мария Соколова', 'm.sokolova@mail.ru', 'C1', 'Free', '3 дня назад', '0 / 10', 'ok'],
+    ['Тимур Хайруллин', 'timur.h@gmail.com', 'A2', 'Trial', '10 минут назад', '4 / 30', 'fresh'],
+    ['Ольга Дементьева', 'olga.d@icloud.com', 'B2', 'Pro', 'вчера', '112 / 120', 'fresh'],
+    ['Павел Ким', 'pkim@outlook.com', 'B1', 'Free', '21 день назад', '0 / 10', 'stale'],
+    ['Джамиля Асанова', 'jamilya@gmail.com', 'B2', 'Pro год', '5 часов назад', '61 / 120', 'fresh'],
+    ['Никита Ершов', 'n.ershov@gmail.com', 'C1', 'Free', '34 дня назад', '0 / 10', 'stale']
+  ].map(u => {
+    const plan = u[3].indexOf('Pro') === 0 ? 'ok' : u[3] === 'Trial' ? 'warn' : 'mute';
+    const pp = this.pill(plan);
+    return {
+      key: u[1], name: u[0], email: u[1], initial: u[0].charAt(0), lvl: u[2], plan: u[3],
+      planCl: pp.cl, planBg: pp.bg, planBd: pp.bd, seen: u[4], minutes: u[5],
+      seenCl: u[6] === 'stale' ? '#B91C1C' : u[6] === 'fresh' ? '#047857' : '#6B7280',
+      paid: u[3] !== 'Free', trial: u[3] === 'Trial', stale: u[6] === 'stale',
+      bonus: () => this.setState({ modal: { title: 'Бонусные минуты для ' + u[0], body: 'Начислим 30 бонусных минут разговора. Пользователь увидит их в профиле с пометкой причины.', ok: 'Начислить 30 мин', done: '30 бонусных минут начислено — ' + u[0] } }),
+      open: () => this.toastMsg('Карточка пользователя: ' + u[0])
+    };
+  }); }
+  renderVals() {
+    const st = this.state;
+    const S = {
+      overview: ['Дашборд', 'Ключевые метрики за последние 30 дней', null],
+      users: ['Пользователи', '12 480 аккаунтов · 3 214 активных за 7 дней', 'Экспорт CSV'],
+      payments: ['Оплаты и подписки', 'Списания, возвраты и состояние подписок', 'Выгрузить отчёт'],
+      promos: ['Промокоды и бонусы', 'Скидки на подписку и бонусные минуты тьютора', null],
+      texts: ['Тексты', 'Каталог, источники и модерация контента', '+ Новый текст'],
+      news: ['Новости', 'Еженедельный дайджест: сборка и статистика', null],
+      team: ['Команда и роли', 'Кто и что может менять в админке', null]
+    };
+    const cur = S[st.sec] || S.overview;
+    const nav = [
+      ['overview', 'Дашборд', '◧', null], ['users', 'Пользователи', '☰', '12 480'],
+      ['payments', 'Оплаты', '₽', null], ['promos', 'Промокоды', '%', '4'],
+      ['texts', 'Тексты', '¶', '312'], ['news', 'Новости', '◈', '1'],
+      ['team', 'Команда', '○', null]
+    ].map(n => ({
+      key: n[0], label: n[1], icon: n[2], cls: st.sec === n[0] ? 'on' : '',
+      hasCount: !!n[3], count: n[3] || '', on: () => this.setState({ sec: n[0] })
+    }));
+    const kpis = [
+      ['Всего юзеров', '12 480', '+486', true, 1],
+      ['Активные, 7 дней', '3 214', '+8%', true, 2],
+      ['Платных', '1 092', '8,7%', true, 3],
+      ['MRR', '644 280 ₽', '+11%', true, 4],
+      ['Отток, месяц', '4,2%', '−0,6 п.п.', true, 5]
+    ].map(k => ({
+      key: k[0], label: k[0], value: k[1], delta: k[2],
+      deltaCl: k[3] ? '#047857' : '#B91C1C', spark: this.spark(k[4], k[3])
+    }));
+    const regs = [24, 31, 28, 44, 62, 51, 33, 29, 38, 47, 55, 41, 36, 27];
+    const days = ['5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'];
+    const regBars = regs.map((v, i) => ({
+      key: i, day: days[i], h: Math.round((v / 62) * 100) + '%',
+      color: v >= 50 ? '#4F46E5' : '#C7D2FE', delay: (i * 0.03).toFixed(2) + 's',
+      title: days[i] + ' июля: ' + v + ' регистраций'
+    }));
+    const fun = [
+      ['Регистрация', '12 480', 100, '', 'info'],
+      ['Онбординг пройден', '9 860', 79, '−21%', 'info'],
+      ['Первый текст открыт', '7 420', 59, '−25%', 'info'],
+      ['Текст дочитан', '4 980', 40, '−33%', 'warn'],
+      ['Разговор с тьютором', '2 140', 17, '−57%', 'bad'],
+      ['Оплата', '1 092', 9, '−49%', 'warn']
+    ].map(f => ({
+      key: f[0], label: f[0], count: f[1], w: f[2] + '%', drop: f[3],
+      dropCl: f[4] === 'bad' ? '#B91C1C' : f[4] === 'warn' ? '#B45309' : '#9CA3AF',
+      barCl: f[4] === 'bad' ? '#EF4444' : f[4] === 'warn' ? '#F59E0B' : '#4F46E5'
+    }));
+    const contentStats = [
+      ['Public domain', 148, '#4F46E5'], ['Новости (пересказ)', 96, '#0D9488'],
+      ['Импорт юзеров', 52, '#B45309'], ['Партнёрские', 16, '#BE185D']
+    ].map(c => ({ key: c[0], label: c[0], n: c[1], w: Math.round((c[1] / 148) * 100) + '%', color: c[2] }));
+    const feed = [
+      ['Тимур Х. оплатил Trial → Pro', '10 мин', '#10B981'],
+      ['Новый импорт PDF: «Deep Work, ch. 2»', '18 мин', '#4F46E5'],
+      ['Текст «What Octopuses Know» ждёт модерации', '41 мин', '#F59E0B'],
+      ['Возврат 590 ₽ по заявке Никиты Е.', '2 ч', '#EF4444'],
+      ['Дайджест 18 июля: 1 842 открытия', '5 ч', '#6B7280']
+    ].map(f => ({ key: f[0], text: f[0], time: f[1], color: f[2] }));
+    const allUsers = this.usersData();
+    const q = (st.q || '').trim().toLowerCase();
+    const filt = { all: () => true, paid: u => u.paid, free: u => !u.paid, stale: u => u.stale };
+    const users = allUsers.filter(u => (filt[st.userFilter] || filt.all)(u) && (!q || (u.name + ' ' + u.email).toLowerCase().indexOf(q) > -1));
+    const userChips = [['all', 'Все'], ['paid', 'Платные'], ['free', 'Бесплатные'], ['stale', 'Не заходили 14+ дней']].map(c => ({
+      key: c[0], label: c[1],
+      bg: st.userFilter === c[0] ? '#EEF2FF' : '#fff', bd: st.userFilter === c[0] ? '#C7D2FE' : '#E5E7EB',
+      cl: st.userFilter === c[0] ? '#4338CA' : '#4B5563', fw: st.userFilter === c[0] ? 600 : 400,
+      on: () => this.setState({ userFilter: c[0] })
+    }));
+    const payKpis = [
+      ['MRR', '644 280 ₽', '+11%', 'к июню', true], ['ARPU', '590 ₽', '=', 'на платного', true],
+      ['Возвраты', '3', '0,3%', 'за месяц', false], ['Trial → Pro', '31%', '+4 п.п.', '14-дневный триал', true]
+    ].map(k => ({ key: k[0], label: k[0], value: k[1], delta: k[2], hint: k[3], deltaCl: k[4] ? '#047857' : '#B91C1C' }));
+    const payments = [
+      ['Ольга Дементьева', 'карта •• 4417', '590 ₽', 'Pro', '18 июля, 09:12', 'проведён', 'ok', 'Возврат'],
+      ['Тимур Хайруллин', 'СБП', '590 ₽', 'Pro', '18 июля, 08:40', 'проведён', 'ok', 'Возврат'],
+      ['Джамиля Асанова', 'карта •• 2098', '5 900 ₽', 'Pro год', '17 июля, 22:03', 'проведён', 'ok', 'Возврат'],
+      ['Игорь Лебедев', 'карта •• 7731', '590 ₽', 'Pro', '17 июля, 14:50', 'ошибка карты', 'bad', 'Повтор'],
+      ['Никита Ершов', 'карта •• 5512', '−590 ₽', 'Pro', '16 июля, 11:20', 'возврат', 'warn', 'Детали'],
+      ['Мария Соколова', 'СБП', '590 ₽', 'Pro', '15 июля, 19:35', 'ожидает', 'info', 'Детали'],
+      ['Павел Ким', 'карта •• 3390', '590 ₽', 'Pro', '14 июля, 07:58', 'проведён', 'ok', 'Возврат']
+    ].map(p => {
+      const pp = this.pill(p[6]);
+      return {
+        key: p[0] + p[4], name: p[0], method: p[1], amount: p[2], plan: p[3], date: p[4], status: p[5],
+        stCl: pp.cl, stBg: pp.bg, stBd: pp.bd, actLabel: p[7],
+        act: () => this.setState({ modal: { title: p[7] + ' · ' + p[0], body: p[7] === 'Возврат' ? 'Вернём ' + p[2] + ' на карту ' + p[1] + '. Подписка станет неактивной с конца оплаченного периода.' : 'Открыть детали платежа и историю списаний по этому пользователю.', ok: 'Подтвердить', done: p[7] + ' выполнен — ' + p[0] } })
+      };
+    });
+    const promos = [
+      ['SUMMER25', '25%', '31.08.26', 148, 200, 'активен'],
+      ['FRIEND30', '30%', 'бессрочно', 512, 1000, 'активен'],
+      ['WELCOME50', '50%', '01.07.26', 300, 300, 'исчерпан'],
+      ['PODCAST15', '15%', '30.09.26', 12, 500, 'активен']
+    ].map(p => {
+      const off = !!st.promoOff[p[0]];
+      const kind = off ? 'mute' : p[5] === 'исчерпан' ? 'mute' : 'ok';
+      const pp = this.pill(kind);
+      return {
+        key: p[0], code: p[0], pct: p[1], until: p[2], used: p[3] + ' / ' + p[4],
+        w: Math.round((p[3] / p[4]) * 100) + '%', status: off ? 'выключен' : p[5],
+        stCl: pp.cl, stBg: pp.bg, stBd: pp.bd,
+        toggleLabel: off ? 'Включить' : 'Выключить',
+        toggle: () => { this.setState(s => ({ promoOff: Object.assign({}, s.promoOff, { [p[0]]: !s.promoOff[p[0]] }) })); this.toastMsg('Код ' + p[0] + (off ? ' включён' : ' выключен')); }
+      };
+    });
+    const sources = [
+      ['Public domain', 148, '#4F46E5', 'Gutenberg, Wikisource. Публикуем целиком, права свободны.', 'Импортировать книгу'],
+      ['Новости (RSS)', 96, '#0D9488', 'Парсер приносит кандидатов каждое утро — мы пишем свой пересказ под уровень.', 'Настроить фиды'],
+      ['Импорт юзеров', 52, '#B45309', 'PDF, EPUB и ссылки. Виден только автору, в общий каталог не идёт.', 'Смотреть очередь'],
+      ['Партнёрские', 16, '#BE185D', 'Лицензия от издателей и блогов, по договору.', 'Добавить партнёра']
+    ].map(s => ({ key: s[0], label: s[0], n: s[1], color: s[2], hint: s[3], action: s[4], on: () => { window.location.href = 'Fluenta Admin Add Text.dc.html'; } }));
+    const texts = [
+      ['The Open Window', 'Саки · 1 240 слов', 'B1', 'Public domain', 'опубликован', 'ok', '95%'],
+      ['Europe Rewrites Its AI Rulebook', 'пересказ · 18 июля', 'B2', 'Новости', 'опубликован', 'ok', '93%'],
+      ['What Octopuses Know', 'пересказ · 17 июля', 'C1', 'Новости', 'на модерации', 'warn', '87%'],
+      ['A Quieter Way to Cool Cities', 'пересказ · 17 июля', 'B1', 'Новости', 'на модерации', 'warn', '95%'],
+      ['The Machine Stops', 'Форстер · 12 400 слов', 'C1', 'Public domain', 'опубликован', 'ok', '84%'],
+      ['Deep Work — ch. 2', 'импорт · Игорь Л.', 'B2', 'Импорт юзера', 'приватный', 'mute', '90%'],
+      ['How to Do Great Work', 'эссе · по лицензии', 'C2', 'Партнёрский', 'черновик', 'info', '81%']
+    ].map(t => {
+      const pp = this.pill(t[5]);
+      const published = t[4] === 'опубликован';
+      return {
+        key: t[0], title: t[0], meta: t[1], lvl: t[2], source: t[3], status: t[4],
+        stCl: pp.cl, stBg: pp.bg, stBd: pp.bd, known: t[6],
+        pubLabel: published ? 'Снять' : 'Опубликовать',
+        pubStyle: published ? '' : 'border-color:#C7D2FE;color:#4338CA',
+        edit: () => this.toastMsg('Редактор текста «' + t[0] + '»'),
+        pub: () => this.toastMsg(published ? 'Снят с публикации: ' + t[0] : 'Опубликован: ' + t[0])
+      };
+    });
+    const cand = [
+      ['c1', 'Europe Rewrites Its AI Rulebook', 'Reuters · 4 мин · пересказ готов', 'B2'],
+      ['c2', 'A Quieter Way to Cool Cities', 'Guardian · 3 мин · пересказ готов', 'B1'],
+      ['c3', 'Why Coffee Got Expensive', 'FT · 4 мин · пересказ готов', 'B2'],
+      ['c4', 'A New Telescope Opens Its Eye', 'Nature · 5 мин · нужен пересказ', 'C1'],
+      ['c5', 'The Return of the Paper Diary', 'NYT · 3 мин · пересказ готов', 'B1'],
+      ['c6', 'The Sub-Two-Hour Question', 'BBC · 4 мин · нужен пересказ', 'B2']
+    ];
+    const picked = st.picked;
+    const candidates = cand.map(c => ({
+      key: c[0], title: c[1], meta: c[2], lvl: c[3],
+      check: picked[c[0]] ? '✓' : '', bg: picked[c[0]] ? '#F7F7FF' : '#fff',
+      bd: picked[c[0]] ? '#E0E7FF' : '#EFEFEB',
+      boxBd: picked[c[0]] ? '#4F46E5' : '#D6D6D0', boxBg: picked[c[0]] ? '#4F46E5' : '#fff',
+      on: () => this.setState(s => ({ picked: Object.assign({}, s.picked, { [c[0]]: !s.picked[c[0]] }) }))
+    }));
+    const nPicked = cand.filter(c => picked[c[0]]).length;
+    const issues = [
+      ['18 июля', '5 новостей · B1–C1', '1 842'], ['11 июля', '5 новостей · B1–C1', '1 733'],
+      ['4 июля', '4 новости · B1–B2', '1 610'], ['27 июня', '5 новостей · B1–C1', '1 588'],
+      ['20 июня', '5 новостей · B1–C1', '1 402']
+    ].map(i => ({ key: i[0], date: 'Выпуск ' + i[0], meta: i[1], opens: i[2], on: () => this.toastMsg('Скопировали состав выпуска ' + i[0] + ' в черновик') }));
+    const team = [
+      ['Дмитрий Орлов', 'dmitry@fluenta.wiki', 'Владелец', 'Всё, включая оплаты и роли', 'info'],
+      ['Лиза Ткачёва', 'liza@fluenta.wiki', 'Редактор', 'Тексты, новости, дайджест', 'ok'],
+      ['Артём Гусев', 'artem@fluenta.wiki', 'Поддержка', 'Пользователи, бонусы, возвраты', 'warn'],
+      ['Катя Морозова', 'katya@fluenta.wiki', 'Аналитик', 'Только просмотр метрик', 'mute']
+    ].map(t => {
+      const pp = this.pill(t[4]);
+      return {
+        key: t[1], name: t[0], email: t[1], initial: t[0].charAt(0), role: t[2], access: t[3],
+        roleCl: pp.cl, roleBg: pp.bg, roleBd: pp.bd, on: () => this.toastMsg('Смена роли: ' + t[0])
+      };
+    });
+    const modal = st.modal;
+    const secActions = {
+      users: 'Экспорт CSV', payments: 'Выгрузить отчёт', texts: '+ Новый текст'
+    };
+    return {
+      nav, secTitle: cur[0], secHint: cur[1],
+      hasAction: !!secActions[st.sec], actionLabel: secActions[st.sec] || '',
+      doAction: () => {
+        if (st.sec === 'texts') { window.location.href = 'Fluenta Admin Add Text.dc.html'; return; }
+        this.toastMsg(secActions[st.sec] + ' — заглушка прототипа');
+      },
+      isOverview: st.sec === 'overview', isUsers: st.sec === 'users', isPay: st.sec === 'payments',
+      isPromo: st.sec === 'promos', isTexts: st.sec === 'texts', isNews: st.sec === 'news', isTeam: st.sec === 'team',
+      kpis, regBars, funnel: fun, contentStats, feed,
+      users, userChips, userCount: 'Показано ' + users.length + ' из ' + allUsers.length,
+      q: st.q, qChange: e => this.setState({ q: e.target.value }),
+      payKpis, payments, promos, sources, texts, candidates, issues, team,
+      pickedLabel: nPicked + ' из 5 новостей выбрано',
+      nCode: st.nCode, nPct: st.nPct, nLimit: st.nLimit, nUntil: st.nUntil,
+      nCodeCh: e => this.setState({ nCode: e.target.value }), nPctCh: e => this.setState({ nPct: e.target.value }),
+      nLimitCh: e => this.setState({ nLimit: e.target.value }), nUntilCh: e => this.setState({ nUntil: e.target.value }),
+      addPromo: () => {
+        const c = (st.nCode || '').trim().toUpperCase();
+        if (!c) return this.toastMsg('Введите код');
+        this.setState({ nCode: '', nPct: '', nLimit: '', nUntil: '' });
+        this.toastMsg('Код ' + c + ' создан' + (st.nPct ? ' · −' + st.nPct + '%' : ''));
+      },
+      bWho: st.bWho, bMin: st.bMin, bWhy: st.bWhy,
+      bWhoCh: e => this.setState({ bWho: e.target.value }), bMinCh: e => this.setState({ bMin: e.target.value }),
+      bWhyCh: e => this.setState({ bWhy: e.target.value }),
+      grantBonus: () => {
+        if (!(st.bWho || '').trim() || !(st.bMin || '').trim()) return this.toastMsg('Укажите кому и сколько минут');
+        this.toastMsg('Начислено ' + st.bMin + ' мин — ' + st.bWho);
+        this.setState({ bWho: '', bMin: '', bWhy: '' });
+      },
+      publishIssue: () => this.toastMsg(nPicked ? 'Выпуск на 25 июля опубликован · ' + nPicked + ' новостей' : 'Выберите хотя бы одну новость'),
+      saveDraft: () => this.toastMsg('Черновик сохранён'),
+      invite: () => this.toastMsg('Приглашение по e-mail — заглушка прототипа'),
+      modalOn: !!modal, modalTitle: modal ? modal.title : '', modalBody: modal ? modal.body : '', modalOk: modal ? modal.ok : '',
+      closeModal: () => this.setState({ modal: null }),
+      stop: e => e.stopPropagation(),
+      confirmModal: () => { const m = this.state.modal; this.setState({ modal: null }); if (m) this.toastMsg(m.done); },
+      toastOn: !!st.toast, toast: st.toast || ''
+    };
+  }
+}
+</script>
+</body>
+</html>

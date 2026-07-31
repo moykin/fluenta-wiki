@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fluenta-mobile.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #FAFAF8; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+  a { color: #4F46E5; text-decoration: none; }
+  a:hover { color: #4338CA; }
+  ::selection { background: rgba(79,70,229,.14); }
+  html { scroll-behavior: smooth; }
+  button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #4F46E5; outline-offset: 2px; }
+  summary { list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  @keyframes crise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  #scCta { display: none; }
+  @media (max-width: 639px) { #scCta { display: flex !important; } #scNav { display: none !important; } }
+</style>
+</helmet>
+<div data-screen-label="SEO — Английский для собеседования" style="min-height:100vh;background:#FAFAF8;">
+
+  <div style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(250,250,248,.97);border-bottom:1px solid #ECECE8;">
+    <div style="display:flex;align-items:center;gap:16px;height:58px;padding:0 clamp(16px,4vw,40px);max-width:1220px;margin:0 auto;">
+      <a href="Fluenta Landing.dc.html" style="display:flex;align-items:center;gap:9px;flex:none;color:#1A1A1A;">
+        <span style="width:26px;height:26px;border-radius:8px;background:#4F46E5;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;font-family:'Source Serif 4',serif;">f</span>
+        <span style="font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;letter-spacing:-.01em;">fluenta.wiki</span>
+      </a>
+      <div id="scNav" style="display:flex;align-items:center;gap:16px;font-size:13.5px;color:#6B7280;margin-left:8px;">
+        <a href="#how" style="color:#6B7280;" style-hover="color:#1A1A1A;">Как это работает</a>
+        <a href="#tracks" style="color:#6B7280;" style-hover="color:#1A1A1A;">Профессии</a>
+        <a href="#plan" style="color:#6B7280;" style-hover="color:#1A1A1A;">План на 14 дней</a>
+        <a href="#faq" style="color:#6B7280;" style-hover="color:#1A1A1A;">Вопросы</a>
+      </div>
+      <div style="flex:1;"></div>
+      <a href="Fluenta Pricing.dc.html" style="font-size:13.5px;font-weight:500;color:#6B7280;flex:none;" style-hover="color:#1A1A1A;">Тарифы</a>
+      <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:flex;align-items:center;justify-content:center;height:34px;padding:0 14px;background:#4F46E5;color:#fff;border-radius:9px;font-size:13px;font-weight:500;flex:none;" style-hover="background:#4338CA;color:#fff;">Начать бесплатно</a>
+    </div>
+  </div>
+
+  <main style="max-width:1060px;margin:0 auto;padding:88px clamp(16px,4vw,40px) 0;box-sizing:border-box;">
+
+    <nav aria-label="Хлебные крошки" style="max-width:68ch;margin:0 auto;">
+      <ol style="display:flex;align-items:center;gap:7px;flex-wrap:wrap;list-style:none;margin:0;padding:0;font-size:12.5px;color:#9CA3AF;">
+        <li><a href="Fluenta Landing.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Главная</a></li>
+        <li aria-hidden="true">›</li>
+        <li><a href="Fluenta SEO Pillar.dc.html" style="color:#6B7280;" style-hover="color:#1A1A1A;">Английский</a></li>
+        <li aria-hidden="true">›</li>
+        <li style="color:#9CA3AF;">Английский для собеседования и работы</li>
+      </ol>
+    </nav>
+
+    <header style="max-width:68ch;margin:22px auto 0;">
+      <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#4338CA;background:#EEF2FF;border:1px solid #E0E7FF;border-radius:9px;padding:6px 11px;text-wrap:pretty;">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(31px,5vw,50px);line-height:1.08;font-weight:700;letter-spacing:-.022em;margin:14px 0 0;text-wrap:pretty;">Английский для собеседования и работы: 14 дней, чтобы заговорить о своей профессии</h1>
+      <p style="font-family:'Source Serif 4',serif;font-size:clamp(17px,2.2vw,20px);line-height:1.62;color:#374151;margin:16px 0 0;text-wrap:pretty;">Вы читаете документацию, письма и статьи — и всё понимаете. Но на созвоне или собеседовании нужные слова не приходят. Разрыв между «понимаю» и «говорю» закрывается не новыми правилами, а практикой на языке вашей работы: термины профессии, ответы на реальные вопросы и повторения, которые ловят ошибку до того, как вы повторите её третий раз.</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px;">
+        <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:inline-flex;align-items:center;height:46px;padding:0 20px;background:#4F46E5;color:#fff;border-radius:11px;font-size:14.5px;font-weight:500;" style-hover="background:#4338CA;color:#fff;">Пройти цикл за 3 минуты</a>
+        <a href="#plan" style="display:inline-flex;align-items:center;height:46px;padding:0 18px;border:1px solid #E5E7EB;background:#fff;color:#374151;border-radius:11px;font-size:14.5px;font-weight:500;" style-hover="border-color:#C7D2FE;color:#4F46E5;">Посмотреть план на 14 дней</a>
+        <span style="font-size:12.5px;color:#9CA3AF;">Без карты · один трек бесплатно</span>
+      </div>
+      <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid #ECECE8;">
+        <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="3">
+          <div style="min-width:150px;">
+            <div style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;letter-spacing:-.01em;">{{ s.n }}</div>
+            <div style="font-size:12.5px;line-height:1.5;color:#6B7280;margin-top:3px;">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </header>
+
+    <section id="gap" style="max-width:68ch;margin:56px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;">Почему «знаю английский» и «прохожу собеседование» — разные умения</h2>
+      <p style="font-size:16px;line-height:1.75;color:#374151;margin:14px 0 0;">Чтение и слушание — это узнавание: мозгу достаточно опознать знакомую форму. Речь требует обратного — достать конструкцию из памяти за секунду, без подсказки. Этот разрыв называют output gap, и он не закрывается ещё одним учебником: нужны попытки говорить и точная обратная связь на каждую.</p>
+      <p style="font-size:16px;line-height:1.75;color:#374151;margin:14px 0 0;">На собеседовании к этому добавляется второй слой — язык профессии. Вы можете уверенно обсуждать отпуск и погоду, но встать на вопросе «walk me through a trade-off you made». Дело не в уровне: слов вашей специальности просто не было в учебнике.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:22px;">
+        <sc-for list="{{ gaps }}" as="g" hint-placeholder-count="3">
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:17px 18px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;">{{ g.kicker }}</div>
+            <div style="font-size:14.5px;font-weight:600;margin-top:8px;line-height:1.4;">{{ g.title }}</div>
+            <div style="font-size:13px;line-height:1.6;color:#6B7280;margin-top:7px;">{{ g.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="how" style="max-width:820px;margin:60px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;max-width:34ch;">Как Fluenta доводит профессиональный текст до речи</h2>
+      <p style="font-size:16px;line-height:1.75;color:#374151;margin:14px 0 0;max-width:68ch;">Один цикл вместо трёх приложений. Читаете материал своей профессии, разбираете непонятное прямо в тексте, пересказываете вслух — тьютор слушает и даёт одну точную правку. Ошибка уходит в повторения и возвращается назавтра.</p>
+      <div style="display:flex;flex-direction:column;gap:2px;margin-top:22px;background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;gap:16px;padding:18px 20px;border-bottom:1px solid #F3F4F6;">
+            <span style="flex:none;width:30px;height:30px;border-radius:9px;background:#EEF2FF;color:#4F46E5;display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;font-size:14px;font-weight:700;">{{ s.n }}</span>
+            <div style="min-width:0;">
+              <div style="font-size:15.5px;font-weight:600;">{{ s.title }}</div>
+              <div style="font-size:13.5px;line-height:1.65;color:#6B7280;margin-top:5px;">{{ s.text }}</div>
+              <div style="font-size:12.5px;color:#4338CA;margin-top:7px;">{{ s.example }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="tracks" style="max-width:1000px;margin:60px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;">Десять профессий, включая рабочие специальности</h2>
+      <p style="font-size:16px;line-height:1.75;color:#374151;margin:14px 0 0;max-width:68ch;">В каждом треке — банк терминов с произношением, гайд самопрезентации, вопросы, которые задают именно в этой профессии, и тексты для чтения: документация, инструкции, кейсы. Один трек открыт бесплатно.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:12px;margin-top:22px;">
+        <sc-for list="{{ tracks }}" as="t" hint-placeholder-count="10">
+          <a href="Fluenta Career.dc.html" style="display:block;background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px;color:#1A1A1A;" style-hover="border-color:#C7D2FE;color:#1A1A1A;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;">
+              <span style="font-size:14.5px;font-weight:600;line-height:1.3;">{{ t.name }}</span>
+              <span style="flex:none;font-size:10.5px;font-weight:600;color:{{ t.tagCl }};background:{{ t.tagBg }};border:1px solid {{ t.tagBd }};border-radius:6px;padding:2px 6px;">{{ t.tag }}</span>
+            </div>
+            <div style="font-size:12.5px;line-height:1.55;color:#6B7280;margin-top:8px;">{{ t.sub }}</div>
+            <div style="font-size:11.5px;color:#4338CA;font-weight:600;margin-top:10px;">{{ t.terms }} терминов</div>
+          </a>
+        </sc-for>
+      </div>
+      <div style="font-size:13px;color:#9CA3AF;margin-top:14px;">Нет вашей специальности? Загрузите три текста своей работы — трек соберётся под неё.</div>
+    </section>
+
+    <section id="plan" style="max-width:1000px;margin:60px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;">План на 14 дней до собеседования</h2>
+      <p style="font-size:16px;line-height:1.75;color:#374151;margin:14px 0 0;max-width:68ch;">Реалистичный график: 15–20 минут в день, из них голоса — примерно 30 минут за все две недели. Чтение и повторения времени по счётчику не занимают.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:22px;">
+        <sc-for list="{{ plan }}" as="p" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #E5E7EB;border-radius:14px;padding:16px 17px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#4F46E5;">{{ p.day }}</span>
+              <span style="font-size:11.5px;color:#9CA3AF;">{{ p.mins }}</span>
+            </div>
+            <div style="font-size:14.5px;font-weight:600;margin-top:8px;">{{ p.title }}</div>
+            <div style="font-size:12.5px;line-height:1.6;color:#6B7280;margin-top:6px;">{{ p.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;">Пример: ответ до и после одной правки</h2>
+      <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:22px 24px;margin-top:18px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;">Вопрос интервьюера</div>
+        <div lang="en" style="font-family:'Source Serif 4',serif;font-size:18px;line-height:1.55;font-weight:600;margin-top:6px;">“Tell me about a technical decision you later regretted.”</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px;">
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#B91C1C;">Как звучало</div>
+            <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.7;color:#374151;margin-top:7px;">“We had a problem with the queue. It was bad. I fixed it and after that it was better.”</div>
+            <div style="font-size:12.5px;line-height:1.6;color:#6B7280;margin-top:9px;">Нет контекста, нет действий, нет результата — интервьюер не может оценить вклад.</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#047857;">После правки</div>
+            <div lang="en" style="font-family:'Source Serif 4',serif;font-size:15.5px;line-height:1.7;color:#1A1A1A;margin-top:7px;">“Last spring our task queue dropped messages under load. I owned the fix: first I added idempotency keys, then a dead-letter queue, and finally alerts on retry spikes. We went from six lost jobs a week to none in three months.”</div>
+            <div style="font-size:12.5px;line-height:1.6;color:#6B7280;margin-top:9px;">Тот же опыт, каркас S-T-A-R и одно число в финале — этому учит трек, не заучиванию текста.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:820px;margin:56px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;">Сколько это стоит</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px;">
+        <div style="background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:20px 22px;">
+          <div style="font-size:13px;font-weight:600;color:#6B7280;">Free</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:28px;font-weight:700;margin-top:6px;">0 ₽</div>
+          <div style="font-size:13px;line-height:1.7;color:#374151;margin-top:12px;">Один карьерный трек, чтение и повторения без счётчика, один пересказ в неделю (≈15 голосовых минут в месяц).</div>
+        </div>
+        <div style="background:#fff;border:1px solid #C7D2FE;border-radius:16px;padding:20px 22px;box-shadow:0 10px 28px rgba(79,70,229,.09);">
+          <div style="font-size:13px;font-weight:600;color:#4F46E5;">Pro</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:28px;font-weight:700;margin-top:6px;">590 ₽ / мес</div>
+          <div style="font-size:13px;line-height:1.7;color:#374151;margin-top:12px;">Все десять треков, mock interview, 150 голосовых минут в месяц ≈ 25 пересказов. Не хватило — пакеты +60 и +180 минут.</div>
+        </div>
+      </div>
+      <div style="font-size:13px;line-height:1.7;color:#6B7280;margin-top:14px;">Минуты расходуют только пересказы, тьютор и репетиция собеседования. Чтение, переводы, разборы и карточки счётчика не имеют. <a href="Fluenta Pricing.dc.html">Полное сравнение тарифов →</a></div>
+    </section>
+
+    <section id="faq" style="max-width:68ch;margin:56px auto 0;">
+      <h2 style="font-family:'Source Serif 4',serif;font-size:clamp(23px,3.2vw,30px);font-weight:700;letter-spacing:-.015em;margin:0;">Частые вопросы</h2>
+      <div style="margin-top:16px;background:#fff;border:1px solid #E5E7EB;border-radius:16px;overflow:hidden;">
+        <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+          <details style="border-bottom:1px solid #F3F4F6;">
+            <summary style="display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;font-size:15px;font-weight:600;color:#1A1A1A;">
+              <span style="flex:1;min-width:0;">{{ f.q }}</span>
+              <span style="flex:none;color:#9CA3AF;font-size:18px;line-height:1;">+</span>
+            </summary>
+            <div style="font-size:14px;line-height:1.75;color:#374151;padding:0 20px 18px;">{{ f.a }}</div>
+          </details>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="max-width:68ch;margin:52px auto 0;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;">Читать дальше</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px;">
+        <sc-for list="{{ links }}" as="l" hint-placeholder-count="4">
+          <a href="{{ l.href }}" style="display:block;background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:14px 15px;color:#1A1A1A;" style-hover="border-color:#C7D2FE;color:#1A1A1A;">
+            <div style="font-size:14px;font-weight:600;line-height:1.35;">{{ l.title }}</div>
+            <div style="font-size:12.5px;color:#6B7280;margin-top:5px;">{{ l.sub }}</div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <aside style="max-width:68ch;margin:44px auto 0;background:#4F46E5;border-radius:16px;padding:26px clamp(18px,3.5vw,30px);">
+      <div style="display:inline-block;font-size:12px;font-weight:500;line-height:1.45;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.32);border-radius:9px;padding:6px 11px;text-wrap:pretty;">Fluenta превращает то, что вы читаете, в то, что вы можете сказать</div>
+      <div style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:700;color:#fff;margin-top:12px;">Начните с одного текста своей профессии</div>
+      <div style="font-size:14px;line-height:1.7;color:#C7D2FE;margin-top:8px;max-width:52ch;">Три минуты: прочитать, разобрать фразу, пересказать вслух, получить одну правку. Дальше решите, нужен ли Pro.</div>
+      <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="display:inline-flex;align-items:center;height:44px;padding:0 20px;background:#fff;color:#4338CA;border-radius:11px;font-size:14px;font-weight:600;margin-top:18px;" style-hover="background:#EEF2FF;color:#4338CA;">Пройти цикл бесплатно</a>
+    </aside>
+
+    <footer style="max-width:68ch;margin:44px auto 0;padding:22px 0 56px;border-top:1px solid #ECECE8;display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+      <span style="font-size:12.5px;color:#9CA3AF;">© fluenta.wiki</span>
+      <a href="Fluenta About.dc.html" style="font-size:12.5px;color:#6B7280;" style-hover="color:#1A1A1A;">О проекте</a>
+      <a href="Fluenta Pricing.dc.html" style="font-size:12.5px;color:#6B7280;" style-hover="color:#1A1A1A;">Тарифы</a>
+      <a href="Fluenta SEO Pillar.dc.html" style="font-size:12.5px;color:#6B7280;" style-hover="color:#1A1A1A;">Как выучить английский</a>
+      <span style="flex:1;"></span>
+      <span style="font-size:12.5px;color:#9CA3AF;">Цель — превратить то, что вы читаете, в то, что вы можете сказать</span>
+    </footer>
+
+  </main>
+
+  <div id="scCta" style="position:fixed;bottom:0;left:0;right:0;z-index:55;display:none;align-items:center;gap:12px;padding:12px 16px 20px;background:rgba(250,250,248,.97);border-top:1px solid #ECECE8;">
+    <span style="flex:1;min-width:0;font-size:12.5px;line-height:1.4;color:#6B7280;">Один трек бесплатно, без карты</span>
+    <a href="Fluenta Onboarding.dc.html" class="fl-tap" style="flex:none;display:inline-flex;align-items:center;height:44px;padding:0 18px;background:#4F46E5;color:#fff;border-radius:11px;font-size:14px;font-weight:500;" style-hover="background:#4338CA;color:#fff;">Начать</a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      heroStats: [
+        { key: 1, n: '10 профессий', label: 'от разработки и финансов до сварки, монтажа и электрики' },
+        { key: 2, n: '3 минуты', label: 'до первой правки — цикл проходится целиком, без регистрации' },
+        { key: 3, n: '≈30 минут', label: 'голоса на всю двухнедельную подготовку к собеседованию' }
+      ],
+      gaps: [
+        { key: 1, kicker: 'Узнавание', title: 'Читать легче, чем говорить', text: 'В тексте форму достаточно опознать. В речи её нужно достать из памяти за секунду — это другой навык и другая тренировка.' },
+        { key: 2, kicker: 'Лексика', title: 'Учебник не знает вашей работы', text: 'Weld bead, load chart, due diligence, edge case — слова, которые решают на собеседовании, в общих курсах не встречаются.' },
+        { key: 3, kicker: 'Структура', title: 'Дело не только в словах', text: 'Ответ без ситуации, действий и результата звучит слабо даже на хорошем английском. Каркас важнее беглости.' }
+      ],
+      steps: [
+        { key: 1, n: '1', title: 'Читаете текст своей профессии', text: 'Документация, инструкция, кейс или статья. Непонятную фразу нажимаете прямо в тексте — перевод и разбор появляются рядом, без выхода на другую страницу.', example: 'Пример: “the trade-off here is latency versus cost”' },
+        { key: 2, n: '2', title: 'Разбираете, почему это так', text: 'Не только перевод, но и объяснение конструкции под вашу языковую пару. Это то, чего не даёт машинный перевод.', example: 'Past Perfect после since, а не просто «прошедшее время»' },
+        { key: 3, n: '3', title: 'Пересказываете вслух', text: 'Тридцать секунд своими словами. Тьютор слушает, разбирает структуру ответа и даёт одну правку — самую важную, а не список из двенадцати.', example: 'Разбор S-T-A-R: где пропал результат' },
+        { key: 4, n: '4', title: 'Ошибка возвращается назавтра', text: 'Правка становится карточкой в интервальных повторениях. Так одна и та же ошибка не доживает до собеседования.', example: 'Карточка в очереди на 09:00 следующего дня' }
+      ],
+      tracks: [
+        ['Разработка / IT', 'Ревью, инциденты, system design', 240, 0],
+        ['Продуктовый дизайн', 'Защита решений, критика, хендофф', 180, 1],
+        ['Продажи и аккаунты', 'Discovery, возражения, продления', 210, 1],
+        ['Финансы и консалтинг', 'Кейс-интервью, модели, отчётность', 260, 1],
+        ['Наука и академия', 'Доклад, метод, гранты, рецензии', 300, 1],
+        ['Медицина', 'Пациент, передача смены, документы', 320, 1],
+        ['Сварка и металлоконструкции', 'Допуски, дефекты шва, инспекция', 160, 1],
+        ['Монтаж и такелаж', 'Сигналы, грузовые таблицы, инструктаж', 150, 1],
+        ['Электрика', 'Блокировки, нагрузки, приёмка щитов', 170, 1],
+        ['Сантехника и HVAC', 'Опрессовка, обратный поток, заказчик', 165, 1]
+      ].map((t, i) => ({
+        key: i, name: t[0], sub: t[1], terms: String(t[2]),
+        tag: t[3] === 0 ? 'Free' : 'Pro',
+        tagCl: t[3] === 0 ? '#047857' : '#4338CA',
+        tagBg: t[3] === 0 ? '#ECFDF5' : '#EEF2FF',
+        tagBd: t[3] === 0 ? '#A7F3D0' : '#E0E7FF'
+      })),
+      plan: [
+        { key: 1, day: 'День 1–2', mins: 'голос 0 мин', title: 'Термины профессии', text: '40 слов трека уходят в повторения. Только чтение и произношение — минуты не тратятся.' },
+        { key: 2, day: 'День 3–4', mins: 'голос 6 мин', title: 'Самопрезентация', text: 'Гайд в читалке: 30 секунд, 90 секунд и финал «почему вы». Каждый вариант проговариваете вслух.' },
+        { key: 3, day: 'День 5–6', mins: 'голос 8 мин', title: 'Четыре истории по STAR', text: 'Спор с руководителем, ошибка, жёсткий срок, сложное объяснение. Каркас — готовый, содержание — ваше.' },
+        { key: 4, day: 'День 7–9', mins: 'голос 12 мин', title: 'Mock interview №1', text: 'Вопросы вашей профессии голосом. Разбор структуры и правки формулировок.' },
+        { key: 5, day: 'День 10–12', mins: 'голос 0 мин', title: 'Разбор вакансии', text: 'Вставляете описание — получаете термины и вопросы, которые почти наверняка зададут.' },
+        { key: 6, day: 'День 13–14', mins: 'голос 12 мин', title: 'Mock interview №2', text: 'Только слабые места из первой сессии. Накануне — короткое повторение карточек.' }
+      ],
+      faq: [
+        { key: 1, q: 'Мой уровень B1 — этого хватит для профессионального собеседования?', a: 'Да, если тренировать нужное. На собеседовании ценят понятность и структуру, а не сложные конструкции. Треки построены от A2–B1: сначала термины и короткие ответы, потом развёрнутые истории.' },
+        { key: 2, q: 'У меня рабочая специальность — сварка, монтаж, электрика. Это правда есть?', a: 'Да, четыре трека рабочих профессий: терминология площадки, допуски и разрешения, инструктажи, разговор с инспектором и заказчиком. Тексты — реальные инструкции и формы, а не адаптированные диалоги из учебника.' },
+        { key: 3, q: 'Сколько нужно заниматься в день?', a: '15–20 минут. Чтение и повторения можно делать сколько угодно — они не расходуют голосовые минуты. Ограничен только голос: на Free это один пересказ в неделю, на Pro — 150 минут в месяц.' },
+        { key: 4, q: 'Можно загрузить свою вакансию или резюме?', a: 'Да. Fluenta разбирает описание вакансии и собирает из него термины, вероятные вопросы и план ответа на каждый. Резюме разбирается так же — по нему готовятся ответы о вашем опыте.' },
+        { key: 5, q: 'Чем это отличается от разговорного клуба или репетитора?', a: 'Ничем не заменяет живого собеседника, но работает в любое время и на вашем материале. Главное отличие — цикл замкнут: ошибка из пересказа сама превращается в повторение и возвращается назавтра.' },
+        { key: 6, q: 'Что происходит с записью голоса?', a: 'Запись нужна только для разбора ответа и не хранится. Остаются лишь ваши ошибки — в виде карточек для повторения.' }
+      ],
+      links: [
+        { key: 1, href: 'Fluenta SEO Pillar.dc.html', title: 'Как выучить английский по текстам', sub: 'Метод целиком, без карьерного контекста' },
+        { key: 2, href: 'Fluenta SEO Texts.dc.html', title: 'Тексты на английском по уровням', sub: 'Каталог и подбор по знакомым словам' },
+        { key: 3, href: 'Fluenta SEO Grammar.dc.html', title: 'Грамматика в живых текстах', sub: 'Конструкции, которые встречаются в работе' },
+        { key: 4, href: 'Fluenta Career.dc.html', title: 'Карьерные треки в приложении', sub: 'Термины, mock interview, тексты профессии' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
