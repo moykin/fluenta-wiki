@@ -118,7 +118,8 @@ jobs:
 
       - name: Lighthouse CI
         if: steps.check.outputs.exists == 'true'
-        uses: treosh/lighthouse-ci-action@v12
+        # Точная версия: major-тега v12 у этого action не существует.
+        uses: treosh/lighthouse-ci-action@12.6.2
         with:
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
