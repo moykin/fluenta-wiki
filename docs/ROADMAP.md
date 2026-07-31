@@ -4,9 +4,18 @@
 
 Принцип: сначала снимаем техническую неизвестность, потом гоним фичи. Каждый этап заканчивается чем-то, что реально работает на устройстве.
 
-## Э0 — Фундамент репозитория ✅ (2026-07-31)
+## Э0 — Фундамент репозитория и контур разработки ✅ (2026-07-31)
 
-git init, монорепо, дизайн-хэндофф в репо, документация, secret-hygiene, первый push.
+git init, монорепо, дизайн-хэндофф в репо, документация, первый push.
+
+Плюс инженерный контур, поставленный до появления кода: `Makefile` как единая точка входа, pre-commit с gitleaks, четыре workflow (CI, Security, Deploy, Pages), Dependabot, бюджеты Lighthouse, серверный compose с изоляцией dev от прода, скрипт провижна. Подробности — [DEVELOPMENT.md](DEVELOPMENT.md), [OPERATIONS.md](OPERATIONS.md), [QUALITY.md](QUALITY.md).
+
+**Осталось сделать руками** (требует доступов, которых нет у репозитория):
+1. Завести секреты в GitHub: `SSH_HOST`, `SSH_USER`, `SSH_KEY`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
+2. Создать два проекта в Cloudflare Pages: `fluenta-marketing`, `fluenta-app`.
+3. Прогнать `infra/provision.sh` на сервере и положить `/opt/fluenta/.env`.
+4. Направить DNS: `api` и `api-dev` на сервер (DNS-only), `fluenta.wiki` и `app` — на Pages.
+5. Создать окружение `prod` в настройках репозитория с правилом ручного подтверждения.
 
 ## Э1 — Сквозной путь «код → прод»
 

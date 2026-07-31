@@ -1,0 +1,69 @@
+# Caddy: TLS, security-заголовки, маршрутизация прод/dev.
+# Сертификаты Let's Encrypt получаются автоматически.
+
+{
+	# Продовый email для уведомлений ACME задаётся при провижне.
+	servers {
+		protocols h1 h2 h3
+	}
+}
+
+# ─────────────────────────── Прод API ───────────────────────────
+
+api.fluenta.wiki {
+	encode zstd gzip
+
+	header {
+		# HSTS на два года с преднагрузкой.
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "geolocation=(), camera=(), microphone=(self)"
+		# Не раскрываем, чем обслуживается.
+		-Server
+	}
+
+	# Rate limiting делается в приложении (slowapi на FastAPI), а не здесь:
+	# в стандартном образе Caddy нет модуля rate_limit, а собирать свой
+	# образ ради этого — лишняя поверхность обслуживания.
+
+	reverse_proxy api-prod:8000 {
+		header_up X-Real-IP {remote_host}
+		# Голосовой релей — долгие WebSocket-сессии.
+		transport http {
+			read_timeout 3600s
+			write_timeout 3600s
+		}
+	}
+}
+
+# ──────────────────────────── Dev API ────────────────────────────
+
+api-dev.fluenta.wiki {
+	encode zstd gzip
+
+	header {
+		# Dev-стенд не должен попадать в поисковую выдачу ни при каких
+		# обстоятельствах: дубли контента бьют по SEO прода.
+		X-Robots-Tag "noindex, nofollow, noarchive"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		-Server
+	}
+
+	# Пароль на весь dev-стенд. Хэш генерируется командой
+	#   docker run --rm caddy:2-alpine caddy hash-password --plaintext '<пароль>'
+	# и кладётся в .env как DEV_BASICAUTH_HASH.
+	basic_auth {
+		dev {$DEV_BASICAUTH_HASH}
+	}
+
+	reverse_proxy api-dev:8000 {
+		header_up X-Real-IP {remote_host}
+		transport http {
+			read_timeout 3600s
+			write_timeout 3600s
+		}
+	}
+}

@@ -1,0 +1,165 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Новый пуш в ту же ветку отменяет предыдущий прогон — не жжём минуты.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Минимальные права по умолчанию: job получает только чтение репозитория.
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (Python)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли backend
+        id: check
+        run: |
+          if [ -f backend/pyproject.toml ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
+          else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Backend ещё не создан — пропускаю."; fi
+
+      - uses: astral-sh/setup-uv@v6
+        if: steps.check.outputs.exists == 'true'
+        with:
+          enable-cache: true
+
+      - name: Установить зависимости
+        if: steps.check.outputs.exists == 'true'
+        working-directory: backend
+        run: uv sync --all-extras --dev
+
+      - name: Формат (ruff)
+        if: steps.check.outputs.exists == 'true'
+        working-directory: backend
+        run: uv run ruff format --check .
+
+      - name: Линт (ruff)
+        if: steps.check.outputs.exists == 'true'
+        working-directory: backend
+        run: uv run ruff check .
+
+      - name: Типы (mypy)
+        if: steps.check.outputs.exists == 'true'
+        working-directory: backend
+        run: uv run mypy .
+
+      - name: Тесты
+        if: steps.check.outputs.exists == 'true'
+        working-directory: backend
+        run: uv run pytest -q --cov=app --cov-report=term-missing --cov-fail-under=70
+
+  app:
+    name: Приложение (Flutter)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли приложение
+        id: check
+        run: |
+          if [ -f app/pubspec.yaml ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
+          else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Приложение ещё не создано — пропускаю."; fi
+
+      - uses: subosito/flutter-action@v2
+        if: steps.check.outputs.exists == 'true'
+        with:
+          channel: stable
+          cache: true
+
+      - name: Зависимости
+        if: steps.check.outputs.exists == 'true'
+        working-directory: app
+        run: flutter pub get
+
+      - name: Формат
+        if: steps.check.outputs.exists == 'true'
+        working-directory: app
+        run: dart format --set-exit-if-changed --output=none .
+
+      - name: Анализ
+        if: steps.check.outputs.exists == 'true'
+        working-directory: app
+        run: flutter analyze --fatal-infos
+
+      - name: Тесты
+        if: steps.check.outputs.exists == 'true'
+        working-directory: app
+        run: flutter test --coverage
+
+      - name: Сборка web (проверка, что собирается)
+        if: steps.check.outputs.exists == 'true'
+        working-directory: app
+        run: flutter build web --release
+
+  marketing:
+    name: Маркетинг (Jaspr)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли маркетинг
+        id: check
+        run: |
+          if [ -f marketing/pubspec.yaml ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
+          else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Маркетинг ещё не создан — пропускаю."; fi
+
+      - uses: dart-lang/setup-dart@v1
+        if: steps.check.outputs.exists == 'true'
+
+      - name: Зависимости
+        if: steps.check.outputs.exists == 'true'
+        working-directory: marketing
+        run: dart pub get
+
+      - name: Формат и анализ
+        if: steps.check.outputs.exists == 'true'
+        working-directory: marketing
+        run: |
+          dart format --set-exit-if-changed --output=none .
+          dart analyze --fatal-infos
+
+      - name: Сборка статики
+        if: steps.check.outputs.exists == 'true'
+        working-directory: marketing
+        run: dart run jaspr_cli:jaspr build
+
+  infra:
+    name: Инфраструктура
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Проверить shell-скрипты
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          find infra -name '*.sh' -print0 | xargs -0 -r shellcheck
+
+      - name: Проверить docker-compose
+        run: |
+          for f in infra/docker-compose*.yml; do
+            docker compose -f "$f" config --quiet && echo "OK: $f"
+          done
+        env:
+          # Плейсхолдеры: проверяем синтаксис, а не реальные значения.
+          POSTGRES_DB: x
+          POSTGRES_USER: x
+          POSTGRES_PASSWORD: x
+          DEV_DB: x
+          DEV_DB_USER: x
+          DEV_DB_PASSWORD: x
+          JWT_SECRET: x
+          DEV_JWT_SECRET: x
+          GEMINI_API_KEY: x
+          DEV_GEMINI_API_KEY: x
+          PROD_CORS_ORIGINS: x
+          DEV_CORS_ORIGINS: x
+          DEV_BASICAUTH_HASH: x

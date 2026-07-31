@@ -29,13 +29,27 @@ infra/      — docker-compose, Caddy, провижн сервера
 docs/       — документация проекта
 ```
 
+## Быстрый старт
+
+```bash
+make hooks     # pre-commit хуки, включая сканер секретов
+make db-up     # локальная база в Docker
+make api       # backend  → 127.0.0.1:8000
+make app-web   # приложение в браузере
+```
+
+`make` без аргументов покажет все команды.
+
 ## Документация
 
 - [docs/PROJECT.md](docs/PROJECT.md) — что за продукт, фичи, монетизация
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — стек, решения и их обоснование, открытые вопросы
 - [docs/ROADMAP.md](docs/ROADMAP.md) — план работ по этапам
+- [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) — локальная разработка: как видеть результат
+- [docs/OPERATIONS.md](docs/OPERATIONS.md) — окружения, dev-стенд, деплой, откат
+- [docs/QUALITY.md](docs/QUALITY.md) — стандарты кода, тесты, бюджеты производительности
+- [docs/SECURITY.md](docs/SECURITY.md) — секреты и операционная безопасность
 - [docs/REPO.md](docs/REPO.md) — устройство репозитория
-- [docs/SECURITY.md](docs/SECURITY.md) — правила работы с секретами
 - [docs/POSITIONING.md](docs/POSITIONING.md) — посыл и тон
 - [design/README.md](design/README.md) — дизайн-хэндофф: экраны, токены, состояния
 

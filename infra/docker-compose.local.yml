@@ -1,0 +1,33 @@
+# Локальная разработка: только база. Backend, приложение и маркетинг
+# запускаются нативно (быстрее и с hot reload) — см. Makefile.
+#
+#   make db-up      поднять
+#   make db-reset   снести вместе с данными
+#
+# Порт 5433, а не 5432 — чтобы не конфликтовать с системным Postgres,
+# если он у вас установлен.
+
+name: fluenta-local
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: fluenta
+      POSTGRES_USER: fluenta
+      # Локальная база: слабый пароль допустим, наружу она не смотрит.
+      POSTGRES_PASSWORD: localdev
+    ports:
+      # 127.0.0.1 обязателен: иначе база доступна из локальной сети.
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fluenta -d fluenta"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

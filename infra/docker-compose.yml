@@ -1,0 +1,153 @@
+# Серверный стек: прод и dev-стенд на одной машине (CPX21, 4 ГБ).
+#
+# Фронт (маркетинг на Jaspr и Flutter web) здесь НЕ хостится — он лежит
+# на Cloudflare Pages. Сервер держит только API и голосовой релей.
+#
+# Запуск на сервере:  cd /opt/fluenta && docker compose up -d
+# Файл .env лежит рядом, права 600, в репозиторий не попадает.
+
+name: fluenta
+
+x-api-common: &api-common
+  restart: unless-stopped
+  # Контейнеры не должны иметь ничего лишнего.
+  security_opt:
+    - no-new-privileges:true
+  cap_drop:
+    - ALL
+  networks:
+    - edge
+    - data
+  healthcheck:
+    test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/healthz')"]
+    interval: 30s
+    timeout: 5s
+    retries: 3
+    start_period: 40s
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"   # HTTP/3
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data      # сертификаты — переживают пересоздание
+      - caddy_config:/config
+    environment:
+      DEV_BASICAUTH_HASH: ${DEV_BASICAUTH_HASH}
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE      # только чтобы слушать 80/443
+    networks:
+      - edge
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    # Портов наружу НЕТ вообще: база доступна только внутри сети data.
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      DEV_DB: ${DEV_DB}
+      DEV_DB_USER: ${DEV_DB_USER}
+      DEV_DB_PASSWORD: ${DEV_DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d:ro
+    command:
+      # Настройки под 4 ГБ: базе отдаём немного, остальное нужно API.
+      - "postgres"
+      - "-c"
+      - "shared_buffers=256MB"
+      - "-c"
+      - "effective_cache_size=768MB"
+      - "-c"
+      - "max_connections=60"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api-prod:
+    <<: *api-common
+    image: ghcr.io/moykin/fluenta-api:${PROD_TAG:-latest}
+    environment:
+      APP_ENV: production
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      JWT_SECRET: ${JWT_SECRET}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      CORS_ORIGINS: ${PROD_CORS_ORIGINS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  api-dev:
+    <<: *api-common
+    image: ghcr.io/moykin/fluenta-api:${DEV_TAG:-main}
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+asyncpg://${DEV_DB_USER}:${DEV_DB_PASSWORD}@postgres:5432/${DEV_DB}
+      JWT_SECRET: ${DEV_JWT_SECRET}
+      # Отдельный ключ с меньшей квотой: эксперименты на dev не должны
+      # выжигать прод-лимиты и прод-бюджет.
+      GEMINI_API_KEY: ${DEV_GEMINI_API_KEY}
+      CORS_ORIGINS: ${DEV_CORS_ORIGINS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        # Dev намеренно меньше прода: утечка памяти на dev не должна
+        # ронять боевой сервис.
+        limits:
+          memory: 640M
+
+networks:
+  edge:
+  data:
+    internal: true    # у контейнеров этой сети нет выхода в интернет
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

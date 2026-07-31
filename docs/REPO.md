@@ -21,10 +21,22 @@ fluenta.wiki/
 │   ├── mascot/           # Люмен
 │   ├── shots/            # скриншоты экранов
 │   └── case-deck-plan.md # план портфолио-кейса
-├── infra/        # docker-compose, Caddy, провижн сервера
-│   └── .env.example      # плейсхолдеры; реальный .env — вне репо
-├── docs/         # PROJECT, ARCHITECTURE, ROADMAP, REPO, SECURITY, POSITIONING
-├── .github/workflows/    # CI
+├── infra/        # инфраструктура
+│   ├── docker-compose.yml        # сервер: caddy + postgres + api-prod + api-dev
+│   ├── docker-compose.local.yml  # локально: только база
+│   ├── Caddyfile                 # TLS, security-заголовки, маршрутизация
+│   ├── provision.sh              # первичная настройка сервера
+│   ├── postgres-init/            # создание dev-базы с изоляцией прав
+│   └── .env.example              # плейсхолдеры; реальный .env — вне репо
+├── docs/         # PROJECT, ARCHITECTURE, ROADMAP, DEVELOPMENT,
+│                 # OPERATIONS, QUALITY, SECURITY, REPO, POSITIONING
+├── .github/
+│   ├── workflows/        # ci, security, deploy, pages
+│   ├── dependabot.yml
+│   └── pull_request_template.md
+├── Makefile              # единая точка входа: make покажет все команды
+├── .pre-commit-config.yaml
+├── .lighthouserc.json    # бюджеты производительности маркетинга
 ├── INFRA.local.md        # состояние сервера — GITIGNORED, вне публичного репо
 └── .gitignore
 ```

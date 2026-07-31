@@ -1,0 +1,58 @@
+# Хуки, которые срабатывают до коммита. Ставятся один раз: make hooks
+#
+# Главный из них — gitleaks: секрет физически не может уйти в публичный
+# репозиторий, потому что коммит просто не создастся.
+
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: detect-private-key
+      - id: check-added-large-files
+        args: ["--maxkb=2048"]
+      - id: check-merge-conflict
+      - id: check-yaml
+        # Caddyfile и compose-шаблоны с якорями проверяются отдельно.
+        exclude: ^infra/docker-compose\.yml$
+      - id: check-json
+      - id: check-toml
+      - id: end-of-file-fixer
+        exclude: ^design/
+      - id: trailing-whitespace
+        exclude: ^design/
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+        exclude: ^design/
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.1
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        files: ^backend/
+      - id: ruff-format
+        files: ^backend/
+
+  - repo: local
+    hooks:
+      - id: dart-format
+        name: dart format
+        entry: bash -c 'command -v dart >/dev/null || exit 0; dart format "$@"' --
+        language: system
+        files: \.dart$
+        pass_filenames: true
+
+      - id: shellcheck
+        name: shellcheck
+        entry: bash -c 'command -v shellcheck >/dev/null || exit 0; shellcheck "$@"' --
+        language: system
+        files: \.sh$
+        pass_filenames: true
+
+# Дизайн-макеты — внешний артефакт, их не форматируем.
+exclude: ^design/(?!README\.md)

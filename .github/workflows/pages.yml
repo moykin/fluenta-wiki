@@ -1,0 +1,125 @@
+name: Deploy Frontend
+
+# Маркетинг (Jaspr) и приложение (Flutter web) — статика, живёт на
+# Cloudflare Pages. Каждый PR получает собственный preview-URL: результат
+# видно до слияния, без выкладки на dev.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "marketing/**"
+      - "app/**"
+      - ".github/workflows/pages.yml"
+  pull_request:
+    paths:
+      - "marketing/**"
+      - "app/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  marketing:
+    name: Маркетинг → Cloudflare Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли маркетинг
+        id: check
+        run: |
+          if [ -f marketing/pubspec.yaml ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
+          else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Маркетинг ещё не создан — пропускаю."; fi
+
+      - uses: dart-lang/setup-dart@v1
+        if: steps.check.outputs.exists == 'true'
+
+      - name: Сборка статики
+        if: steps.check.outputs.exists == 'true'
+        working-directory: marketing
+        run: |
+          dart pub get
+          dart run jaspr_cli:jaspr build
+
+      - name: Публикация
+        if: steps.check.outputs.exists == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy marketing/build/jaspr --project-name=fluenta-marketing
+
+  app-web:
+    name: Приложение (web) → Cloudflare Pages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли приложение
+        id: check
+        run: |
+          if [ -f app/pubspec.yaml ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
+          else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Приложение ещё не создано — пропускаю."; fi
+
+      - uses: subosito/flutter-action@v2
+        if: steps.check.outputs.exists == 'true'
+        with:
+          channel: stable
+          cache: true
+
+      - name: Сборка web
+        if: steps.check.outputs.exists == 'true'
+        working-directory: app
+        run: |
+          flutter pub get
+          flutter build web --release
+
+      - name: Публикация
+        if: steps.check.outputs.exists == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy app/build/web --project-name=fluenta-app
+
+  lighthouse:
+    name: Бюджет производительности маркетинга
+    needs: marketing
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Есть ли маркетинг
+        id: check
+        run: |
+          if [ -f marketing/pubspec.yaml ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
+          else echo "exists=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: dart-lang/setup-dart@v1
+        if: steps.check.outputs.exists == 'true'
+
+      - name: Собрать и проверить локально
+        if: steps.check.outputs.exists == 'true'
+        working-directory: marketing
+        run: |
+          dart pub get
+          dart run jaspr_cli:jaspr build
+
+      - name: Lighthouse CI
+        if: steps.check.outputs.exists == 'true'
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
