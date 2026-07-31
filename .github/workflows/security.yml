@@ -17,13 +17,13 @@ jobs:
     name: Утечки секретов
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Полная история: секрет мог утечь в старом коммите.
           fetch-depth: 0
 
       - name: gitleaks
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -34,7 +34,7 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Есть ли Python-код
         id: check
@@ -42,20 +42,20 @@ jobs:
           if [ -d backend/app ]; then echo "exists=true" >> "$GITHUB_OUTPUT";
           else echo "exists=false" >> "$GITHUB_OUTPUT"; echo "Python-кода ещё нет — пропускаю."; fi
 
-      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@v4.37.3
         if: steps.check.outputs.exists == 'true'
         with:
           languages: python
           queries: security-extended
 
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4.37.3
         if: steps.check.outputs.exists == 'true'
 
   dependencies:
     name: Уязвимости в зависимостях
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: OSV Scanner
         uses: google/osv-scanner-action/osv-scanner-action@v2
@@ -70,10 +70,10 @@ jobs:
     name: Trivy — конфигурация и зависимости
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Trivy
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           scan-type: fs
           scan-ref: .
