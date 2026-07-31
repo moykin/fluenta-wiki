@@ -21,8 +21,9 @@ git init, монорепо, дизайн-хэндофф в репо, докум�
 
 Цель: пустое, но настоящее приложение открывается на `fluenta.wiki`, деплой одной командой.
 
-- `app/` — `flutter create` под web + ios + android + macos; тема из дизайн-токенов в `ThemeExtension`; адаптивный shell (bottom tabs → rail → sidebar) на go_router.
-- `backend/` — FastAPI-скелет, `/healthz`, Postgres + pgvector, Alembic.
+- ✅ `app/` — проект под web + iOS + Android + macOS; дизайн-токены и тема; адаптивный каркас (нижние вкладки → боковая полоса → боковая с подписями) на go_router; заглушки семи разделов; шрифты Source Serif 4 и Inter забандлены; 9 тестов.
+- ✅ `backend/` — FastAPI-скелет с `/healthz`, конфигурация через переменные окружения, многоступенчатый Dockerfile с non-root пользователем; 6 тестов, покрытие 100%.
+- Осталось: Postgres + pgvector в приложении, Alembic, генерация Dart-клиента из OpenAPI.
 - `infra/` — docker-compose (Caddy + api + postgres), провижн сервера (non-root sudo, SSH по ключу, UFW, fail2ban), DNS `fluenta.wiki` → сервер, TLS.
 - CI: линт + тесты, генерация Dart-клиента из OpenAPI.
 - ⚠️ Вместе с созданием каждой части **раскомментировать соответствующий блок в `.github/dependabot.yml`** — они выключены, пока манифестов нет, иначе Dependabot падает и шлёт уведомления.
